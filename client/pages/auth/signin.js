@@ -1,7 +1,7 @@
 import { Layout } from '@/components/Layout'
 import { LoginForm } from '@/components/LoginForm'
 
-export default function Login () {
+export default function Signin () {
   return (
     <Layout>
       <section className="flex h-screen justify-center">
