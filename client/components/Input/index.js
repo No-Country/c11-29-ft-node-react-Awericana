@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 export function Input ({ type = 'text', placeholder, value, onChange, name, error, label }) {
   const [isShown, setIsShown] = useState(false)
-  const [showLabel, setShowLabel] = useState(true)
+  const [showLabel, setShowLabel] = useState(false)
 
   return (
     <>
