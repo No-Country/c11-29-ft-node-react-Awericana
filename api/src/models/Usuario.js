@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
         allowNull: false
     },
     rol: {
-        type: DataTypes.ENUM,
+        type: DataTypes.ENUM("admin", "user"),
         allowNull: false
     },
     resetpasswordcode: {
