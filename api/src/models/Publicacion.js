@@ -2,19 +2,21 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("publicacion", {
-    name: {
-      type: DataTypes.STRING,
+    id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    date: {
+    fecha: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    price: {
+    precio: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    status: {
+    estado: {
       type: DataTypes.ENUM("habilitada", "pausada", "eliminada"),
       allowNull: false,
     },
