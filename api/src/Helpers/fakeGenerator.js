@@ -41,5 +41,3 @@ function generarPrendas(cantidad) {
 }
 
 module.exports = router;
-
-// Ejemplo de uso: generar 5 prendas de ropa
