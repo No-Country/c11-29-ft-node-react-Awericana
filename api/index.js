@@ -18,25 +18,47 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn, Pais } = require('./src/db.js');
-const { paises } = require('./src/Helpers/PaisesJson.js')
+const { conn, Pais, Talle, Color, Categoria, TalleNene, TalleHombre, TalleDama, Marca } = require('./src/db.js');
+const { paises } = require('./src/Helpers/PaisesJson.js');
+const { talles } = require('./src/Helpers/tallesJson.js');
+const { colores } = require('./src/Helpers/coloresJson');
+const { categorias } = require('./src/Helpers/categoriasJson');
+const { marcas } = require('./src/Helpers/marcasJson')
+const { Op } = require("sequelize");
 
+const poblarBaseDeDatos = async () => {
+  await Pais.bulkCreate(paises)
+  await Categoria.bulkCreate(categorias)
+  await Color.bulkCreate(colores)
+  await Talle.bulkCreate(talles)
+  await Marca.bulkCreate(marcas)
 
-const insertarPaises = () => {
-  paises?.forEach(async (pais) => {
-    await Pais.findOrCreate({
-      where: {
-        id: pais.id,
-        nombre: pais.name
-      }
-    })
-  })
+  const todosLosTalles = await Talle.findAll();
+  // console.log(todosLosTalles)
+  const tallesNene = todosLosTalles
+                      .filter(talle => talle.id <= 5)
+                      .map(talle => ({id: talle.id, talleId: talle.id}))
+
+  await TalleNene.bulkCreate(tallesNene)
+
+  const tallesHombre = todosLosTalles
+                        .filter(talle => talle.id >= 3)
+                        .map((talle, index) => ({id: index+1, talleId: talle.id }))
+  // console.log(tallesNene)
+
+  await TalleHombre.bulkCreate(tallesHombre)
+
+  const tallesDama = todosLosTalles
+                      .filter(talle => talle.id >= 3)
+                      .map((talle, index) => ({id: index+1, talleId: talle.id }))
+
+  await TalleDama.bulkCreate(tallesDama)
 }
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: true }).then( () => {
 
-  insertarPaises();
-
+  poblarBaseDeDatos();
+  
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
