@@ -1,7 +1,7 @@
 import { Layout } from '@/components/Layout'
 import Image from 'next/image'
-import Logo from '@/public/assets/logoBig.svg'
-import SignupForm from '@/components/SignupForm'
+import Logo from '@/public/assets/logobig.svg'
+import { SignupForm } from '@/components/SignupForm'
 
 function Signup () {
   return (

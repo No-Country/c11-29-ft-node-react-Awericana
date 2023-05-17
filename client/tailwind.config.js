@@ -31,7 +31,8 @@ module.exports = {
         icon: '48px'
       },
       boxShadow: {
-        normal: '0px 4px 4px rgba(0, 0, 0, 0.25);'
+        down: '0px 4px 4px rgba(0, 0, 0, 0.25);',
+        up: '0px -4px 4px rgba(0, 0, 0, 0.25);'
       },
       margin: {
         layoutSides: '0 16px',
@@ -41,6 +42,10 @@ module.exports = {
         normal: '32px',
         medium: '24px',
         small: '16px'
+      },
+      padding: {
+        big: '24px',
+        normal: '16px'
       }
     }
   },
