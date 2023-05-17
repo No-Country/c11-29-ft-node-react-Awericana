@@ -1,7 +1,7 @@
 import { Input } from '@/components/Input'
 import { useInputValue } from '@/hooks/useInputValue'
 
-export default function SignupForm () {
+export function SignupForm () {
   const { passwordValue, passwordOnChange, error: passwordError } = useInputValue()
 
   const handleSubmit = (e) => {
