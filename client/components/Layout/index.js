@@ -1,10 +1,9 @@
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ weight: ['300', '400'], subsets: ['latin'] })
+import { Roboto } from 'next/font/google'
+const roboto = Roboto({ weight: ['300', '400'], subsets: ['latin'] })
 
 export function Layout ({ children }) {
   return (
-    <main className={`${inter.className}`}>
+    <main className={`${roboto.className}`}>
       {children}
     </main>
   )

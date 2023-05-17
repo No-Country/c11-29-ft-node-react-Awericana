@@ -2,11 +2,11 @@ import { useInputValue } from '@/hooks/useInputValue'
 import { Input } from '@/components/Input'
 import { useEffect } from 'react'
 import { Primary } from '@/components/Buttons/Primary'
-import { Secondary } from '../Buttons/Secondary'
+import { Secondary } from '@/components/Buttons/Secondary'
 
 export function LoginForm () {
-  const { emailValue, emailOnChange, error: emailError, setError: setEmailError } = useInputValue()
-  const { passwordValue, passwordOnChange, error: passwordError, setError: setPasswordError } = useInputValue()
+  const { emailValue, emailOnChange, error: emailError } = useInputValue()
+  const { passwordValue, passwordOnChange, error: passwordError } = useInputValue()
 
   useEffect(() => {
     // Validar email y password

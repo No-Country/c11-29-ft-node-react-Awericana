@@ -18,10 +18,25 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn, Pais } = require('./src/db.js');
+const { paises } = require('./src/Helpers/PaisesJson.js')
 
+
+const insertarPaises = () => {
+  paises?.forEach(async (pais) => {
+    await Pais.findOrCreate({
+      where: {
+        id: pais.id,
+        nombre: pais.name
+      }
+    })
+  })
+}
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
+
+  insertarPaises();
+
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
