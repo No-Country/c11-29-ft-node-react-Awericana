@@ -1,4 +1,4 @@
-import { Input } from '../SignupForm/input'
+import { Input } from '@/components/Input'
 import { useInputValue } from '@/hooks/useInputValue'
 
 export default function SignupForm () {
