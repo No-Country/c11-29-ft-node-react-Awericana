@@ -39,5 +39,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true
     },
+    fechaNacimiento: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    }
   });
 };
