@@ -1,32 +1,31 @@
-import { useInputValue } from '@/hooks/useInputValue'
-import { useEffect } from 'react'
-import { Secondary } from '@/components/Buttons/Secondary'
 import { Input } from '@/components/Input'
 import { Form } from '@/components/Form'
+import { useFormFields } from '@/hooks/useFormFields'
+import { Submit } from '../Buttons/Submit'
+import Link from 'next/link'
+import { Secondary } from '@/components/Buttons/Secondary'
 
 export function LoginForm () {
-  const { emailValue, emailOnChange, error: emailError } = useInputValue()
-  const { passwordValue, passwordOnChange, error: passwordError } = useInputValue()
-
-  useEffect(() => {
-    // Validar email y password
-  }, [emailValue, passwordValue])
+  const { data, handleChange } = useFormFields({
+    email: '',
+    password: ''
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Enviar a Back
+    console.log(data)
   }
 
   return (
     <Form onSubmit={handleSubmit}>
-       <h3 className='text-3xl text-center mt-10 mb-10 md:text-5xl'>Inicio Sesion</h3>
-          <Input placeholder='Email' type={'email'} label={'Ingresa tu e-mail'} value={emailValue} onChange={emailOnChange} />
-          <Input placeholder='Contraseña' type={'password'} label={'Ingresa tu contraseña'} value={passwordValue} onChange={passwordOnChange} />
-              <button className='m-10 bg-green-700 py-4  rounded-lg px-6  hover:bg-green-500 text-white ' value="summit">Iniciar Sesion</button>
-              <a className="ml-18 underline text-center cursor-pointer  text-green-500  mb-5">¿Olvidaste Tu Contraseña?</a>
-              <div className='flex justify-center'><p>No tenes Cuenta?</p><a className='text-blue-600 underline cursor-pointer'>Registrate</a></div>
-     <Secondary>Ingresar con Google</Secondary>
-     <Secondary>Ingresar con Facebook</Secondary>
+        <Input placeholder='Email' type={'email'} label={'Ingresa tu e-mail'} onChange={handleChange} />
+        <Input placeholder='Contraseña' type={'password'} label={'Ingresa tu contraseña'} onChange={handleChange} />
+        <Link href={'#'} className="ml-18 underline cursor-pointer text-black">¿Olvidaste Tu Contraseña?</Link>
+        <Submit center={true} >INICIAR SESIÓN</Submit>
+        <footer className='flex flex-col w-full md:w-9/12 m-auto'>
+          <Secondary>Ingresar con Google</Secondary>
+          <Secondary>Ingresar con Facebook</Secondary>
+        </footer>
     </Form>
   )
 }
