@@ -55,7 +55,7 @@ const poblarBaseDeDatos = async () => {
   await TalleDama.bulkCreate(tallesDama)
 }
 // Syncing all the models at once.
-conn.sync({ force: true }).then( () => {
+conn.sync({ force: false }).then( () => {
 
   poblarBaseDeDatos();
   
