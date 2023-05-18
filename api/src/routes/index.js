@@ -11,6 +11,6 @@ router.use('/fake', fakeRouter)
 
 const productsRoute = require('./routeProducts')
 
-router.use('/product', productsRoute);
+router.use('/producto', productsRoute);
 
 module.exports = router; 
