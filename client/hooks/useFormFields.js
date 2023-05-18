@@ -5,7 +5,7 @@ export function useFormFields (initialState = {}) {
 
   function handleChange (e) {
     const { name, value } = e.target
-    setData({ ...data, [name]: value })
+    setData({ ...data, [name]: value.trim() })
   }
 
   return { data, handleChange }
