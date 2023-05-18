@@ -16,6 +16,7 @@ export function SignupForm () {
     fecha_nacimiento: false
   }
   const [error, setError] = useState(initialError)
+
   const { data, handleChange } = useFormFields({
     nombre: '',
     apellido: '',
@@ -69,12 +70,12 @@ export function SignupForm () {
   return (
     <Form onSubmit={handleSubmit}>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-        <Input name={'nombre'} type='text' placeholder={'Nombre(s)*'} label={'Nombre(s)*'} onChange={handleChange}/>
-        <Input name={'apellido'} type='text' placeholder={'Apellido(s)*'} label={'Apellido(s)*'} onChange={handleChange} />
-        <Input name={'email'} type='email' placeholder={'Email*'} label={'Email*'} onChange={handleChange}/>
-        <Input name={'password'} type={'password'} placeholder={'Contraseña*'} label={'Contraseña*'} onChange={handleChange} />
-        <Input name={'password_confirmation'} type={'password'} placeholder={'Repetir contraseña*'} label={'Repetir contraseña*'} onChange={handleChange} />
-        <Input name={'fecha_nacimiento'} type={'date'} placeholder={'Fecha de nacimiento*'} label={'Fecha de nacimiento*'} onChange={handleChange} />
+        <Input error={error.nombre} name={'nombre'} type='text' placeholder={'Nombre(s)*'} label={'Nombre(s)*'} onChange={handleChange}/>
+        <Input error={error.apellido} name={'apellido'} type='text' placeholder={'Apellido(s)*'} label={'Apellido(s)*'} onChange={handleChange} />
+        <Input error={error.email} name={'email'} type='email' placeholder={'Email*'} label={'Email*'} onChange={handleChange}/>
+        <Input error={error.password} name={'password'} type={'password'} placeholder={'Contraseña*'} label={'Contraseña*'} onChange={handleChange} />
+        <Input error={error.password_confirmation} name={'password_confirmation'} type={'password'} placeholder={'Repetir contraseña*'} label={'Repetir contraseña*'} onChange={handleChange} />
+        <Input error={error.fecha_nacimiento} name={'fecha_nacimiento'} type={'date'} placeholder={'Fecha de nacimiento*'} label={'Fecha de nacimiento*'} onChange={handleChange} />
       </div>
       <Submit center={true}>REGISTRARSE</Submit>
     </Form>
