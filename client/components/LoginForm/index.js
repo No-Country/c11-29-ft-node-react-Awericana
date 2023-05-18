@@ -18,8 +18,8 @@ export function LoginForm () {
 
   return (
     <Form onSubmit={handleSubmit}>
-        <Input placeholder='Email' type={'email'} label={'Ingresa tu e-mail'} onChange={handleChange} />
-        <Input placeholder='Contraseña' type={'password'} label={'Ingresa tu contraseña'} onChange={handleChange} />
+        <Input name='email' placeholder='Ingresa tu e-mail' type={'email'} label={'Ingresa tu e-mail'} onChange={handleChange} />
+        <Input name='password' placeholder='Ingresa tu contraseña' type={'password'} label={'Ingresa tu contraseña'} onChange={handleChange} />
         <Link href={'#'} className="ml-18 underline cursor-pointer text-black">¿Olvidaste Tu Contraseña?</Link>
         <Submit center={true} >INICIAR SESIÓN</Submit>
         <footer className='flex flex-col w-full md:w-9/12 m-auto'>
