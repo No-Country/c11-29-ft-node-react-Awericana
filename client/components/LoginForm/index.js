@@ -1,32 +1,56 @@
-import { useInputValue } from '@/hooks/useInputValue'
 import { Input } from '@/components/Input'
-import { useEffect } from 'react'
-import { Primary } from '@/components/Buttons/Primary'
+import { Form } from '@/components/Form'
+import { useFormFields } from '@/hooks/useFormFields'
+import { Submit } from '../Buttons/Submit'
+import Link from 'next/link'
 import { Secondary } from '@/components/Buttons/Secondary'
+import { useState } from 'react'
+import { useValidator } from '@/hooks/useValidator'
 
 export function LoginForm () {
-  const { emailValue, emailOnChange, error: emailError } = useInputValue()
-  const { passwordValue, passwordOnChange, error: passwordError } = useInputValue()
+  const { isPasswordValid, isEmailValid } = useValidator()
 
-  useEffect(() => {
-    // Validar email y password
-  }, [emailValue, passwordValue])
+  const initialError = {
+    email: false,
+    password: false
+  }
+  const { data, handleChange } = useFormFields({
+    email: '',
+    password: ''
+  })
+  const [error, setError] = useState(initialError)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Enviar a Back
+    setError(initialError)
+
+    const validPassword = isPasswordValid(data.password)
+    const validEmail = isEmailValid(data.email)
+
+    if (!validPassword) {
+      setError(prev => ({ ...prev, password: 'La contraseña es inválida' }))
+    }
+
+    if (!validEmail) {
+      setError(prev => ({ ...prev, email: 'El email es inválido' }))
+    }
+
+    if (validPassword && validEmail) {
+      console.log(data)
+      // fetch...
+    }
   }
 
   return (
-    <form className="w-[400px]  mt-10 flex flex-col" onSubmit={handleSubmit}>
-      <Input placeholder='Email' type={'email'} label={'Ingresa tu e-mail'} value={emailValue} onChange={emailOnChange} error={emailError} />
-      <Input placeholder='Contraseña' type={'password'} label={'Ingresa tu contraseña'} value={passwordValue} onChange={passwordOnChange} error={passwordError} />
-
-      <a className="ml-18 underline  mb-5">¿Olvidaste Tu Contraseña?</a>
-      <Primary>Iniciar Sesion</Primary>
-      <Secondary>Ingresar con Google</Secondary>
-      <Secondary>Ingresar con Facebook</Secondary>
-
-    </form>
+    <Form onSubmit={handleSubmit}>
+        <Input name='email' error={error.email} placeholder='Ingresa tu e-mail' type={'text'} label={'Ingresa tu e-mail'} onChange={handleChange} />
+        <Input name='password' error={error.password} placeholder='Ingresa tu contraseña' type={'password'} label={'Ingresa tu contraseña'} onChange={handleChange} />
+        <Link href={'#'} className="ml-18 underline cursor-pointer text-black">¿Olvidaste Tu Contraseña?</Link>
+        <Submit center={true} >INICIAR SESIÓN</Submit>
+        <footer className='flex flex-col w-full md:w-9/12 m-auto'>
+          <Secondary>Ingresar con Google</Secondary>
+          <Secondary>Ingresar con Facebook</Secondary>
+        </footer>
+    </Form>
   )
 }

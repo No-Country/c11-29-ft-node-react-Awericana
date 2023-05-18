@@ -4,13 +4,18 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, URL
 } = process.env;
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
+
+// const sequelize = new Sequelize(URL, {
+//   logging: false, // set to console.log to see the raw SQL queries
+//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+// }); //
 
 const basename = path.basename(__filename);
 
@@ -38,30 +43,43 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Categoria, Color, Imagen, Marca, Producto, Talle, Carrito } = sequelize.models;
+const { Categoria, Color, Imagen, Marca, Producto, Talle, Carrito, TalleHombre, TalleDama, TalleNene, Publicacion } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 //*DEFINIEDO RELACIONES Productos
-Producto.belongsTo(Marca);
-Marca.hasMany(Producto);
+Publicacion.belongsTo(Marca);
+Marca.hasMany(Publicacion);
 
-Producto.belongsTo(Talle);
-Talle.hasMany(Producto);
+Publicacion.belongsTo(Talle);
+Talle.hasMany(Publicacion);
 
 Producto.belongsTo(Categoria);
 Categoria.hasMany(Producto)
 
-Color.belongsTo(Producto);
-Producto.hasMany(Color);
+Publicacion.belongsTo(Color);
+Color.hasMany(Publicacion);
 
-Producto.belongsTo(Imagen);
-Imagen.hasMany(Producto);
+Imagen.belongsTo(Publicacion);
+Publicacion.hasMany(Imagen)
 
+// Producto.belongsTo(Imagen);
+// Imagen.hasMany(Producto);
 
 Carrito.belongsToMany(Producto, {through: "carrito_producto"});
 Producto.belongsToMany(Carrito, {through: "carrito_producto"});
 
+Talle.hasOne(TalleDama, { foreignKey: 'talleId' });
+Talle.hasOne(TalleHombre, { foreignKey: 'talleId' });
+Talle.hasOne(TalleNene, { foreignKey: 'talleId' });
+
+TalleDama.belongsTo(Talle, { foreignKey: 'talleId' });
+TalleHombre.belongsTo(Talle, { foreignKey: 'talleId' });
+TalleNene.belongsTo(Talle, { foreignKey: 'talleId' });
+
+Publicacion.belongsTo(TalleDama);
+Publicacion.belongsTo(TalleHombre);
+Publicacion.belongsTo(TalleNene);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
