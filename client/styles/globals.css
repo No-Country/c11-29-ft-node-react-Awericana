@@ -13,3 +13,17 @@
 body {
   overflow-x: hidden;
 }
+
+/*Estilos Slider*/
+.slick-slider .slick-dots {
+    bottom: 10px !important;
+}
+
+.slick-dots li button::before {
+    color: #77B5A9 !important;
+    font-size: 12px !important;
+}
+
+.slick-dots li.slick-active button::before {
+    color: #228370 !important;
+}
