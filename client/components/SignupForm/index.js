@@ -10,10 +10,12 @@ export function SignupForm () {
 
   return (
     <form className='flex flex-col gap-4 w-full md:w-9/12'>
-      <Input type='text' placeholder={'Ingresa tu nombre'} label={'Nombre:'} />
-      <Input type='email' placeholder={'Ingresa tu email'} label={'Email:'}/>
-      <Input placeholder='Ingresa tu contraseña' type={'password'} label={'Contraseña:'} value={passwordValue} onChange={passwordOnChange} error={passwordError} />
-      <button onSubmit={handleSubmit} className='my-7 self-end py-3 px-6 bg-emerald-500 shadow-lg rounded-xl text-white font-md text-lg hover:scale-105 hover:bg-emerald-400 transition'>
+      <Input type='text' placeholder={'Nombre y apellido*'} label={'Nombre y apellido*'} />
+      <Input type='email' placeholder={'Email*'} label={'Email*'}/>
+      <Input type='email' placeholder={'Repetir email*'} label={'Repetir email*'}/>
+      <Input type={'password'} placeholder={'Contraseña*'} label={'Contraseña*'} value={passwordValue} onChange={passwordOnChange} error={passwordError} />
+      <Input type={'password'} placeholder={'Repetir contraseña*'} label={'Repetir contraseña*'} value={passwordValue} onChange={passwordOnChange} error={passwordError} />
+      <button onSubmit={handleSubmit} className='my-6 self-end py-3 px-6 bg-secondary shadow-lg rounded-xl text-white font-md text-lg hover:scale-105 hover:bg-primary transition'>
         Registrarse
       </button>
     </form>
