@@ -1,16 +1,16 @@
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
+const fs = require("fs");
+const path = require("path");
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, URL } = process.env;
 
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const fs = require('fs');
-const path = require('path');
-const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, URL
-} = process.env;
-
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-});
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+  {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  }
+);
 
 // const sequelize = new Sequelize(URL, {
 //   logging: false, // set to console.log to see the raw SQL queries
@@ -43,7 +43,20 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Categoria, Color, Imagen, Marca, Producto, Talle, Carrito, TalleHombre, TalleDama, TalleNene, Publicacion } = sequelize.models;
+const {
+  Categoria,
+  Color,
+  Imagen,
+  Marca,
+  Producto,
+  Talle,
+  Carrito,
+  TalleHombre,
+  TalleDama,
+  TalleNene,
+  Publicacion,
+  Usuario,
+} = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -55,27 +68,27 @@ Publicacion.belongsTo(Talle);
 Talle.hasMany(Publicacion);
 
 Producto.belongsTo(Categoria);
-Categoria.hasMany(Producto)
+Categoria.hasMany(Producto);
 
 Publicacion.belongsTo(Color);
 Color.hasMany(Publicacion);
 
 Imagen.belongsTo(Publicacion);
-Publicacion.hasMany(Imagen)
+Publicacion.hasMany(Imagen);
 
 // Producto.belongsTo(Imagen);
 // Imagen.hasMany(Producto);
 
-Carrito.belongsToMany(Producto, {through: "carrito_producto"});
-Producto.belongsToMany(Carrito, {through: "carrito_producto"});
+Carrito.belongsToMany(Producto, { through: "carrito_producto" });
+Producto.belongsToMany(Carrito, { through: "carrito_producto" });
 
-Talle.hasOne(TalleDama, { foreignKey: 'talleId' });
-Talle.hasOne(TalleHombre, { foreignKey: 'talleId' });
-Talle.hasOne(TalleNene, { foreignKey: 'talleId' });
+Talle.hasOne(TalleDama, { foreignKey: "talleId" });
+Talle.hasOne(TalleHombre, { foreignKey: "talleId" });
+Talle.hasOne(TalleNene, { foreignKey: "talleId" });
 
-TalleDama.belongsTo(Talle, { foreignKey: 'talleId' });
-TalleHombre.belongsTo(Talle, { foreignKey: 'talleId' });
-TalleNene.belongsTo(Talle, { foreignKey: 'talleId' });
+TalleDama.belongsTo(Talle, { foreignKey: "talleId" });
+TalleHombre.belongsTo(Talle, { foreignKey: "talleId" });
+TalleNene.belongsTo(Talle, { foreignKey: "talleId" });
 
 Publicacion.belongsTo(TalleDama);
 Publicacion.belongsTo(TalleHombre);
