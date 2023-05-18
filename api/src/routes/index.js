@@ -9,10 +9,19 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/fake", fakeRouter);
 
-const productsRoute = require("./routeProducts");
+
+const productsRoute = require('./routeProducts');
+const publicaciones = require('./publicaciones');
+
+
+router.use('/publicaciones', publicaciones);
+
+
+
 const authRouter = require("./auth");
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
+
 
 module.exports = router;
