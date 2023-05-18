@@ -7,13 +7,13 @@ export function Input ({ type = 'text', placeholder, value, onChange, name, erro
 
   return (
     <>
-      <label className='text-sm font-medium block' htmlFor={name}>{showLabel ? label : ''}
+      <div className='relative mb-1.5'>
+      <label className='text-xs font-light leading-tight absolute left-3 top-2' htmlFor={name}>{showLabel ? label : ''}
       </label>
-      <div className='relative mb-0.5'>
-        <input type={isShown ? 'text' : type} onFocus={() => setShowLabel(true)} onBlur={() => setShowLabel(false)} placeholder={ showLabel ? '' : placeholder} value={value} onChange={onChange} name={name} className='w-full h-12 border border-solid border-primary text-gray-700 text-sm outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' />
+        <input type={isShown ? 'text' : type} onFocus={() => setShowLabel(true)} onBlur={() => setShowLabel(false)} placeholder={ showLabel ? '' : placeholder} value={value} onChange={onChange} name={name} className='my-0.5 w-full h-12 border border-solid border-primary text-gray-700 text-sm font-light leading-tight text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' />
         <span className="absolute inset-y-0 right-4 flex items-center pl-2">
         {type === 'password'
-          ? (isShown ? <AiFillEyeInvisible className='h-4 w-6 fill-secondary' onClick={() => setIsShown(!isShown)} /> : <AiFillEye className='h-4 w-6 fill-secondary' onClick={() => setIsShown(!isShown)} />)
+          ? (isShown ? <AiFillEyeInvisible className='h-4 w-6 fill-secondary' onClick={() => setIsShown(!isShown)} /> : <AiFillEye className='h-4 w-6 fill-primary' onClick={() => setIsShown(!isShown)} />)
           : null
         }
         </span>
