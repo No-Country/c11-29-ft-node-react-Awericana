@@ -7,6 +7,8 @@ import { useValidator } from '@/hooks/useValidator'
 
 export function SignupForm () {
   const { isPasswordValid, isEmailValid } = useValidator()
+  const [isLoading, setIsLoading] = useState(false)
+
   const initialError = {
     nombre: false,
     apellido: false,
@@ -28,6 +30,7 @@ export function SignupForm () {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setIsLoading(true)
     setError(initialError)
 
     const validPassword = isPasswordValid(data.password)
@@ -39,29 +42,36 @@ export function SignupForm () {
 
     if (!validPassword) {
       setError(prev => ({ ...prev, password: 'La contraseña es inválida' }))
+      setIsLoading(false)
     }
 
     if (!validEmail) {
       setError(prev => ({ ...prev, email: 'El email es inválido' }))
+      setIsLoading(false)
     }
 
     if (!validConfirmation) {
       setError(prev => ({ ...prev, password_confirmation: 'Las contraseñas no coinciden' }))
+      setIsLoading(false)
     }
 
     if (!validNombre) {
       setError(prev => ({ ...prev, nombre: 'El nombre es muy corto' }))
+      setIsLoading(false)
     }
 
     if (!validApellido) {
       setError(prev => ({ ...prev, apellido: 'El apellido es muy corto' }))
+      setIsLoading(false)
     }
 
     if (!validNacimiento) {
       setError(prev => ({ ...prev, fecha_nacimiento: 'Por favor, introduzca fecha de nacimiento' }))
+      setIsLoading(false)
     }
 
     if (validPassword && validEmail && validConfirmation && validNombre && validApellido && validNacimiento) {
+      // setIsLoading(false)
       console.log(data)
       // fetch...
     }
@@ -77,7 +87,7 @@ export function SignupForm () {
         <Input error={error.password_confirmation} name={'password_confirmation'} type={'password'} placeholder={'Repetir contraseña*'} label={'Repetir contraseña*'} onChange={handleChange} />
         <Input error={error.fecha_nacimiento} name={'fecha_nacimiento'} type={'date'} placeholder={'Fecha de nacimiento*'} label={'Fecha de nacimiento*'} onChange={handleChange} />
       </div>
-      <Submit center={true}>REGISTRARSE</Submit>
+      <Submit center={true} isLoading={isLoading}>REGISTRARSE</Submit>
     </Form>
   )
 }
