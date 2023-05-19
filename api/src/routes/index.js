@@ -12,6 +12,7 @@ router.use("/fake", fakeRouter);
 
 const productsRoute = require('./routeProducts');
 const publicaciones = require('./publicaciones');
+const rutaBaseDeDatos = require('./routeCargaBaseDeDatos')
 
 
 router.use('/publicaciones', publicaciones);
@@ -22,6 +23,7 @@ const authRouter = require("./auth");
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
+router.use('/cargaBaseDeDatos', rutaBaseDeDatos)
 
 
 module.exports = router;
