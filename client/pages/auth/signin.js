@@ -1,8 +1,8 @@
 import { Layout } from '@/components/Layout'
 import { LoginForm } from '@/components/LoginForm'
+import { Big } from '@/components/Logo/Big'
 import Link from 'next/link'
 import Image from 'next/image'
-import Logo from '@/public/assets/logobig.svg'
 
 export default function Signin () {
   return (
@@ -10,7 +10,7 @@ export default function Signin () {
       <header className='m-small'>
           <nav className='block m-auto w-fit'>
             <Link href={'/'}>
-              <Image src={Logo} width={240} height={120}/>
+              <Big width={240} height={120}/>
             </Link>
           </nav>
       </header>
