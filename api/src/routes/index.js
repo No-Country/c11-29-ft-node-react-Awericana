@@ -14,6 +14,8 @@ const productsRoute = require('./routeProducts');
 const publicaciones = require('./publicaciones');
 const carrito = require('./carrito');
 
+const rutaBaseDeDatos = require('./routeCargaBaseDeDatos')
+const tipoProducto = require('./tipoProducto')
 
 
 
@@ -26,5 +28,7 @@ router.use("/auth", authRouter);
 router.use('/publicaciones', publicaciones);
 router.use('/carrito', carrito);
 
+router.use('/cargaBaseDeDatos', rutaBaseDeDatos)
+router.use('/tipoDeProducto', tipoProducto)
 
 module.exports = router;

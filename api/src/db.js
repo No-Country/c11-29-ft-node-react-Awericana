@@ -45,15 +45,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const {
   Categoria,
-  Color,
   Imagen,
-  Marca,
   Producto,
   Talle,
   Carrito,
-  TalleHombre,
-  TalleDama,
-  TalleNene,
   Publicacion,
   Usuario,
   TipoPersona,

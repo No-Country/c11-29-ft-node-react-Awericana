@@ -35,7 +35,6 @@ module.exports = {
         up: '0px -4px 4px rgba(0, 0, 0, 0.25);'
       },
       margin: {
-        layoutSides: '0 16px',
         extra: '138px',
         bigger: '48px',
         big: '40px',
@@ -44,6 +43,7 @@ module.exports = {
         small: '16px'
       },
       padding: {
+        layoutSides: '0 16px',
         big: '24px',
         normal: '16px'
       }
