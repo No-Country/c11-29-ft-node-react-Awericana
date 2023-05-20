@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         autoIncrement: true,
       },
       nombre: {
-        type: DataTypes.ENUM("hombre", "mujer", "nene"),
+        type: DataTypes.ENUM("hombre", "mujer", "nene", "bebe"),
         allowNull: false,
       },
     },
