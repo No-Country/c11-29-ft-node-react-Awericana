@@ -5,9 +5,7 @@ const {
   Marca,
   Categoria,
   Pais,
-  TalleNene,
-  TalleHombre,
-  TalleDama,
+  TipoPersona
 } = require("../db.js");
 
 const router = Router();
@@ -17,7 +15,7 @@ const { talles } = require("../Helpers/tallesJson.js");
 const { colores } = require("../Helpers/coloresJson");
 const { categorias } = require("../Helpers/categoriasJson");
 const { marcas } = require("../Helpers/marcasJson");
-
+const { tipoPersonas } = require("../Helpers/tipoPersonaJson")
 const poblarBaseDeDatos = async () => {
   try {
     await Pais.bulkCreate(paises);
@@ -25,27 +23,28 @@ const poblarBaseDeDatos = async () => {
     await Color.bulkCreate(colores);
     await Talle.bulkCreate(talles);
     await Marca.bulkCreate(marcas);
+    await TipoPersona.bulkCreate(tipoPersonas)
 
-    const todosLosTalles = await Talle.findAll();
-    // console.log(todosLosTalles)
-    const tallesNene = todosLosTalles
-      .filter((talle) => talle.id <= 5)
-      .map((talle) => ({ id: talle.id, talleId: talle.id }));
+    // const todosLosTalles = await Talle.findAll();
+    // // console.log(todosLosTalles)
+    // const tallesNene = todosLosTalles
+    //   .filter((talle) => talle.id <= 5)
+    //   .map((talle) => ({ id: talle.id, talleId: talle.id }));
 
-    await TalleNene.bulkCreate(tallesNene);
+    // await TalleNene.bulkCreate(tallesNene);
 
-    const tallesHombre = todosLosTalles
-      .filter((talle) => talle.id >= 3)
-      .map((talle, index) => ({ id: index + 1, talleId: talle.id }));
-    // console.log(tallesNene)
+    // const tallesHombre = todosLosTalles
+    //   .filter((talle) => talle.id >= 3)
+    //   .map((talle, index) => ({ id: index + 1, talleId: talle.id }));
+    // // console.log(tallesNene)
 
-    await TalleHombre.bulkCreate(tallesHombre);
+    // await TalleHombre.bulkCreate(tallesHombre);
 
-    const tallesDama = todosLosTalles
-      .filter((talle) => talle.id >= 3)
-      .map((talle, index) => ({ id: index + 1, talleId: talle.id }));
+    // const tallesDama = todosLosTalles
+    //   .filter((talle) => talle.id >= 3)
+    //   .map((talle, index) => ({ id: index + 1, talleId: talle.id }));
 
-    await TalleDama.bulkCreate(tallesDama);
+    // await TalleDama.bulkCreate(tallesDama);
     return true;
   } catch (error) {
     console.log(error.message);

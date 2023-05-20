@@ -45,15 +45,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const {
   Categoria,
-  Color,
   Imagen,
-  Marca,
   Producto,
   Talle,
   Carrito,
-  TalleHombre,
-  TalleDama,
-  TalleNene,
   Publicacion,
   Usuario,
   TipoPersona,
@@ -63,8 +58,6 @@ const {
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 //*DEFINIEDO RELACIONES Productos
-Publicacion.belongsTo(Marca);
-Marca.hasMany(Publicacion);
 
 Publicacion.belongsTo(Talle);
 Talle.hasMany(Publicacion);
@@ -72,8 +65,6 @@ Talle.hasMany(Publicacion);
 Producto.belongsTo(Categoria);
 Categoria.hasMany(Producto);
 
-Publicacion.belongsTo(Color);
-Color.hasMany(Publicacion);
 
 Imagen.belongsTo(Publicacion);
 Publicacion.hasMany(Imagen);
@@ -84,17 +75,9 @@ Publicacion.hasMany(Imagen);
 Carrito.belongsToMany(Producto, { through: "carrito_producto" });
 Producto.belongsToMany(Carrito, { through: "carrito_producto" });
 
-Talle.hasOne(TalleDama, { foreignKey: "talleId" });
-Talle.hasOne(TalleHombre, { foreignKey: "talleId" });
-Talle.hasOne(TalleNene, { foreignKey: "talleId" });
+Publicacion.belongsTo(Talle);
+Talle.hasMany(Publicacion)
 
-TalleDama.belongsTo(Talle, { foreignKey: "talleId" });
-TalleHombre.belongsTo(Talle, { foreignKey: "talleId" });
-TalleNene.belongsTo(Talle, { foreignKey: "talleId" });
-
-Publicacion.belongsTo(TalleDama);
-Publicacion.belongsTo(TalleHombre);
-Publicacion.belongsTo(TalleNene);
 
 TipoProducto.belongsTo(TipoPersona)
 TipoPersona.hasMany(TipoProducto)
