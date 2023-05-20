@@ -56,6 +56,8 @@ const {
   TalleNene,
   Publicacion,
   Usuario,
+  TipoPersona,
+  TipoProducto
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -93,6 +95,9 @@ TalleNene.belongsTo(Talle, { foreignKey: "talleId" });
 Publicacion.belongsTo(TalleDama);
 Publicacion.belongsTo(TalleHombre);
 Publicacion.belongsTo(TalleNene);
+
+TipoProducto.belongsTo(TipoPersona)
+TipoPersona.hasMany(TipoProducto)
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
