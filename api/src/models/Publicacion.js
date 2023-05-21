@@ -16,26 +16,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    talleId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    colorId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    tipoPersonaId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    tipoProductoId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    marcaId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     fecha: {
       type: DataTypes.DATE,
       defaultValue: new Date()
@@ -63,11 +43,8 @@ module.exports = (sequelize) => {
     estado: {
       type: DataTypes.ENUM("habilitada", "pausada", "finalizada"),
       defaultValue: "habilitada"
-    },
-    usuarioId:{
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-   
+    }   
   });
 };
+
+
