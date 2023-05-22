@@ -8,6 +8,7 @@ export function Layout ({ children }) {
   return (
     <main className={`${roboto.className}`}>
       {children}
+      <Banner/>
       <Footer/>
     </main>
   )
