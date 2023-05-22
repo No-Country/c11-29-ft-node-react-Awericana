@@ -12,21 +12,21 @@ const router = Router();
 
 const { paises } = require("../Helpers/PaisesJson");
 const { talles } = require("../Helpers/tallesJson.js");
-const { colores } = require("../Helpers/coloresJson");
+// const { colores } = require("../Helpers/coloresJson");
 const { categorias } = require("../Helpers/categoriasJson");
-const { marcas } = require("../Helpers/marcasJson");
+// const { marcas } = require("../Helpers/marcasJson");
 const { tipoPersonas } = require("../Helpers/tipoPersonaJson")
 const poblarBaseDeDatos = async () => {
   try {
     await Pais.bulkCreate(paises);
     await Categoria.bulkCreate(categorias);
-    await Color.bulkCreate(colores);
+    // await Color.bulkCreate(colores);
     await Talle.bulkCreate(talles);
-    await Marca.bulkCreate(marcas);
+    // await Marca.bulkCreate(marcas);
     await TipoPersona.bulkCreate(tipoPersonas)
 
     // const todosLosTalles = await Talle.findAll();
-    // // console.log(todosLosTalles)
+    // // console.log(todosLosTalles)//
     // const tallesNene = todosLosTalles
     //   .filter((talle) => talle.id <= 5)
     //   .map((talle) => ({ id: talle.id, talleId: talle.id }));
