@@ -11,7 +11,7 @@ export function Layout ({ children }) {
       {children}
       <Banner/>
       
-      <div className='flex flex-wrap justify-center'>
+      <section className='flex flex-wrap justify-center'>
         <Card
             precio={400}
             titulo={'Remera'}
@@ -24,7 +24,7 @@ export function Layout ({ children }) {
         <Card/>
         <Card/>
         <Card/>
-      </div>
+      </section>
 
       <Footer/>
     </main>
