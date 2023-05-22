@@ -9,21 +9,20 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/fake", fakeRouter);
 
-
 const productsRoute = require('./routeProducts');
 const publicaciones = require('./publicaciones');
+const carrito = require('./carrito');
 const rutaBaseDeDatos = require('./routeCargaBaseDeDatos')
-
-
-router.use('/publicaciones', publicaciones);
-
-
-
+const tipoProducto = require('./tipoProducto')
 const authRouter = require("./auth");
+const favoritos = require("./favoritos");
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
+router.use('/publicaciones', publicaciones);
+router.use('/carrito', carrito);
 router.use('/cargaBaseDeDatos', rutaBaseDeDatos)
-
+router.use('/tipoDeProducto', tipoProducto)
+router.use('/favoritos', favoritos)
 
 module.exports = router;

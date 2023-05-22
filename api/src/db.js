@@ -45,24 +45,21 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const {
   Categoria,
-  Color,
   Imagen,
-  Marca,
   Producto,
   Talle,
   Carrito,
-  TalleHombre,
-  TalleDama,
-  TalleNene,
   Publicacion,
   Usuario,
+  TipoPersona,
+  TipoProducto
 } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 //*DEFINIEDO RELACIONES Productos
-Publicacion.belongsTo(Marca);
-Marca.hasMany(Publicacion);
+/*Publicacion.belongsTo(Marca);
+Marca.hasMany(Publicacion);*/
 
 Publicacion.belongsTo(Talle);
 Talle.hasMany(Publicacion);
@@ -70,29 +67,34 @@ Talle.hasMany(Publicacion);
 Producto.belongsTo(Categoria);
 Categoria.hasMany(Producto);
 
-Publicacion.belongsTo(Color);
-Color.hasMany(Publicacion);
-
 Imagen.belongsTo(Publicacion);
 Publicacion.hasMany(Imagen);
 
-// Producto.belongsTo(Imagen);
-// Imagen.hasMany(Producto);
+Usuario.hasMany(Publicacion);
+Publicacion.belongsTo(Usuario);
 
-Carrito.belongsToMany(Producto, { through: "carrito_producto" });
-Producto.belongsToMany(Carrito, { through: "carrito_producto" });
+Usuario.belongsToMany(Publicacion, {through: 'Usuario_publicacion'});
+Publicacion.belongsToMany(Usuario, {through: 'Usuario_publicacion'});
+const {Usuario_publicacion} = sequelize.models; 
+Usuario_publicacion.belongsTo(Publicacion);
+Usuario_publicacion.belongsTo(Usuario);
 
-Talle.hasOne(TalleDama, { foreignKey: "talleId" });
-Talle.hasOne(TalleHombre, { foreignKey: "talleId" });
-Talle.hasOne(TalleNene, { foreignKey: "talleId" });
+Talle.hasMany(Publicacion);
+Publicacion.belongsTo(Talle);
 
-TalleDama.belongsTo(Talle, { foreignKey: "talleId" });
-TalleHombre.belongsTo(Talle, { foreignKey: "talleId" });
-TalleNene.belongsTo(Talle, { foreignKey: "talleId" });
+TipoPersona.hasMany(Publicacion);
+Publicacion.belongsTo(TipoPersona);
 
-Publicacion.belongsTo(TalleDama);
-Publicacion.belongsTo(TalleHombre);
-Publicacion.belongsTo(TalleNene);
+TipoProducto.hasMany(Publicacion);
+Publicacion.belongsTo(TipoProducto);
+
+Usuario.belongsToMany(Publicacion, {through: 'Favoritos'});
+Publicacion.belongsToMany(Usuario, {through: 'Favoritos'});
+const {Favoritos} = sequelize.models; 
+Favoritos.belongsTo(Publicacion);
+Favoritos.belongsTo(Usuario);
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

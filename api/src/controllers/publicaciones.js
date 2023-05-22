@@ -1,10 +1,11 @@
-const {Publicacion} = require("../db");
+const {Publicacion, Talle , TipoPersona, TipoProducto} = require("../db");
 
 const obtenerPublicaciones = async(req, res) => {
 
     const { limit = 25, offset= 0 } = req.query;
     
     const { rows } = await Publicacion.findAndCountAll({
+        include:[Talle, TipoPersona, TipoProducto],
         where:{
             estado: 'habilitada'
         },
@@ -19,7 +20,9 @@ const obtenerPublicacion= async(req, res) => {
 
     const {id} = req.params;
 
-    const publicacion = await Publicacion.findByPk(id);
+    const publicacion = await Publicacion.findByPk(id, {
+        include:[Talle, TipoPersona, TipoProducto]
+    });
 
     if(!publicacion){
         return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})
@@ -53,7 +56,7 @@ const crearPublicacion = async(req, res) => {
 const actualizarPublicacion = async(req, res) => {
 
     const {id} = req.params;
-    const {fecha, precioOferta, descuento, expiracionOferta, usuarioId , ...cambios} = req.body;
+    const {fecha, precioOferta, descuento, expiracionOferta, usuarioId , estado, ...cambios} = req.body;
     
     try {
         const publicacion = await Publicacion.findByPk(id);
