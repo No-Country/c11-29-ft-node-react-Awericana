@@ -2,10 +2,13 @@ import { Layout } from '@/components/Layout'
 import { SignupForm } from '@/components/SignupForm'
 import { Big } from '@/components/Logo/Big'
 import Link from 'next/link'
-
+import Head from 'next/head'
 function Signup () {
   return (
     <Layout>
+       <Head>
+        <title>Registrate</title>
+      </Head>
       <header className='m-small'>
           <nav className='block m-auto w-fit'>
             <Link href={'/'}>
