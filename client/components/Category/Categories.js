@@ -14,7 +14,7 @@ const Categories = () => {
             {
               breakpoint: 1024,
               settings: {
-                slidesToShow: 6,
+                slidesToShow: 5,
                 slidesToScroll: 1
               }
             },
@@ -46,8 +46,6 @@ const Categories = () => {
                 <Category name="Salud"/>
                 <Category name="Ejemplo1"/>
                 <Category name="Ejemplo2"/>
-                <Category name="Ejemplo3"/>
-                <Category name="Ejemplo4"/>
             </Slider>
         </>
     )
