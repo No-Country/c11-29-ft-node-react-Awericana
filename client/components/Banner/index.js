@@ -4,9 +4,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
 
 /*importar las imagenes que van a ir en el Slider*/
-//import imagenDelBanner1 from '@/public/assets/imagen1'
-//import imagenDelBanner2 from '@/public/assets/imagen2'
-//import imagenDelBanner3 from '@/public/assets/imagen3'
+import banner1 from '@/public/assets/img-banner/banner1.png'
+import banner2 from '@/public/assets/img-banner/banner2.png'
+import banner3 from '@/public/assets/img-banner/banner3.png'
 
 const Banner = () => {
     const settings = {
@@ -15,25 +15,29 @@ const Banner = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        autoplay: true,
+        speed: 1000,
+        autoplaySpeed: 6000,
+        cssEase: "linear"
     }
 
     return (
         <>
             <Slider {...settings} className='w-full'>
                 <Image
-                    src={/*acá va la imágen que importamos*/ asd}
+                    src={banner1}
                     width={500}
                     height={500}
                     alt="Picture of the author"
                 />
                 <Image
-                    src={/*acá va la imágen que importamos*/ asd}
+                    src={banner2}
                     width={500}
                     height={500}
                     alt="Picture of the author"
                 />
                 <Image
-                    src={/*acá va la imágen que importamos*/ asd}
+                    src={banner3}
                     width={500}
                     height={500}
                     alt="Picture of the author"
