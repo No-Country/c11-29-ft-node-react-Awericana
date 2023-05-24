@@ -6,7 +6,7 @@ import Head from 'next/head'
 function Signup () {
   return (
     <Layout>
-       <Head>
+      <Head>
         <title>Registrate</title>
       </Head>
       <header className='m-small'>

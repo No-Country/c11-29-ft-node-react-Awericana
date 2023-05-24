@@ -5,7 +5,7 @@ const roboto = Roboto({ weight: ['300', '400'], subsets: ['latin'] })
 
 export function Layout ({ children }) {
   return (
-    <main className={`${roboto.className}`}>
+    <main className={`${roboto.className} h-screen`}>
       {children}
       <Footer/>
     </main>
