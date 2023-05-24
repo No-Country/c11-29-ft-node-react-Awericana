@@ -5,11 +5,7 @@ const calcularMonto = (carrito) => {
     
     carrito.forEach(item => {
         if(item.publicacion.estado === 'habilitada' ){
-            if(item.publicacion.precioOferta){
-                monto = monto + item.publicacion.precioOferta;
-            }else{
-                monto = monto + item.publicacion.precio;
-            }
+            monto = monto + item.publicacion.precio;
         }       
     });
 
@@ -23,7 +19,7 @@ const obtenerCarrito = async(req, res) => {
         const usuario = await Usuario.findByPk(usuarioId);
 
         if(!usuario){
-            return res.status(404).json({msg: `El usuario con el ID ${id} no existe.`})
+            return res.status(404).json({msg: `El usuario con el ID ${usuarioId} no existe.`})
         } 
 
         const carrito = await Usuario_publicacion.findAll({
