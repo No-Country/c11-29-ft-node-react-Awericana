@@ -13,7 +13,7 @@ function Component () {
         <Label href='/profile' Icon={HiUser}>
           Mis Datos
         </Label>
-        <Label href='#' Icon={BsFillHouseDoorFill}>
+        <Label href='/profile/directions' Icon={BsFillHouseDoorFill}>
           Direcciones
         </Label>
         <Label href='#' Icon={AiFillHeart}>
