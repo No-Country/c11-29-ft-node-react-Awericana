@@ -8,17 +8,18 @@ import Categories from '@/components/Category/Categories'
 export default function Home () {
   return (
     <Layout>
+    
       <Head>
         <title>Inicio</title>
       </Head>
       <Header />
+    
       <Banner/>
 
       <div className='p-4'>
         <section>
             <Categories/>
         </section>
-
         <section className='flex flex-wrap justify-center'>
             <Card
                 precio={400}
