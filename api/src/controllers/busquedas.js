@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const {Publicacion} = require("../db");
+const {Publicacion, Talle, TipoPersona, TipoProducto} = require("../db");
 
 const buscar = async(req, res) => {
     const {
@@ -13,26 +13,30 @@ const buscar = async(req, res) => {
         oferta,
     } = req.query;
 
-    const filtros = {};
+    const filtroPublicacion = {};
 
     //si la variable es True se agregara el campo al filtro   
     
-    termino     &&  (filtros.titulo = {[Op.iLike]: '%' + termino + '%'}); // busqueda insensible   
-    genero      &&  (filtros.tipoPersonaId = genero);
-    categoria   &&  (filtros.tipoProductoId = categoria);
-    talle       &&  (filtros.talleId = talle);
-    oferta      &&  (filtros.oferta = true);
+    termino     &&  (filtroPublicacion.titulo = {[Op.iLike]: '%' + termino + '%'}); // busqueda insensible   
+    oferta      &&  (filtroPublicacion.oferta = true);
 
     if(precioMin && precioMax ){
-        filtros.precio = { [Op.between]: [precioMin, precioMax] };
+        filtroPublicacion.precio = { [Op.between]: [precioMin, precioMax] };
     }else if(precioMax){
-        filtros.precio = { [Op.lte]: precioMax }; //$lte: menor o igual que
+        filtroPublicacion.precio = { [Op.lte]: precioMax }; //$lte: menor o igual que
     }else if(precioMin){
-        filtros.precio = { [Op.gte]: precioMin }; //$gto: mayor o igual que
+        filtroPublicacion.precio = { [Op.gte]: precioMin }; //$gto: mayor o igual que
     } 
+
+    let filtrosRelaciones = [];
+
+    talle       &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Talle, where: {nombre: talle}}]);
+    genero      &&  (filtrosRelaciones = [...filtrosRelaciones, {model: TipoPersona, where: {nombre: genero}}]);
+    categoria   &&  (filtrosRelaciones = [...filtrosRelaciones, {model: TipoProducto, where: {nombre: categoria}}]);
     
     const publicaciones = await Publicacion.findAll({
-       where: filtros,
+       where: filtroPublicacion,
+       include: filtrosRelaciones,
        order: [['precio', orden]]
     }); 
 

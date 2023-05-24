@@ -12,10 +12,10 @@ router.get('/', [
     query('oferta', 'El unico valor valido es "si"').optional().isIn('si'),
     query('orden', 'Los valores validos son "asc" y "desc"').optional().isIn(['asc', 'desc']),
     //las siguientes no son definitivas
-    query('genero', 'el genero indicado no existe').optional().isInt({min:1}),
-    query('categoria', 'la categoria indicada no existe').optional().isInt({min:1}),
-    query('talle', 'el talle indicado no existe').optional().isInt({min:1}),
+    query('genero', 'el genero debe ser una cadena de texto').optional().not().isInt(),
+    query('categoria', 'la categoria debe ser una cadena de texto').optional().not().isInt(),
+    query('talle', 'el talle debe ser una cadena de texto').optional().not().isInt(),
     validarCampos
 ] , buscar );
 
-module.exports = router;
+module.exports = router; 
