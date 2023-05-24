@@ -26,20 +26,20 @@ const Banner = () => {
             <Slider {...settings} className='w-full'>
                 <Image
                     src={banner1}
-                    width={500}
-                    height={500}
+                    width={1440}
+                    height={640}
                     alt="Picture of the author"
                 />
                 <Image
                     src={banner2}
-                    width={500}
-                    height={500}
+                    width={1440}
+                    height={640}
                     alt="Picture of the author"
                 />
                 <Image
                     src={banner3}
-                    width={500}
-                    height={500}
+                    width={1440}
+                    height={640}
                     alt="Picture of the author"
                 />
             </Slider>  
