@@ -18,7 +18,7 @@ function profile () {
               <p>Documento de Identidad</p>
               <p>Fecha de nacimiento</p>
           </div>
-          <Link href={'/modificar-datos'} className='my-auto font-normal text-xs leading-5 underline'>
+          <Link href={'profile/modify-data'} className='my-auto font-normal text-xs leading-5 underline'>
             Modificar
           </Link>
         </div>
@@ -27,7 +27,7 @@ function profile () {
               <p>Email</p>
               <p>Contraseña</p>
           </div>
-          <Link href={'/modificar-datos'} className='my-auto font-normal text-xs leading-5 underline'>
+          <Link href={'profile/modify-credentials'} className='my-auto font-normal text-xs leading-5 underline'>
             Modificar
           </Link>
         </div>
