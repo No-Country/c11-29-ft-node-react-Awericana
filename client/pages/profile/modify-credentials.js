@@ -11,7 +11,7 @@ function modifyCredentials () {
       <Head>
         <title>Mis Datos 2</title>
       </Head>
-      <Header />
+      <Header disabled={true} />
       <section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit'>
         <h1 className='py-12 px-4 font-normal text-lg leading-5'>Mis datos</h1>
         <Form>

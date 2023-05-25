@@ -5,12 +5,12 @@ import { Big } from '../Logo/Big'
 import Link from 'next/link'
 import { UserOptions } from '@/components/UserOptions'
 
-export function Header () {
+export function Header ({ disabled = false }) {
   return (
     <header className='flex w-screen justify-around items-center h-[96px] p-layoutSides gap-2 z-10 shadow-down '>
-        <Small className='min-w-[20px] max-w-[48px] lg:hidden' />
-        <Big className='w-[150px] hidden lg:inline-block' />
-        <Search />
+        <Small className='min-w-[20px] max-w-[48px] cursor-pointer lg:hidden' />
+        <Big className='w-[150px] hidden cursor-pointer lg:inline-block' />
+        <Search disabled={disabled} />
         <section className='flex items-center justify-around gap-2 md:gap-8'>
           <UserOptions />
           <Link href={'/'} className='flex items-center lg:gap-2 justify-between'>

@@ -7,7 +7,7 @@ import { ImPriceTag } from 'react-icons/im'
 
 function Component () {
   return (
-    <nav className="w-screen shadow-down px-2 max-w-[400px] h-fit z-20 absolute top-20 bg-white right-0">
+    <nav className="w-screen shadow-down px-2 max-w-[400px] h-fit z-20 absolute top-20 bg-white right-0 lg:right-32 xl:right-40">
       <h3 className='m-small mt-medium font-bold'>Nombre y Apellido</h3> {/* Cambiar por nombre y apellido correspondientes */}
       <div className='flex flex-col justify-around h-full'>
         <Label href='/profile' Icon={HiUser}>
