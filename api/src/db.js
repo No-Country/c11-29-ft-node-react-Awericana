@@ -44,11 +44,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const {
-  Categoria,
+  // Categoria,
   Imagen,
   Producto,
   Talle,
-  Carrito,
+  // Carrito,
   Publicacion,
   Usuario,
   TipoPersona,
@@ -64,8 +64,8 @@ Marca.hasMany(Publicacion);*/
 Publicacion.belongsTo(Talle);
 Talle.hasMany(Publicacion);
 
-Producto.belongsTo(Categoria);
-Categoria.hasMany(Producto);
+Producto.belongsTo(TipoProducto);
+TipoProducto.hasMany(Producto);
 
 Imagen.belongsTo(Publicacion);
 Publicacion.hasMany(Imagen);
@@ -73,11 +73,11 @@ Publicacion.hasMany(Imagen);
 Usuario.hasMany(Publicacion);
 Publicacion.belongsTo(Usuario);
 
-Usuario.belongsToMany(Publicacion, {through: 'Usuario_publicacion'});
-Publicacion.belongsToMany(Usuario, {through: 'Usuario_publicacion'});
-const {Usuario_publicacion} = sequelize.models; 
-Usuario_publicacion.belongsTo(Publicacion);
-Usuario_publicacion.belongsTo(Usuario);
+Usuario.belongsToMany(Publicacion, {through: 'Carrito'});
+Publicacion.belongsToMany(Usuario, {through: 'Carrito'});
+const {Carrito} = sequelize.models; 
+Carrito.belongsTo(Publicacion);
+Carrito.belongsTo(Usuario);
 
 Talle.hasMany(Publicacion);
 Publicacion.belongsTo(Talle);
@@ -85,8 +85,8 @@ Publicacion.belongsTo(Talle);
 TipoPersona.hasMany(Publicacion);
 Publicacion.belongsTo(TipoPersona);
 
-TipoProducto.hasMany(Publicacion);
-Publicacion.belongsTo(TipoProducto);
+Producto.hasMany(Publicacion);
+Publicacion.belongsTo(Producto);
 
 Usuario.belongsToMany(Publicacion, {through: 'Favoritos'});
 Publicacion.belongsToMany(Usuario, {through: 'Favoritos'});
