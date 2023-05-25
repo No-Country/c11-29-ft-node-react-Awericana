@@ -34,7 +34,7 @@ async function getUrlPago(req, res) {
       },
     ],
     notification_url:
-      "https://fb2d-179-41-169-237.ngrok-free.app/pagos/notificar",
+      "hasddasdadsok-free.app/pagos/notificar",
   };
 
   mercadopago.preferences
@@ -71,11 +71,11 @@ async function notificarYConfirmarPago(req, res) {
 
   var paidAmount = 0;
 
-  merchantOrders.body.payments.forEach( payment  => {
-    if(payment.status === "approved"){
-        paidAmount += payment.transaction_amount;
-    }
-  });
+  // merchantOrders.body.payments.forEach( payment  => {
+  //   if(payment.status === "approved"){
+  //       paidAmount += payment.transaction_amount;
+  //   }
+  // });
 
 
   if(paidAmount >= body.total_amount){
