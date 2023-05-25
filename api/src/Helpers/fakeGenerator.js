@@ -1,13 +1,13 @@
-const { faker } = require('@faker-js/faker');
-const express = require('express')
+const { faker } = require("@faker-js/faker");
+const express = require("express");
 const router = express.Router();
 
 
 
-router.get('/all', (req,res)=>{
-    const prendas = generarPrendas(20);
-    res.json(prendas)
-})
+router.get("/all", (req, res) => {
+  const prendas = generarPrendas(20);
+  res.json(prendas);
+});
 
 function generarPrendas(cantidad) {
   const publicaciones = [];
@@ -16,29 +16,30 @@ function generarPrendas(cantidad) {
     const prenda = {
       nombre: faker.commerce.productName(),
       descripion: faker.commerce.productDescription(),
-      talle: faker.helpers.arrayElement(['S', 'M', 'L', 'XL']),
+      talle: faker.helpers.arrayElement(["S", "M", "L", "XL"]),
       color: faker.vehicle.color(),
       marca: faker.commerce.productAdjective(),
       imagen: [
-        faker.image.urlLoremFlickr({ category: 'fashion' }),
-        faker.image.urlLoremFlickr({ category: 'fashion' }),
-        faker.image.urlLoremFlickr({ category: 'fashion' })
-      ]
+        faker.image.urlLoremFlickr({ category: "fashion" }),
+        faker.image.urlLoremFlickr({ category: "fashion" }),
+        faker.image.urlLoremFlickr({ category: "fashion" }),
+      ],
     };
 
     const publicacion = {
-        fecha: faker.date.anytime(),
-        precio: faker.commerce.price(),
-        estado: 'habilitada',
-        user: faker.internet.userName(),
-        producto: prenda,
-    }
+      fecha: faker.date.anytime(),
+      precio: faker.commerce.price(),
+      estado: "habilitada",
+      user: faker.internet.userName(),
+      producto: prenda,
+    };
 
     publicaciones.push(publicacion);
   }
 
   return publicaciones;
 }
+
 
 module.exports = router;
 
