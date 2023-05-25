@@ -30,13 +30,7 @@ const validatorRegisterUser = [
     .withMessage("La contraseña no puede estar vacía")
     .isLength({ min: 6, max: 30 })
     .withMessage("La contraseña debe tener entre 6 y 30 caracteres"),
-  check("rol")
-    .exists()
-    .withMessage("El rol es requerido")
-    .notEmpty()
-    .withMessage("El rol no puede estar vacío")
-    .isIn(["admin", "user"])
-    .withMessage("El rol debe ser uno de admin, user"),
+
   check("fechaNacimiento")
     .exists()
     .withMessage("La fecha de nacimiento es requerida")

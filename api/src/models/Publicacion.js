@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    precioOferta:{
+    precioOriginal:{
       type: DataTypes.FLOAT,
       allowNull: true,
     },

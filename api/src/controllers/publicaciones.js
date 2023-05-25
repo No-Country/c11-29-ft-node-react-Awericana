@@ -93,11 +93,12 @@ const configurarDescuento = async( req, res) =>{
         }
 
         if(descuento !== 0){
-            const precioOferta = publicacion.precio - (publicacion.precio * (descuento / 100));
+            const precioCopia = publicacion.precio;
 
             const cambios = {
+                precio : publicacion.precio - (publicacion.precio * (descuento / 100)),
+                precioOriginal: precioCopia,
                 oferta: true,
-                precioOferta,
                 descuento
             }
 
@@ -109,15 +110,16 @@ const configurarDescuento = async( req, res) =>{
             })
         }else{
             const cambios = {
+                precio: publicacion.precioOriginal,
                 oferta: false,
-                precioOferta: null,
+                precioOriginal: null,
                 descuento: 0
             }
             
             await publicacion.update(cambios); 
         
             res.status(201).json({
-                msg: "El descuento fue aplicado.",
+                msg: "El descuento fue quitado.",
                 publicacion
             })
         } 

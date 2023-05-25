@@ -10,11 +10,11 @@
   padding: 0;
 }
 
-body {
+body, html {
   overflow-x: hidden;
 }
 
-/*Estilos Slider*/
+/* Estilos Slider */
 .slick-slider .slick-dots {
     bottom: 10px !important;
 }
@@ -26,4 +26,22 @@ body {
 
 .slick-dots li.slick-active button::before {
     color: #228370 !important;
+}
+
+
+/* Scrollbar settings */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 131, 112, 1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(119, 181, 169, 1);
 }
