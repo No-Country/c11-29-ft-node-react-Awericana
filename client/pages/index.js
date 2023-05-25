@@ -8,12 +8,12 @@ import Categories from '@/components/Category/Categories'
 export default function Home () {
   return (
     <Layout>
-    
+
       <Head>
         <title>Inicio</title>
       </Head>
       <Header />
-    
+
       <Banner/>
 
       <div className='p-4'>

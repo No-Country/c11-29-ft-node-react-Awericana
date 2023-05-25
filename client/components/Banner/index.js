@@ -12,35 +12,37 @@ const Banner = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 1000,
     autoplaySpeed: 6000,
     cssEase: 'linear'
   }
 
   return (
         <>
-            <Slider {...settings} className='w-full'>
+            <Slider {...settings} className='w-full overflow-hidden'>
                 <Image
                     src={banner1}
                     width={1440}
                     height={640}
                     alt="Picture of the author"
+                    className='max-w-screen'
                 />
                 <Image
                     src={banner2}
                     width={1440}
                     height={640}
                     alt="Picture of the author"
+                    className='max-w-screen'
                 />
                 <Image
                     src={banner3}
                     width={1440}
                     height={640}
                     alt="Picture of the author"
+                    className='max-w-screen'
                 />
             </Slider>
         </>
