@@ -3,10 +3,13 @@ import { LoginForm } from '@/components/LoginForm'
 import { Big } from '@/components/Logo/Big'
 import Link from 'next/link'
 import Image from 'next/image'
-
+import Head from 'next/head'
 export default function Signin () {
   return (
     <Layout>
+       <Head>
+        <title>Inicia Sesion</title>
+      </Head>
       <header className='m-small'>
           <nav className='block m-auto w-fit'>
             <Link href={'/'}>

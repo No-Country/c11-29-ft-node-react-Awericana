@@ -1,47 +1,52 @@
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import Image from 'next/image';
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import Image from 'next/image'
 
-/*importar las imagenes que van a ir en el Slider*/
-//import imagenDelBanner1 from '@/public/assets/imagen1'
-//import imagenDelBanner2 from '@/public/assets/imagen2'
-//import imagenDelBanner3 from '@/public/assets/imagen3'
+/* importar las imagenes que van a ir en el Slider */
+import banner1 from '@/public/assets/img-banner/banner1.png'
+import banner2 from '@/public/assets/img-banner/banner2.png'
+import banner3 from '@/public/assets/img-banner/banner3.png'
 
 const Banner = () => {
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    }
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    cssEase: 'linear'
+  }
 
-    return (
+  return (
         <>
-            <Slider {...settings} className='w-full'>
+            <Slider {...settings} className='w-full overflow-hidden'>
                 <Image
-                    src={/*acá va la imágen que importamos*/ asd}
-                    width={500}
-                    height={500}
+                    src={banner1}
+                    width={1440}
+                    height={640}
                     alt="Picture of the author"
+                    className='max-w-screen'
                 />
                 <Image
-                    src={/*acá va la imágen que importamos*/ asd}
-                    width={500}
-                    height={500}
+                    src={banner2}
+                    width={1440}
+                    height={640}
                     alt="Picture of the author"
+                    className='max-w-screen'
                 />
                 <Image
-                    src={/*acá va la imágen que importamos*/ asd}
-                    width={500}
-                    height={500}
+                    src={banner3}
+                    width={1440}
+                    height={640}
                     alt="Picture of the author"
+                    className='max-w-screen'
                 />
-            </Slider>  
+            </Slider>
         </>
-    )
+  )
 }
-  
-export default Banner;
-  
+
+export default Banner

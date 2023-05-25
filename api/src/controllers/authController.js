@@ -3,6 +3,9 @@ const { Usuario } = require("../db");
 const { tokenSign } = require("../utils/handleJwt");
 const { encrypt, compare } = require("../utils/handlePassword");
 const { handleHttpError } = require("../utils/handleError");
+const transporter = require("../config/mailer");
+
+const CLIENT_URL = "http://localhost:3000/";
 
 const userGet = async (req, res) => {
   try {
@@ -28,9 +31,19 @@ const userRegister = async (req, res) => {
     const body = { ...req, password };
     const dataUser = await Usuario.create(body);
 
+    //Enviar correo electrónico de confirmación o bienvenida al usuario
+
+    await transporter.sendMail({
+      from: '"Awericana" <awericana@gmail.com>', // sender address
+      to: req.email, // list of receivers
+      subject: "¡Bienvenido a Awericana!", // Subject line
+      text: "Gracias por registrarte en nuestra aplicación. Esperamos que disfrutes de tu experiencia.", // plain text body
+      //html: "<b>Hello world?</b>", // html body
+    });
+
     res.status(201).json(dataUser);
   } catch (error) {
-    handleHttpError(res, "ERROR_REGISTRO");
+    handleHttpError(res, error.message, 500);
   }
 };
 
@@ -48,6 +61,7 @@ const userLogin = async (req, res) => {
         "password",
         "rol",
         "fechaNacimiento",
+        "habilitado",
       ],
     });
     if (!user) {
@@ -66,14 +80,37 @@ const userLogin = async (req, res) => {
     };
 
     const expirationTime = 24 * 60 * 60 * 1000;
-    res.cookie("session", data.token, {
+    res.cookie("sessionLocal", data.token, {
       expires: new Date(Date.now() + expirationTime),
       httpOnly: true,
     });
-    res.send({ data });
+    res.status(200).json(data);
   } catch (error) {
-    handleHttpError(res, { error: error.message }, 500);
+    handleHttpError(res, error.message, 500);
   }
 };
 
-module.exports = { userRegister, userLogin, userGet };
+const logoutUser = (req, res) => {
+  try {
+    res.clearCookie("sessionLocal");
+    // res.send("Logged out successfully");
+    res.redirect(CLIENT_URL);
+  } catch (error) {
+    handleHttpError(res, error.message, 500);
+  }
+};
+const loginSuccess = (req, res) => {
+  try {
+    if (req.user) {
+      res.status(200).json({
+        success: true,
+        message: "successfull",
+        user: req.user,
+      });
+    }
+  } catch (error) {
+    handleHttpError(res, "Necesitas iniciar Sesion", 404);
+  }
+};
+
+module.exports = { userRegister, userLogin, userGet, logoutUser, loginSuccess };
