@@ -1,15 +1,27 @@
+require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const passportSetup = require("./config/passport");
+const passport = require("passport");
+const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-require("dotenv").config();
 require("./db.js");
 
 const server = express();
 
 server.name = "API";
 
+server.use(
+  cookieSession({
+    name: "session",
+    keys: [process.env.JWT_SECRET],
+    maxAge: 24 * 60 * 60 * 100,
+  })
+);
+server.use(passport.initialize());
+server.use(passport.session());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
