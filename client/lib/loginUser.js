@@ -4,6 +4,7 @@ export async function loginUser (data) {
 
   const request = fetch(URL, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
