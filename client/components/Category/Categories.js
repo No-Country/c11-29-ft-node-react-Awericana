@@ -2,8 +2,19 @@ import Category from '.'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { useEffect, useState } from 'react'
+import { data } from 'autoprefixer'
 
 const Categories = () => {
+  const [categories, setCategories] = useState([])
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/tipoDeProducto`
+  useEffect(() => {
+    fetch(URL)
+      .then(response => response.json())
+      .then(data => setCategories(data.tipoProductos))
+    console.log(data)
+  }, [])
+
   const settings = {
     dots: false,
     infinite: true,
@@ -36,18 +47,11 @@ const Categories = () => {
   }
 
   return (
-        <>
-            <Slider {...settings}>
-                <Category name="Categoria"/>
-                <Category name="Caballero"/>
-                <Category name="Dama"/>
-                <Category name="Niños"/>
-                <Category name="Deportes"/>
-                <Category name="Salud"/>
-                <Category name="Ejemplo1"/>
-                <Category name="Ejemplo2"/>
-            </Slider>
-        </>
+    <Slider {...settings}>
+      {categories.map(category => (
+        <Category key={category.id} name={category.nombre}/>
+      ))}
+    </Slider>
   )
 }
 
