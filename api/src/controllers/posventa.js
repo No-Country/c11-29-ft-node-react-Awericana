@@ -2,7 +2,6 @@ const transporter = require("../config/mailer");
 const {Publicacion} = require("../db");
 
 const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
-    const {publicacionId, compradorId} = req.body;
     const publicacion = await Publicacion.findOne({
         where: {
             publicacionId,
