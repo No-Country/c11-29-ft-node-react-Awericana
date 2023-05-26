@@ -5,7 +5,7 @@ const { getUrlPago, notificarYConfirmarPago } = require("../controllers/pagosCon
 
 
 
-router.get("/url", getUrlPago)
+router.get("/url/:userid", getUrlPago)
 
 
 router.post('/notificar', notificarYConfirmarPago)

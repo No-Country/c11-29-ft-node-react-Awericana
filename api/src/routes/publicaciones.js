@@ -21,7 +21,7 @@ router.post('/' , [
     body('titulo', 'El titulo debe tener entre 1 y 50 caracteres').isString().isLength({min:1, max:50}),
     body('descripcion', 'La descripción debe tener entre 10 y 200 caracteres').isString().isLength({min:10, max:200}),
     body('talleId', 'El id del talle no es valido').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
-    body('tipoProductoId', 'El id del tipoProducto no es valido').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
+    body('productoId', 'El id del tipoProducto no es valido').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
     body('tipoPersonaId', 'El id del tipoPersona no es valido').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
 validarCampos
 ], crearPublicacion);
