@@ -9,24 +9,35 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/fake", fakeRouter);
 
-const productsRoute = require("./routeProducts");
+const productsRoute = require("./producto");
 const publicaciones = require("./publicaciones");
 const carrito = require("./carrito");
 const rutaBaseDeDatos = require("./routeCargaBaseDeDatos");
 const tipoProducto = require("./tipoProducto");
+
 const authRouter = require("./auth");
 const favoritos = require("./favoritos");
+const usuario = require("./usuario");
+
+const pagos = require("./pagosRoutes");
+
 const busquedas = require("./busquedas");
 const authTerceros = require("./authTerceros.js");
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
+
 router.use("/auth", authTerceros);
+
 router.use("/publicaciones", publicaciones);
 router.use("/carrito", carrito);
 router.use("/cargaBaseDeDatos", rutaBaseDeDatos);
 router.use("/tipoDeProducto", tipoProducto);
 router.use("/favoritos", favoritos);
+
+router.use("/pagos", pagos);
+
 router.use("/busqueda", busquedas);
+router.use("/usuario", usuario);
 
 module.exports = router;

@@ -4,8 +4,10 @@ const {
   Color,
   Marca,
   Categoria,
+  Producto,
   Pais,
-  TipoPersona
+  TipoPersona,
+  TipoProducto,
 } = require("../db.js");
 
 const router = Router();
@@ -15,36 +17,19 @@ const { talles } = require("../Helpers/tallesJson.js");
 // const { colores } = require("../Helpers/coloresJson");
 const { categorias } = require("../Helpers/categoriasJson");
 // const { marcas } = require("../Helpers/marcasJson");
-const { tipoPersonas } = require("../Helpers/tipoPersonaJson")
+const { tipoPersonas } = require("../Helpers/tipoPersonaJson");
+const { tipoProductos } = require("../Helpers/tipoProductoJson");
+const { productos } = require('../Helpers/productosJson');
 const poblarBaseDeDatos = async () => {
   try {
     await Pais.bulkCreate(paises);
-    await Categoria.bulkCreate(categorias);
+    // await Categoria.bulkCreate(categorias);
     // await Color.bulkCreate(colores);
     await Talle.bulkCreate(talles);
     // await Marca.bulkCreate(marcas);
-    await TipoPersona.bulkCreate(tipoPersonas)
-
-    // const todosLosTalles = await Talle.findAll();
-    // // console.log(todosLosTalles)//
-    // const tallesNene = todosLosTalles
-    //   .filter((talle) => talle.id <= 5)
-    //   .map((talle) => ({ id: talle.id, talleId: talle.id }));
-
-    // await TalleNene.bulkCreate(tallesNene);
-
-    // const tallesHombre = todosLosTalles
-    //   .filter((talle) => talle.id >= 3)
-    //   .map((talle, index) => ({ id: index + 1, talleId: talle.id }));
-    // // console.log(tallesNene)
-
-    // await TalleHombre.bulkCreate(tallesHombre);
-
-    // const tallesDama = todosLosTalles
-    //   .filter((talle) => talle.id >= 3)
-    //   .map((talle, index) => ({ id: index + 1, talleId: talle.id }));
-
-    // await TalleDama.bulkCreate(tallesDama);
+    await TipoPersona.bulkCreate(tipoPersonas);
+    await TipoProducto.bulkCreate(tipoProductos);
+    await Producto.bulkCreate(productos)
     return true;
   } catch (error) {
     console.log(error.message);
@@ -53,14 +38,11 @@ const poblarBaseDeDatos = async () => {
 };
 
 router.post("/", async (req, res) => {
-
-    if (await poblarBaseDeDatos()){
-        return res.status(200).json({ message: "base de datos inicializada" });
-    }else {
-        return res.status(400).json({ error: "no se pudo cargar" });
-    }
-  
-  
+  if (await poblarBaseDeDatos()) {
+    return res.status(200).json({ message: "base de datos inicializada" });
+  } else {
+    return res.status(400).json({ error: "no se pudo cargar" });
+  }
 });
 
 module.exports = router;

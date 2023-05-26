@@ -1,6 +1,6 @@
 import { FaSearch } from 'react-icons/fa'
 
-export function Search ({ disabled = false }) {
+export function Search ({ disabled }) {
   if (disabled) {
     // Input sin funcionalidad, solo UI
     return (

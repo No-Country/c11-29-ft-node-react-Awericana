@@ -1,7 +1,6 @@
 export async function registerUser (data) {
   const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/register`
   const { passwordConfirmation, ...bodyData } = data
-  console.log(URL)
   const BODY = {
     ...bodyData,
     rol: 'user'
@@ -9,6 +8,7 @@ export async function registerUser (data) {
 
   const request = fetch(URL, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },

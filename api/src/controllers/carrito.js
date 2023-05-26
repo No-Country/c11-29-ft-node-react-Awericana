@@ -1,4 +1,4 @@
-const {Usuario_publicacion, Publicacion,Usuario } = require("../db");
+const {Carrito, Publicacion,Usuario } = require("../db");
 
 const calcularMonto = (carrito) => {
     let monto = 0;
@@ -22,7 +22,7 @@ const obtenerCarrito = async(req, res) => {
             return res.status(404).json({msg: `El usuario con el ID ${usuarioId} no existe.`})
         } 
 
-        const carrito = await Usuario_publicacion.findAll({
+        const carrito = await Carrito.findAll({
             include:[Publicacion],
             where:{usuarioId}
         });
@@ -51,7 +51,7 @@ const agregarAlCarrito = async(req, res) => {
             return res.status(404).json({msg: `El usuario o publicación no existen.`})
         }
 
-        const existe = await Usuario_publicacion.findOne({where: {
+        const existe = await Carrito.findOne({where: {
             usuarioId,
             publicacionId
         }});
@@ -60,7 +60,7 @@ const agregarAlCarrito = async(req, res) => {
             return res.json('La publicación ya se encuentra en el carrito de compra.');
         }
 
-        const itemDeCarrito = await Usuario_publicacion.create({usuarioId, publicacionId});
+        const itemDeCarrito = await Carrito.create({usuarioId, publicacionId});
         await itemDeCarrito.save();
 
         res.json({msg: 'La publicación fue agregada al carrito.'});
@@ -84,7 +84,7 @@ const quitarDelCarrito = async(req, res) => {
         }
 
         if(publicacionId === 0){
-            await Usuario_publicacion.destroy({
+            await Carrito.destroy({
                 where:{usuarioId}
             });
             res.json({msg: 'Se han quitado todas las publicaciones del carrito.'});
@@ -94,7 +94,7 @@ const quitarDelCarrito = async(req, res) => {
             if( !publicacion ){
                 return res.status(404).json({msg: `La publicación no existe.`})
             }
-            await Usuario_publicacion.destroy({
+            await Carrito.destroy({
                 where:{
                     usuarioId,
                     publicacionId
