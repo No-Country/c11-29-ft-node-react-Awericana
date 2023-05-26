@@ -43,7 +43,23 @@ module.exports = (sequelize) => {
     estado: {
       type: DataTypes.ENUM("habilitada", "pausada", "finalizada"),
       defaultValue: "habilitada"
-    }   
+    },
+    compradorId:{
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    fechaEntrega:{
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    estadoEntrega: {
+      type: DataTypes.ENUM("Esperando retiro", "Enviado", "Entregado"),
+      allowNull: true
+    },
+    tipoEntrega: {
+      type: DataTypes.ENUM("Retiro", "Envio"),
+      defaultValue: "Envio"
+    },
   });
 };
 
