@@ -9,3 +9,5 @@ const router = Router();
 
 router.post('/solicitar_devolucion' , iniciarReclamo );
 router.post('/tracking' , actualizarEstadoEnvio );
+
+module.exports = router
