@@ -4,8 +4,10 @@ import { HiUser } from 'react-icons/hi2'
 import { BsFillHouseDoorFill, BsTrash3Fill } from 'react-icons/bs'
 import { AiFillHeart, AiFillCloseSquare } from 'react-icons/ai'
 import { ImPriceTag } from 'react-icons/im'
+import { useAuth } from '@/hooks/useAuth'
 
 function Component () {
+  const { logout } = useAuth()
   return (
     <nav className="w-screen shadow-down px-2 max-w-[400px] h-fit z-20 absolute top-20 bg-white right-0 lg:right-32 xl:right-40">
       <h3 className='m-small mt-medium font-bold'>Nombre y Apellido</h3> {/* Cambiar por nombre y apellido correspondientes */}
@@ -22,7 +24,7 @@ function Component () {
         <Label href='#' Icon={ImPriceTag}>
           Vender
         </Label>
-        <Label href='#' Icon={AiFillCloseSquare}>
+        <Label href='#' onClick={logout} Icon={AiFillCloseSquare}>
           Cerrar sesión
         </Label>
         <Label href='#' red={true} Icon={BsTrash3Fill}>

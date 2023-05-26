@@ -4,8 +4,11 @@ import Head from 'next/head'
 import Banner from '@/components/Banner'
 import Card from '@/components/Card'
 import Categories from '@/components/Category/Categories'
+import { useSession } from '@/hooks/useSession'
 
-export default function Home () {
+export default function Home ({ userData }) {
+  const { session } = useSession(userData)
+
   return (
     <Layout>
 
@@ -38,4 +41,16 @@ export default function Home () {
 
     </Layout>
   )
+}
+
+export async function getServerSideProps (ctx) {
+  const domain = ctx.req.headers.host
+  const response = await fetch('http://' + domain + '/api/session')
+  const userData = await response.json()
+
+  return {
+    props: {
+      userData: userData?.error ? null : userData.user
+    }
+  }
 }
