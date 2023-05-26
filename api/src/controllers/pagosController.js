@@ -1,6 +1,6 @@
 const mercadopago = require("mercadopago");
 const { obtenerCarrito } = require("./carrito");
-
+const { URL } = process.env;
 mercadopago.configure({
   access_token: "APP_USR-4017867997637860-052214-bb4bc3b777174420c8702b0f8df8434b-1380721330",
 });
@@ -27,9 +27,9 @@ async function getUrlPago(req, res) {
 
     const result = await mercadopago.preferences.create({
       back_urls: {
-        success: "http://localhost:3001/pagos/success",
-        pending: "http://localhost:3001/pagos/pending",
-        failure: "http://localhost:3001/pagos/failure",
+        success: `${URL}/pagos/success`,
+        pending: `${URL}/pagos/pending`,
+        failure: `${URL}/pagos/failure`,
       },
       items: [
         {
@@ -43,7 +43,7 @@ async function getUrlPago(req, res) {
         },
       ],
       notification_url:
-        "http://localhost:3001/pagos/notificar",
+        "https://675e-179-41-169-237.ngrok-free.app/pagos/notificar",
     })
 
 
@@ -63,13 +63,23 @@ async function notificarYConfirmarPago(req, res) {
     // const body = req.body
     if (payment.type === "payment") {
       const data = await mercadopago.payment.findById(payment["data.id"]);
-      console.log(data.response.status);
-
-      // switch(data.response.status)
       // pago rechazado ---> status = rejected
       // pago pagofacil ---> status = pending
       // pago aprobado ---> status = aproved
-      console.log('el pago se realizo')
+      switch (data.response.status) {
+        case "approved":
+          console.log("El estado es 'approved'.");
+          break;
+        case "pending":
+          console.log("El estado es 'pending'.");
+          break;
+        case "rejected":
+          console.log("El estado es 'rejected'.");
+          break;
+        default:
+          console.log("Estado desconocido.");
+          break;
+      }
     }
 
 
