@@ -9,22 +9,24 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/fake", fakeRouter);
 
-const productsRoute = require('./routeProducts');
-const publicaciones = require('./publicaciones');
-const carrito = require('./carrito');
-const rutaBaseDeDatos = require('./routeCargaBaseDeDatos')
-const tipoProducto = require('./tipoProducto')
+const productsRoute = require("./routeProducts");
+const publicaciones = require("./publicaciones");
+const carrito = require("./carrito");
+const rutaBaseDeDatos = require("./routeCargaBaseDeDatos");
+const tipoProducto = require("./tipoProducto");
 const authRouter = require("./auth");
 const favoritos = require("./favoritos");
 const busquedas = require("./busquedas");
+const authTerceros = require("./authTerceros.js");
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
-router.use('/publicaciones', publicaciones);
-router.use('/carrito', carrito);
-router.use('/cargaBaseDeDatos', rutaBaseDeDatos)
-router.use('/tipoDeProducto', tipoProducto)
-router.use('/favoritos', favoritos)
-router.use('/busqueda', busquedas)
+router.use("/auth", authTerceros);
+router.use("/publicaciones", publicaciones);
+router.use("/carrito", carrito);
+router.use("/cargaBaseDeDatos", rutaBaseDeDatos);
+router.use("/tipoDeProducto", tipoProducto);
+router.use("/favoritos", favoritos);
+router.use("/busqueda", busquedas);
 
 module.exports = router;
