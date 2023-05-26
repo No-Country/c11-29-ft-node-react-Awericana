@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import card from '@/public/assets/img-category/category.png'
+import card from '@/public/assets/img-category/category.webp'
 
 const Category = ({ name = 'sin nombre' }) => {
   return (
