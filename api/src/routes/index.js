@@ -17,6 +17,7 @@ const tipoProducto = require('./tipoProducto')
 const authRouter = require("./auth");
 const favoritos = require("./favoritos");
 const busquedas = require("./busquedas");
+const comentarioRoutes = require("./routeComentario");
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
@@ -26,5 +27,5 @@ router.use('/cargaBaseDeDatos', rutaBaseDeDatos)
 router.use('/tipoDeProducto', tipoProducto)
 router.use('/favoritos', favoritos)
 router.use('/busqueda', busquedas)
-
+router.use('/comentarios', comentarioRoutes)
 module.exports = router;
