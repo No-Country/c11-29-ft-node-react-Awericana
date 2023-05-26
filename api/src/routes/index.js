@@ -16,6 +16,7 @@ const rutaBaseDeDatos = require('./routeCargaBaseDeDatos')
 const tipoProducto = require('./tipoProducto')
 const authRouter = require("./auth");
 const favoritos = require("./favoritos");
+const usuario = require('./usuario')
 const pagos = require("./pagosRoutes")
 const busquedas = require("./busquedas");
 
@@ -29,6 +30,7 @@ router.use('/tipoDeProducto', tipoProducto)
 router.use('/favoritos', favoritos)
 router.use('/pagos', pagos)
 router.use('/busqueda', busquedas)
+router.use('/usuario', usuario)
 
 
 module.exports = router;
