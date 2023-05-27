@@ -37,7 +37,9 @@ const obtenerUsuario = async (req, res) => {
 
 const actualizarUsuario = async (req, res) => {
   const { id } = req.params;
-  const { nombre, apellido, email, rol, imagen, fechaNacimiento } = req.body;
+//   const { nombre, apellido, email, rol, imagen, fechaNacimiento } = req.body;
+
+  const { nombre, apellido, fechaNacimiento, dni } = req.body;
 
   try {
     const usuario = await Usuario.findOne({
@@ -53,14 +55,12 @@ const actualizarUsuario = async (req, res) => {
           msg: `El usuario con el ID: ${id} no se encuentra en la base de datos`,
         });
     } else {
-        await Usuario.update(
+        const user = await Usuario.update(
             {
               nombre,
               apellido,
-              email,
-              rol,
-              imagen,
               fechaNacimiento,
+              dni,
             },
             {
               where: {
@@ -68,7 +68,7 @@ const actualizarUsuario = async (req, res) => {
               }
             }
           );
-        res.status(200).json({msg: `Usuario con ID: ${id} correctamente actualizado`})
+        res.status(200).json({msg: `Usuario con ID: ${id} correctamente actualizado`, user})
     }
   } catch (error) {
     console.log(error.message);
