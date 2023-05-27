@@ -12,26 +12,25 @@ export function useAuth () {
 
   async function register (data) {
     const response = await registerUser(data)
-    if (response?.error) {
-      setError(response.error)
-      return false
-    }
-    return response
+    const json = await response.json()
+
+    if (response.ok) return json
+    setError(json)
+    return false
   }
 
   async function login (data) {
     const response = await loginUser(data)
-    if (response?.error) {
-      setError(response.error)
-      return false
-    }
-    return response
+    const json = await response.json()
+    if (response.ok) return json
+    setError(json)
+    return false
   }
 
   async function logout () {
-    const response = await logoutUser()
-    if (response?.error) {
-      setError(response.error)
+    const isLoggedOut = await logoutUser()
+    if (!isLoggedOut) {
+      setError({ error: 'Could not logout' })
       return false
     }
     setSession(null)
