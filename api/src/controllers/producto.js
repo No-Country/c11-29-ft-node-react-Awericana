@@ -1,4 +1,4 @@
-const { TipoProducto, Producto } = require("../db");
+const { Categoria, Producto } = require("../db");
 
 const crearProducto = async (req, res) => {
     const { nombre, idTipoProducto, ...resto} = req.body;
@@ -10,7 +10,7 @@ const crearProducto = async (req, res) => {
             });
           }
         
-          const existeTipoProducto = await TipoProducto.findByPk(idTipoProducto)
+          const existeTipoProducto = await Categoria.findByPk(idTipoProducto)
 
           if(!existeTipoProducto){
             return res.status(400).json({
@@ -28,7 +28,7 @@ const crearProducto = async (req, res) => {
                 ...resto
             })
 
-            await producto.setTipoProducto(existeTipoProducto)
+            await producto.setCategorium(existeTipoProducto)
 
             res.status(200).json(producto)
         }else {
@@ -43,7 +43,7 @@ const crearProducto = async (req, res) => {
 const obtenerProducto = async (req, res) => {
     const { nombreTipoProducto } = req.body
     try {
-        const tipoProducto = await TipoProducto.findOne({
+        const tipoProducto = await Categoria.findOne({
             where: {
                 nombre: nombreTipoProducto
             }
@@ -52,7 +52,7 @@ const obtenerProducto = async (req, res) => {
         if(tipoProducto){
             const producto = await Producto.findAll({
                 where: {
-                    tipoProductoId: tipoProducto.id
+                    categoriumId: tipoProducto.id
                 }
             })
         
