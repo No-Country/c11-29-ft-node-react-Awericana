@@ -1,10 +1,11 @@
 const { Op } = require("sequelize");
-const {Publicacion, Talle, TipoPersona, TipoProducto} = require("../db");
+const {Publicacion, Talle, Persona, Producto, Categoria} = require("../db");
 
 const buscar = async(req, res) => {
     const {
         orden = 'DESC',
-        genero,
+        persona,
+        producto,
         categoria,
         precioMin,
         precioMax,
@@ -31,9 +32,9 @@ const buscar = async(req, res) => {
     let filtrosRelaciones = [];
 
     talle       &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Talle, where: {nombre: talle}}]);
-    genero      &&  (filtrosRelaciones = [...filtrosRelaciones, {model: TipoPersona, where: {nombre: genero}}]);
-    categoria   &&  (filtrosRelaciones = [...filtrosRelaciones, {model: TipoProducto, where: {nombre: categoria}}]);
-    
+    persona      &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Persona, where: {nombre: persona}}]);
+    producto   &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Producto, where: {nombre: producto}}]);
+
     const publicaciones = await Publicacion.findAll({
        where: filtroPublicacion,
        include: filtrosRelaciones,

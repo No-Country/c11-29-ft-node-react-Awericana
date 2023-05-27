@@ -60,6 +60,10 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM("Retiro", "Envio"),
       defaultValue: "Envio"
     },
+    imagenPortada:{
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   });
 };
 

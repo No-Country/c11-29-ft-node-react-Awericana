@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "tipoProducto",
+    "persona",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -12,9 +12,8 @@ module.exports = (sequelize) => {
         autoIncrement: true,
       },
       nombre: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("hombre", "mujer", "nene", "nena", "bebe"),
         allowNull: false,
-        unique: true
       },
     },
     {
