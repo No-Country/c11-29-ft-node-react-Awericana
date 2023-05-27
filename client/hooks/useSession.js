@@ -9,7 +9,7 @@ export function useSession (initialState) {
   useEffect(() => {
     if (!session && !initialState) {
       fetch('/api/session')
-        .then(res => res.json())
+        .then(res => res?.json())
         .then(res => {
           if (!res?.error) {
             setSession(res)
