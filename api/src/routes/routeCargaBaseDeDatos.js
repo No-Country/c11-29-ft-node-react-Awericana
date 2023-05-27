@@ -6,8 +6,10 @@ const {
   Categoria,
   Producto,
   Pais,
-  TipoPersona,
-  TipoProducto,
+  Persona,
+  // TipoProducto,
+
+  
 } = require("../db.js");
 
 const router = Router();
@@ -20,6 +22,7 @@ const { categorias } = require("../Helpers/categoriasJson");
 const { tipoPersonas } = require("../Helpers/tipoPersonaJson");
 const { tipoProductos } = require("../Helpers/tipoProductoJson");
 const { productos } = require('../Helpers/productosJson');
+
 const poblarBaseDeDatos = async () => {
   try {
     await Pais.bulkCreate(paises);
@@ -27,8 +30,8 @@ const poblarBaseDeDatos = async () => {
     // await Color.bulkCreate(colores);
     await Talle.bulkCreate(talles);
     // await Marca.bulkCreate(marcas);
-    await TipoPersona.bulkCreate(tipoPersonas);
-    await TipoProducto.bulkCreate(tipoProductos);
+    await Persona.bulkCreate(tipoPersonas);
+    await Categoria.bulkCreate(tipoProductos);
     await Producto.bulkCreate(productos)
     return true;
   } catch (error) {
