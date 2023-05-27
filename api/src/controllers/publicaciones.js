@@ -1,11 +1,11 @@
-const {Publicacion, Talle , TipoPersona, TipoProducto} = require("../db");
+const {Publicacion, Talle , Persona, Producto} = require("../db");
 
 const obtenerPublicaciones = async(req, res) => {
 
     const { limit = 25, offset= 0 } = req.query;
     
     const { rows } = await Publicacion.findAndCountAll({
-        include:[Talle, TipoPersona, TipoProducto],
+        include:[Talle, Persona, Producto],
         where:{
             estado: 'habilitada'
         },
@@ -21,7 +21,10 @@ const obtenerPublicacion= async(req, res) => {
     const {id} = req.params;
 
     const publicacion = await Publicacion.findByPk(id, {
-        include:[Talle, TipoPersona, TipoProducto]
+        include:[Talle, Persona, Producto],
+        where:{
+            estado: 'habilitada'
+        },
     });
 
     if(!publicacion){
@@ -33,7 +36,7 @@ const obtenerPublicacion= async(req, res) => {
 
 const crearPublicacion = async(req, res) => {
 
-    const {fecha, precioOferta, descuento, expiracionOferta, estado, ...resto} = req.body;    
+    const {fecha, precioOriginal, descuento, expiracionOferta, estado, ...resto} = req.body;    
 
     try {
         const publicacion = await Publicacion.create(resto);
@@ -56,10 +59,14 @@ const crearPublicacion = async(req, res) => {
 const actualizarPublicacion = async(req, res) => {
 
     const {id} = req.params;
-    const {fecha, precioOferta, descuento, expiracionOferta, usuarioId , estado, ...cambios} = req.body;
+    const {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, ...cambios} = req.body;
     
     try {
-        const publicacion = await Publicacion.findByPk(id);
+        const publicacion = await Publicacion.findByPk(id, {
+            where:{
+                estado: 'habilitada'
+            },
+        });
 
         if(!publicacion){
             return res.status(404).json({msg: `La publicación con el ID: ${id} no existe.`})
@@ -86,7 +93,11 @@ const configurarDescuento = async( req, res) =>{
     const {descuento = 0} = req.body;
     
     try {
-        const publicacion = await Publicacion.findByPk(id);
+        const publicacion = await Publicacion.findByPk(id, {
+            where:{
+                estado: 'habilitada'
+            },
+        });
 
         if(!publicacion){
             return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})

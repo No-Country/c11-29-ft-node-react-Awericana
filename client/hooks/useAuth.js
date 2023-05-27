@@ -39,5 +39,10 @@ export function useAuth () {
     return true
   }
 
-  return { login, register, error, logout }
+  async function googleLogin () {
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`
+    window.open(URL, '_self')
+  }
+
+  return { login, register, error, logout, googleLogin }
 }

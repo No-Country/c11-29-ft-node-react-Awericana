@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const { Usuario } = require("../db");
+const { Usuario, Publicacion } = require("../db");
 
 const obtenerUsuarios = async (req, res) => {
   const usuarios = await Usuario.findAll();
@@ -37,7 +37,9 @@ const obtenerUsuario = async (req, res) => {
 
 const actualizarUsuario = async (req, res) => {
   const { id } = req.params;
-  const { nombre, apellido, email, rol, imagen, fechaNacimiento } = req.body;
+//   const { nombre, apellido, email, rol, imagen, fechaNacimiento } = req.body;
+
+  const { nombre, apellido, fechaNacimiento, dni } = req.body;
 
   try {
     const usuario = await Usuario.findOne({
@@ -53,14 +55,12 @@ const actualizarUsuario = async (req, res) => {
           msg: `El usuario con el ID: ${id} no se encuentra en la base de datos`,
         });
     } else {
-        await Usuario.update(
+        const user = await Usuario.update(
             {
               nombre,
               apellido,
-              email,
-              rol,
-              imagen,
               fechaNacimiento,
+              dni,
             },
             {
               where: {
@@ -68,7 +68,7 @@ const actualizarUsuario = async (req, res) => {
               }
             }
           );
-        res.status(200).json({msg: `Usuario con ID: ${id} correctamente actualizado`})
+        res.status(200).json({msg: `Usuario con ID: ${id} correctamente actualizado`, user})
     }
   } catch (error) {
     console.log(error.message);
@@ -103,9 +103,51 @@ const inhabilitarOHabilitarUsuario = async (req, res) => {
     }
 }
 
+const obtenerPublicaciones = async (req, res) => {
+  const {id} = req.params;
+
+  const publicaciones = await Publicacion.findAll({
+    where: {
+      usuarioId: id,
+      estado: 'habilitada'
+    }
+  })
+
+  res.json(publicaciones)
+}
+
+const obtenerVentas = async (req, res) => {
+  const {id} = req.params;
+
+  const ventasConcretadas = await Publicacion.findAll({
+    where: {
+      usuarioId: id,
+      estado: 'finalizada'
+    }
+  })
+
+  res.json(ventasConcretadas)
+}
+
+const obtenerCompras = async (req, res) => {
+  const {id} = req.params;
+
+  const comprasHechas = await Publicacion.findAll({
+    where: {
+      compradorId: id,
+      estado: 'finalizada',
+    }
+  })
+
+  res.json(comprasHechas)
+}
+
 module.exports = {
   obtenerUsuarios,
   obtenerUsuario,
   actualizarUsuario,
-  inhabilitarOHabilitarUsuario
+  inhabilitarOHabilitarUsuario,
+  obtenerPublicaciones,
+  obtenerVentas,
+  obtenerCompras
 };

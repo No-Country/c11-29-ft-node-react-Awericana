@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
     },
     habilitado: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
+      defaultValue: true,
     },
     imagen: {
       type: DataTypes.STRING,
@@ -43,6 +43,14 @@ module.exports = (sequelize) => {
     fechaNacimiento: {
       type: DataTypes.DATEONLY,
       allowNull: false,
+    },
+    calificacion: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    dni: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   });
 

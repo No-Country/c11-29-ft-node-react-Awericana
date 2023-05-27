@@ -31,6 +31,15 @@ const validatorRegisterUser = [
     .isLength({ min: 6, max: 30 })
     .withMessage("La contraseña debe tener entre 6 y 30 caracteres"),
 
+  check("dni")
+    .exists()
+    .withMessage("El DNI es requerido")
+    .notEmpty()
+    .withMessage("El DNI no puede estar vAcío")
+    .isLength({ min: 7, max: 15 })
+    .withMessage("La longitud del dni no puede ser menor a 7 números ni mayor a 15")
+    ,
+
   check("fechaNacimiento")
     .exists()
     .withMessage("La fecha de nacimiento es requerida")
