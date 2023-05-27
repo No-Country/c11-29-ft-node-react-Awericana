@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const { Usuario } = require("../db");
+const { Usuario, Publicacion } = require("../db");
 
 const obtenerUsuarios = async (req, res) => {
   const usuarios = await Usuario.findAll();
@@ -103,9 +103,51 @@ const inhabilitarOHabilitarUsuario = async (req, res) => {
     }
 }
 
+const obtenerPublicaciones = async (req, res) => {
+  const {id} = req.params;
+
+  const publicaciones = await Publicacion.findAll({
+    where: {
+      usuarioId: id,
+      estado: 'habilitada'
+    }
+  })
+
+  res.json(publicaciones)
+}
+
+const obtenerVentas = async (req, res) => {
+  const {id} = req.params;
+
+  const ventasConcretadas = await Publicacion.findAll({
+    where: {
+      usuarioId: id,
+      estado: 'finalizada'
+    }
+  })
+
+  res.json(ventasConcretadas)
+}
+
+const obtenerCompras = async (req, res) => {
+  const {id} = req.params;
+
+  const comprasHechas = await Publicacion.findAll({
+    where: {
+      compradorId: id,
+      estado: 'finalizada',
+    }
+  })
+
+  res.json(comprasHechas)
+}
+
 module.exports = {
   obtenerUsuarios,
   obtenerUsuario,
   actualizarUsuario,
-  inhabilitarOHabilitarUsuario
+  inhabilitarOHabilitarUsuario,
+  obtenerPublicaciones,
+  obtenerVentas,
+  obtenerCompras
 };

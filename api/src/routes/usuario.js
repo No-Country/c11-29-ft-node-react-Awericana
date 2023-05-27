@@ -6,7 +6,10 @@ const {
     obtenerUsuarios,
     obtenerUsuario,
     actualizarUsuario,
-    inhabilitarOHabilitarUsuario
+    inhabilitarOHabilitarUsuario,
+    obtenerVentas,
+    obtenerCompras,
+    obtenerPublicaciones
     // eliminarTipoProducto
 } = require("../controllers/usuario");
 
@@ -21,7 +24,14 @@ router.put('/:id', [
    validarCampos
 ]
  ,actualizarUsuario)
-router.put('/:id/inhabilitarOHabilitar', inhabilitarOHabilitarUsuario)
+router.put('/:id/inhabilitarOHabilitar', inhabilitarOHabilitarUsuario);
+
+router.get('/:id/compras' , obtenerCompras);
+
+router.get('/:id/ventas' , obtenerVentas);
+
+router.get('/:id/publicaciones' , obtenerPublicaciones);
+
 
 
 module.exports = router;

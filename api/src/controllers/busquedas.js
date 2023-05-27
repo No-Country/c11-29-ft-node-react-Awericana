@@ -12,9 +12,13 @@ const buscar = async(req, res) => {
         talle,
         termino,
         oferta,
+        limit,
+        offset
     } = req.query;
 
-    const filtroPublicacion = {};
+    const filtroPublicacion = {
+        estado: 'habilitada'
+    };
 
     //si la variable es True se agregara el campo al filtro   
     
@@ -35,13 +39,15 @@ const buscar = async(req, res) => {
     persona      &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Persona, where: {nombre: persona}}]);
     producto   &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Producto, where: {nombre: producto}}]);
 
-    const publicaciones = await Publicacion.findAll({
+    const {rows, count} = await Publicacion.findAndCountAll({
        where: filtroPublicacion,
        include: filtrosRelaciones,
+       offset,
+       limit,
        order: [['precio', orden]]
     }); 
 
-    res.json(publicaciones);
+    res.json({coincidencias: count, publicaciones: rows, });
 }
 
 module.exports = {
