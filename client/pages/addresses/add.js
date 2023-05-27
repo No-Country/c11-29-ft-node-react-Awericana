@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/Input'
-import { Submit } from '../../../components/Buttons/Submit'
+import { Submit } from '../../components/Buttons/Submit'
 import { Footer } from '@/components/Footer'
 
 export default function add () {

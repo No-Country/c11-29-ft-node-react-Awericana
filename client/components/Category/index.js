@@ -1,12 +1,12 @@
 import Image from 'next/image'
-import card from '@/public/assets/img-category/category.webp'
+// import card from '@/public/assets/img-category/category.webp'
 
 const Category = ({ name = 'sin nombre' }) => {
   return (
         <div className='inline-block text-center m-6'>
             <Image
                 className='rounded-full'
-                src={card}
+                src="@/public/assets/logosmall.svg"
                 width={104}
                 height={104}
                 alt="categoria"
