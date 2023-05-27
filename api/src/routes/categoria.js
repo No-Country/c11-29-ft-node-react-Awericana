@@ -2,28 +2,28 @@ const { Router } = require("express");
 const { body, param } = require('express-validator');
 const { validarCampos } = require("../middlewares/validar-campos");
 const {
-    crearTipoProducto,
-    obtenerTipoProducto,
-    actualizarTipoProducto,
-    eliminarTipoProducto
-} = require("../controllers/tipoProducto");
+    crearCategoria,
+    obtenerCategoria,
+    actualizarCategoria,
+    eliminarCategoria
+} = require("../controllers/categoria");
 
 const router = Router();
 
 
 
-router.get('/' , obtenerTipoProducto);
+router.get('/' , obtenerCategoria);
 
 router.post('/', [
     body('nombre', 'El nombre debe tener entre 3 y 50 caracteres').isString().trim().isLength({min:3, max:50}),
     validarCampos
     ]
-    ,crearTipoProducto);
+    ,crearCategoria);
 
 router.put('/:id', [
     body('nombre', 'El nombre debe tener entre 3 y 50 caracteres').isString().trim().isLength({min:3, max:50}),
     validarCampos
-], actualizarTipoProducto);
+], actualizarCategoria);
 
-router.delete('/:id', eliminarTipoProducto)
+router.delete('/:id', eliminarCategoria)
 module.exports = router;

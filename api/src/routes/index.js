@@ -13,7 +13,7 @@ const productsRoute = require('./producto');
 const publicaciones = require('./publicaciones');
 const carrito = require('./carrito');
 const rutaBaseDeDatos = require('./routeCargaBaseDeDatos')
-const tipoProducto = require('./tipoProducto')
+const categoria = require('./categoria')
 const authRouter = require("./auth");
 const favoritos = require("./favoritos");
 const authTerceros = require("./authTerceros.js");
@@ -28,7 +28,7 @@ router.use("/auth", authRouter);
 router.use('/publicaciones', publicaciones);
 router.use('/carrito', carrito);
 router.use('/cargaBaseDeDatos', rutaBaseDeDatos)
-router.use('/tipoDeProducto', tipoProducto)
+router.use('/categoria', categoria)
 router.use('/favoritos', favoritos)
 router.use("/auth", authTerceros);
 router.use('/pagos', pagos)
