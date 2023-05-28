@@ -21,6 +21,8 @@ const usuario = require("./usuario");
 const pagos = require("./pagosRoutes");
 const busquedas = require("./busquedas");
 const posventa = require("./posventa");
+const talle = require('./talle')
+const genero = require('./genero')
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
@@ -30,9 +32,12 @@ router.use("/cargaBaseDeDatos", rutaBaseDeDatos);
 router.use("/categoria", categoria);
 router.use("/favoritos", favoritos);
 router.use("/auth", authTerceros);
-router.use("/pagos", pagos);
-router.use("/busqueda", busquedas);
-router.use("/posventa", posventa);
-router.use("/usuario", usuario);
+
+router.use('/pagos', pagos)
+router.use('/busqueda', busquedas)
+router.use('/posventa', posventa)
+router.use('/usuario', usuario)
+router.use('/talle', talle)
+router.use('/genero', genero)
 
 module.exports = router;
