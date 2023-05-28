@@ -1,4 +1,5 @@
 const { Publicacion } = require("../db.js");
+const { notificarCompraVenta } = require("./notificarCompraVenta.js");
 
 const finalizarPublicacion = async (publicacionId, compradorId) => {
   const publicacion = await Publicacion.findByPk(publicacionId);
@@ -15,6 +16,8 @@ const finalizarPublicacion = async (publicacionId, compradorId) => {
   };
 
   publicacion.update(cambios);
+
+  await notificarCompraVenta(usuarioId, publicacionId);
 };
 
 module.exports = {
