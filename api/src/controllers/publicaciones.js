@@ -90,8 +90,8 @@ const actualizarPublicacion = async(req, res) => {
 
 const configurarDescuento = async( req, res) =>{
     const {id} = req.params;
-    const {descuento = 0} = req.body;
-    
+    const {descuento = 0, expiracion} = req.body;
+        
     try {
         const publicacion = await Publicacion.findByPk(id, {
             where:{
@@ -103,13 +103,15 @@ const configurarDescuento = async( req, res) =>{
             return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})
         }
 
-        if(descuento !== 0){
+        if(descuento !== 0 && expiracion){
             const precioCopia = publicacion.precio;
-
+            const expiracionOferta = new Date(Date.parse(expiracion));
+            
             const cambios = {
                 precio : publicacion.precio - (publicacion.precio * (descuento / 100)),
                 precioOriginal: precioCopia,
                 oferta: true,
+                expiracionOferta,
                 descuento
             }
 
@@ -120,12 +122,14 @@ const configurarDescuento = async( req, res) =>{
                 publicacion
             })
         }else{
-            const cambios = {
-                precio: publicacion.precioOriginal,
+            const cambios = { 
                 oferta: false,
                 precioOriginal: null,
-                descuento: 0
+                descuento: 0,
+                expiracionOferta: null
             }
+           
+            publicacion.precioOriginal && (cambios.precio = publicacion.precioOriginal);
             
             await publicacion.update(cambios); 
         

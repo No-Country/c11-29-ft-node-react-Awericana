@@ -1,20 +1,26 @@
+const { simularTracking } = require("../Helpers/simularTracking");
 const transporter = require("../config/mailer");
 const {Publicacion} = require("../db");
 
 const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
+    let estado = null;
     const publicacion = await Publicacion.findOne({
         where: {
-            publicacionId,
-            compradorId
+            id: publicacionId,
+            compradorId,
+            estado: 'finalizada',
+            estadoEntrega: 'Entregado'
         }
-    });
+    });   
     
     if(!publicacion){
-        return res.status({msg: `El usuario no ha comprado el producto indicado.`});
+        return 'error'
     }
 
-    if(publicacion.estadoReclamo !== 'hecho'){
-    
+    estado = publicacion.estadoReclamo;
+
+    if(publicacion.estadoReclamo !== 'hecho' && publicacion.estadoReclamo !== 'bloqueado' ){
+         
         const fechaInicio = new Date(publicacion.fechaEntrega); // fecha inicial
         const fechaActual = new Date(); // fecha actual
 
@@ -22,36 +28,58 @@ const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
         const diasTranscurridos = Math.floor(tiempoTranscurrido / (1000 * 60 * 60 * 24)); // diferencia de tiempo en días
 
         if( diasTranscurridos <= 7 ){
-            publicacion.estadoReclamo === 'permitido';
-            res.json(publicacion.estadoReclamo);
+            publicacion.update({ estadoReclamo: 'permitido' })
+            estado = 'permitido';
         }
         if( diasTranscurridos > 7 ){
-            publicacion.estadoReclamo === 'bloqueado';
-            res.json(publicacion.estadoReclamo);
-        }
+            publicacion.update({ estadoReclamo: 'bloqueado' })
+            estado = 'bloqueado';
+        } 
     }
-
-    res.json(publicacion.estadoReclamo);
+    
+    return estado;
 }
 
-const enviarReclamo = async ({nombre, correo, subject, message, usuarioId, publicacionId }) => {
-    await transporter.sendMail({
-        from: `"${nombre}" <${correo}>'`, // sender address
-        to: 'awericana@gmail.com', // list of receivers
-        subject, // Subject line
-        text: `[ Usuario: ${usuarioId} ] [ reclamo sobre:  ${publicacionId} ] ${message}` // plain text body
+const enviarReclamo = async ({nombre, correo, subject, message, compradorId, publicacionId }) => {
+    console.log('Mail enviado');
+    /*await transporter.sendMail({
+        from: `"${nombre}" <${correo}>'`, 
+        to: 'awericana@gmail.com', 
+        subject, 
+        text: `[ Comprador: ${compradorId} ] [ reclamo sobre:  ${publicacionId} ] ${message}` 
         //html: "<b>Hello world?</b>", // html body
-      });
+      });*/
+
+      return true;
 }
 
 const iniciarReclamo = async (req, res) => {
-    const {nombre, correo, subject, message, usuarioId, publicacionId} = req.body;
+    const {nombre, correo, subject, message, compradorId, publicacionId} = req.body;
 
-    if(await verificarDisponibilidadReclamo({publicacionId, compradorId}) === 'habilitado'){
+    if(await verificarDisponibilidadReclamo(publicacionId, compradorId) === 'permitido'){
 
-        await enviarReclamo({nombre, correo, subject, message, usuarioId, publicacionId });
+        const exito = await enviarReclamo({nombre, correo, subject, message, compradorId, publicacionId });
 
-        res.json({msg: "El reclamo ha sido enviado"});
+        if(exito){
+            
+            const publicacion = await Publicacion.findOne({
+                where: {
+                    id: publicacionId,
+                    compradorId,
+                    estado: 'finalizada',
+                    estadoEntrega: 'Entregado'
+                }
+            });
+
+            await publicacion.update({ estadoReclamo: 'hecho' });
+
+            res.json({msg: "El reclamo ha sido enviado"});
+        }else{
+            res.json({msg: "No se ha podido enviar el reclamo"});
+        }
+        
+    }else{
+        res.json({msg: "No permitido"});
     }
 
 }
