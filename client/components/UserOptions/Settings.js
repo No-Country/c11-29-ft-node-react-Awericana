@@ -21,7 +21,7 @@ function Component () {
         <Label href='#' Icon={AiFillHeart}>
           Mis Favoritos
         </Label>
-        <Label href='#' Icon={ImPriceTag}>
+        <Label href='/sell' Icon={ImPriceTag}>
           Vender
         </Label>
         <Label href='#' onClick={logout} Icon={AiFillCloseSquare}>

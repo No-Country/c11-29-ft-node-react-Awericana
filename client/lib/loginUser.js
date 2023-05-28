@@ -12,7 +12,6 @@ export async function loginUser (data) {
   })
 
   const response = await request
-  const json = await response.json()
 
-  return json
+  return response
 }
