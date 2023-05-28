@@ -23,6 +23,8 @@ export function useValidator () {
         return Boolean(data[key]) && data[key].length > 3 ? null : 'El apellido es muy corto'
       case 'fechaNacimiento':
         return data[key].length ? null : 'La fecha de nacimiento es inválida'
+      case 'dni':
+        return data[key].length > 7 && data[key].length < 16 ? null : 'El DNI es inválido'
     }
   }
 
