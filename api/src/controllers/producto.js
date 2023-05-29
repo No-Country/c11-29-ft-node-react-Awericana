@@ -41,7 +41,7 @@ const crearProducto = async (req, res) => {
 }
 
 const obtenerProducto = async (req, res) => {
-    const { nombreTipoProducto } = req.body
+    const { nombreTipoProducto } = req.query
     try {
         const tipoProducto = await Categoria.findOne({
             where: {
