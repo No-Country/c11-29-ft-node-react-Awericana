@@ -14,7 +14,7 @@ const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
     });   
     
     if(!publicacion){
-        return 'error'
+        return 'El usuario no realizo la compra de la publicación indicada'
     }
 
     estado = publicacion.estadoReclamo;
@@ -40,6 +40,8 @@ const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
     return estado;
 }
 
+
+
 const enviarReclamo = async ({nombre, correo, subject, message, compradorId, publicacionId }) => {
     console.log('Mail enviado');
     /*await transporter.sendMail({
@@ -51,6 +53,14 @@ const enviarReclamo = async ({nombre, correo, subject, message, compradorId, pub
       });*/
 
       return true;
+}
+
+const chequearReclamo = async (req, res) => {
+    const {compradorId, publicacionId} = req.body;
+
+    const estado = await verificarDisponibilidadReclamo(publicacionId, compradorId);
+
+    res.json({estado});
 }
 
 const iniciarReclamo = async (req, res) => {
@@ -116,5 +126,6 @@ const revelarVendedor = async (req, res) => {
 module.exports = {
     actualizarEstadoEnvio,
     iniciarReclamo,
-    revelarVendedor
+    revelarVendedor,
+    chequearReclamo
 }

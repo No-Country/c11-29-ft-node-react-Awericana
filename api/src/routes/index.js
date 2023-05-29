@@ -38,6 +38,6 @@ router.use('/busqueda', busquedas)
 router.use('/posventa', posventa)
 router.use('/usuario', usuario)
 router.use('/talle', talle)
-router.use('/genero', genero)
+router.use('/personas', genero)
 
 module.exports = router;

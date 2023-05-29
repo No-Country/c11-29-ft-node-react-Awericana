@@ -4,7 +4,8 @@ const { validarCampos } = require("../middlewares/validar-campos");
 const { 
     iniciarReclamo,
     actualizarEstadoEnvio,
-    revelarVendedor
+    revelarVendedor,
+    chequearReclamo
 } = require("../controllers/posventa");
 
 const router = Router();
@@ -12,5 +13,6 @@ const router = Router();
 router.post('/solicitar_devolucion' , iniciarReclamo );
 router.post('/tracking' , actualizarEstadoEnvio );
 router.post('/revelar_vendedor' , revelarVendedor );
+router.post('/estado_devolucion' , chequearReclamo );
 
 module.exports = router
