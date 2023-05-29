@@ -3,6 +3,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Submit } from '@/components/Buttons/Submit'
 import { useRouter } from 'next/router'
+import { Layout } from '@/components/Layout'
 
 export default function VenderCategory () {
   const [categorias, setCategorias] = useState([])
@@ -63,8 +64,8 @@ export default function VenderCategory () {
     router.push('/')
   }
   return (
-    <div>
-      <Header />
+    <Layout>
+      <Header disabled={true} />
       <h2 className="font-bold text-4xl mt-10 mb-10 ml-10">Vender</h2>
       <section className='flex justify-center flex-col-reverse'>
         <form className="flex justify-center items-center flex-col " onSubmit={handleFormSubmit}>
@@ -103,6 +104,6 @@ export default function VenderCategory () {
       </section>
       <div className='flex justify-center'> <button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ' onClick={handleCancel}>Cancelar</button></div>
       <Footer />
-    </div>
+    </Layout>
   )
 }

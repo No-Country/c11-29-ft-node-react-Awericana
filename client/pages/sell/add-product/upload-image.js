@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { BiUpload } from 'react-icons/bi'
+import { Layout } from '@/components/Layout'
 
 export default function UploadImage () {
   const [, setSelectedImages] = useState([])
@@ -67,8 +68,8 @@ export default function UploadImage () {
   }
 
   return (
-    <div>
-      <Header />
+    <Layout>
+      <Header disabled={true} />
       <h2 className="font-bold text-4xl mt-10 mb-10 ml-10">Sube las fotos de tu producto</h2>
       <section className='flex flex-col justify-center items-center'>
         <form className="flex justify-center items-center flex-col">
@@ -110,6 +111,6 @@ export default function UploadImage () {
         <button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg' onClick={handleCancel}>Cancelar</button>
       </div>
       <Footer />
-    </div>
+    </Layout>
   )
 }

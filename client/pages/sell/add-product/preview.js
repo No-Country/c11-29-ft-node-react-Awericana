@@ -5,6 +5,8 @@ import { FcLike } from 'react-icons/fc'
 import { FiStar } from 'react-icons/fi'
 import { Submit } from '@/components/Buttons/Submit'
 import { Tertiary } from '@/components/Buttons/Tertiary'
+import { Layout } from '@/components/Layout'
+
 export default function Preview () {
   const [formData, setFormData] = useState(null)
 
@@ -17,8 +19,8 @@ export default function Preview () {
   }, [])
 
   return (
-    <div>
-      <Header />
+    <Layout>
+      <Header disabled={true} />
       <h2 className='mt-14 ml-8 text-4xl'>Vista Previa</h2>
       {formData && (
         <div className='flex  justify-center gap-10 mt-14'>
@@ -41,6 +43,6 @@ export default function Preview () {
         <div><Tertiary>Cancelar</Tertiary></div>
         </div>
       <Footer />
-    </div>
+    </Layout>
   )
 }
