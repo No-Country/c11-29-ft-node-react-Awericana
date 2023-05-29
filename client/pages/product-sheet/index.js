@@ -3,23 +3,64 @@ import { Header } from "@/components/Header";
 import Image from "next/image";
 import producto from '@/public/assets/img-prod-vendedor/prod-vendedor.png';
 import banner from '@/public/assets/img-banner-ficha-mobile/banner-ficha-mobile.png';
-import { Primary } from "@/components/Buttons/Primary";
 import { Secondary } from "@/components/Buttons/Secondary";
 import { Submit } from "@/components/Buttons/Submit";
 
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
 const productSheet = () => {
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 6000,
+        cssEase: 'linear'
+      }
+
     return (
         <Layout>
             <Header/>
             <main className="p-4">
                 <section id="producto">
                     <div>
-                        <Image
-                            src={banner}
-                            width={379}
-                            height={224}
-                            alt="banner-producto"
-                        />
+                        <Slider {...settings} className='w-full overflow-hidden rounded-tr-3xl rounded-tl-3xl'>
+                            <Image
+                                src={banner}
+                                width={379}
+                                height={224}
+                                alt="banner-producto"
+                            />
+                            <Image
+                                src={banner}
+                                width={379}
+                                height={224}
+                                alt="banner-producto"
+                            />
+                            <Image
+                                src={banner}
+                                width={379}
+                                height={224}
+                                alt="banner-producto"
+                            />
+                            <Image
+                                src={banner}
+                                width={379}
+                                height={224}
+                                alt="banner-producto"
+                            />
+                            <Image
+                                src={banner}
+                                width={379}
+                                height={224}
+                                alt="banner-producto"
+                            />
+                        </Slider>
                     </div>
                     <div className="flex mt-6">
                         <div className="w-2/4">
