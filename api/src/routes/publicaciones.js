@@ -23,7 +23,7 @@ router.post('/' , [
     body('talleId', 'El id del talle debe ser entero mayor a 0').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
     body('productoId', 'El id del productoId debe ser entero mayor a 0').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
     body('personaId', 'El id del personaId debe ser entero mayor a 0').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
-    body('imagenPortada', 'La url de la imagen de portada debe ser un string').isString({min:1}),
+    body('imagenes', 'Las imagenes debe estar en un array de strings').isArray(),
     validarCampos
 ], crearPublicacion);
 
@@ -34,7 +34,7 @@ router.put('/:id' , [
     body('talleId', 'El id del talle debe ser entero mayor a 0').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
     body('productoId', 'El id del productoId debe ser entero mayor a 0').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
     body('personaId', 'El id del personaId debe ser entero mayor a 0').isInt({min:1}), //a mejorar: debe verificarse que exista en BD
-    body('imagenPortada', 'La url de imagenPortada debe ser un string').optional().isString({min:1}),
+    body('imagenes', 'Las imagenes debe estar en un array de strings').isArray(),
     validarCampos
 ], actualizarPublicacion);
 

@@ -54,6 +54,7 @@ const {
   Persona,
   Categoria,
   Pago,
+  Banner,
 } = sequelize.models;
 
 // Aca vendrian las relaciones

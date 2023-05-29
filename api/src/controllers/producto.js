@@ -41,7 +41,7 @@ const crearProducto = async (req, res) => {
 }
 
 const obtenerProducto = async (req, res) => {
-    const { nombreTipoProducto } = req.body
+    const { nombreTipoProducto } = req.query
     try {
         const tipoProducto = await Categoria.findOne({
             where: {
@@ -112,11 +112,21 @@ const eliminarProducto = async (req, res) => {
 
 }
 
+const obtenerTodosLosProductos = async (req, res) => {
+
+    const productos = await Producto.findAll()
+
+    return productos.length ? 
+        res.status(200).json(productos) :
+        res.status(404).json({msg: `No hay productos`})
+}
+
 
 module.exports = {
     crearProducto,
     obtenerProducto,
     actualizarProducto,
-    eliminarProducto
+    eliminarProducto,
+    obtenerTodosLosProductos
   };
   
