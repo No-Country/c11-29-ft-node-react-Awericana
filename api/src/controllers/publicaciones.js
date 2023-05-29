@@ -7,7 +7,7 @@ const obtenerPublicaciones = async(req, res) => {
     const { rows } = await Publicacion.findAndCountAll({
         include:[Talle, Persona, Producto, Pago],
         where:{
-            // estado: 'habilitada'
+            estado: 'habilitada'
         },
         offset,
         limit
