@@ -24,6 +24,7 @@ const posventa = require("./posventa");
 const talle = require('./talle')
 const genero = require('./genero')
 const banner = require('./banner')
+const imagenes = require('./imagenes')
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
@@ -44,5 +45,6 @@ router.use('/talle', talle)
 router.use('/banner', banner)
 
 router.use('/personas', genero)
+router.use('/imagenes', imagenes)
 
 module.exports = router;

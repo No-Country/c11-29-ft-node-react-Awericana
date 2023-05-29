@@ -1,4 +1,4 @@
-const {Publicacion, Talle , Persona, Producto} = require("../db");
+const {Publicacion, Talle , Persona, Producto, Imagen} = require("../db");
 
 const obtenerPublicaciones = async(req, res) => {
 
@@ -36,7 +36,7 @@ const obtenerPublicacion= async(req, res) => {
 
 const crearPublicacion = async(req, res) => {
 
-    const {fecha, precioOriginal, descuento, expiracionOferta, estado, talleId, personaId, productoId, ...resto} = req.body;    
+    let {fecha, precioOriginal, descuento, expiracionOferta, estado, talleId, personaId, productoId, imagenes, ...resto} = req.body;    
 
     try {
         const talle = await Talle.findByPk(talleId);
@@ -57,11 +57,30 @@ const crearPublicacion = async(req, res) => {
             return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
         }
 
-        const body = {...resto, talleId, personaId, productoId}
+        if(imagenes.length === 0){
+            return res.status(400).json({msg: `Debe incluir por lo menos una imagen`});
+        }
+
+        const imagenPortada = imagenes[0];
+
+        const body = {...resto, talleId, personaId, productoId, imagenPortada}
 
         const publicacion = await Publicacion.create(body);
         await publicacion.save();
 
+        const subirImagen = async (imagen) => {
+            const imagenParaSubir = await Imagen.create({link: imagen, publicacionId: publicacion.id});
+            await imagenParaSubir.save();
+        }
+
+        if(imagenes.length > 6){
+            imagenes = [imagenes[0], imagenes[1], imagenes[2], imagenes[3], imagenes[4], imagenes[5]];
+        }
+
+        for (let i = 0; i < imagenes.length; i++) {
+            subirImagen(imagenes[i]);
+        }
+            
         res.status(201).json({
             msg: "La publicación fue creada.",
             publicacion

@@ -1,4 +1,4 @@
-const { Categoria } = require("../db");
+const { Categoria , Producto} = require("../db");
 const { Op } = require("sequelize");
 
 const obtenerCategoria = async (req, res) => {
@@ -96,9 +96,29 @@ const eliminarCategoria = async (req, res) => {
     });
   }
 };
+
+const obtenerProductosCategoria = async (req, res) => {
+  const {categoriaId} = req.body;
+
+  const categoria = await Categoria.findByPk(categoriaId);
+
+  if (!categoria) {
+    return res.status(404).json({ msg: `La categoria con el ID: ${categoriaId} no existe.` });
+  }
+
+  const productos = await Producto.findAll({
+    where: {
+      categoriumId: categoriaId
+    }
+  })
+
+  res.json(productos);
+}
+
 module.exports = {
   obtenerCategoria,
   crearCategoria,
   actualizarCategoria,
   eliminarCategoria,
+  obtenerProductosCategoria
 };
