@@ -1,6 +1,6 @@
 const { simularTracking } = require("../Helpers/simularTracking");
 const transporter = require("../config/mailer");
-const {Publicacion} = require("../db");
+const {Publicacion, Usuario} = require("../db");
 
 const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
     let estado = null;
@@ -14,7 +14,7 @@ const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
     });   
     
     if(!publicacion){
-        return 'error'
+        return 'El usuario no realizo la compra de la publicación indicada'
     }
 
     estado = publicacion.estadoReclamo;
@@ -40,6 +40,8 @@ const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
     return estado;
 }
 
+
+
 const enviarReclamo = async ({nombre, correo, subject, message, compradorId, publicacionId }) => {
     console.log('Mail enviado');
     /*await transporter.sendMail({
@@ -51,6 +53,14 @@ const enviarReclamo = async ({nombre, correo, subject, message, compradorId, pub
       });*/
 
       return true;
+}
+
+const chequearReclamo = async (req, res) => {
+    const {compradorId, publicacionId} = req.body;
+
+    const estado = await verificarDisponibilidadReclamo(publicacionId, compradorId);
+
+    res.json({estado});
 }
 
 const iniciarReclamo = async (req, res) => {
@@ -92,7 +102,30 @@ const actualizarEstadoEnvio = async (req, res) => {
     res.json({msg: 'Estado actualizado'});
 }
 
+const revelarVendedor = async (req, res) => {
+    const {publicacionId, usuarioId} = req.body;
+
+    const publicacion = await Publicacion.findOne({
+        where: {
+            id: publicacionId,
+            compradorId: usuarioId
+        }
+    })
+
+    if(publicacion){
+        const vendedor = await Usuario.findByPk(publicacion.usuarioId);
+
+        res.json({email: vendedor.email});
+
+    }else{
+        res.json('');
+    }
+
+}
+
 module.exports = {
     actualizarEstadoEnvio,
-    iniciarReclamo
+    iniciarReclamo,
+    revelarVendedor,
+    chequearReclamo
 }
