@@ -112,11 +112,21 @@ const eliminarProducto = async (req, res) => {
 
 }
 
+const obtenerTodosLosProductos = async (req, res) => {
+
+    const productos = await Producto.findAll()
+
+    return productos.length ? 
+        res.status(200).json(productos) :
+        res.status(404).json({msg: `No hay productos`})
+}
+
 
 module.exports = {
     crearProducto,
     obtenerProducto,
     actualizarProducto,
-    eliminarProducto
+    eliminarProducto,
+    obtenerTodosLosProductos
   };
   
