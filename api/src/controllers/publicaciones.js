@@ -51,7 +51,7 @@ const crearPublicacion = async(req, res) => {
             return res.status(400).json({msg: `No existe la persona con el ID: ${personaId}`});
         }
 
-        const producto = await Persona.findByPk(productoId);
+        const producto = await Producto.findByPk(productoId);
 
         if(!producto){
             return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
@@ -104,7 +104,7 @@ const actualizarPublicacion = async(req, res) => {
             return res.status(400).json({msg: `No existe la persona con el ID: ${personaId}`});
         }
 
-        const producto = await Persona.findByPk(productoId);
+        const producto = await Producto.findByPk(productoId);
 
         if(!producto){
             return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
