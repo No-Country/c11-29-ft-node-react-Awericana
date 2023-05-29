@@ -36,10 +36,30 @@ const obtenerPublicacion= async(req, res) => {
 
 const crearPublicacion = async(req, res) => {
 
-    const {fecha, precioOriginal, descuento, expiracionOferta, estado, ...resto} = req.body;    
+    const {fecha, precioOriginal, descuento, expiracionOferta, estado, talleId, personaId, productoId, ...resto} = req.body;    
 
     try {
-        const publicacion = await Publicacion.create(resto);
+        const talle = await Talle.findByPk(talleId);
+
+        if(!talle){
+            return res.status(400).json({msg: `No existe el talle con el ID: ${talleId}`});
+        }
+
+        const persona = await Persona.findByPk(personaId);
+
+        if(!persona){
+            return res.status(400).json({msg: `No existe la persona con el ID: ${personaId}`});
+        }
+
+        const producto = await Persona.findByPk(productoId);
+
+        if(!producto){
+            return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
+        }
+
+        const body = {...resto, talleId, personaId, productoId}
+
+        const publicacion = await Publicacion.create(body);
         await publicacion.save();
 
         res.status(201).json({
@@ -59,7 +79,7 @@ const crearPublicacion = async(req, res) => {
 const actualizarPublicacion = async(req, res) => {
 
     const {id} = req.params;
-    const {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, ...cambios} = req.body;
+    const {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, talleId, personaId, productoId, ...cambios} = req.body;
     
     try {
         const publicacion = await Publicacion.findByPk(id, {
@@ -72,7 +92,27 @@ const actualizarPublicacion = async(req, res) => {
             return res.status(404).json({msg: `La publicación con el ID: ${id} no existe.`})
         }
 
-        await publicacion.update(cambios);       
+        const talle = await Talle.findByPk(talleId);
+
+        if(!talle){
+            return res.status(400).json({msg: `No existe el talle con el ID: ${talleId}`});
+        }
+
+        const persona = await Persona.findByPk(personaId);
+
+        if(!persona){
+            return res.status(400).json({msg: `No existe la persona con el ID: ${personaId}`});
+        }
+
+        const producto = await Persona.findByPk(productoId);
+
+        if(!producto){
+            return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
+        }
+
+        const body = {...cambios, talleId, personaId, productoId};
+
+        await publicacion.update(body);       
        
         res.status(201).json({
             msg: "La publicación fue actualizada.",
