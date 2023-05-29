@@ -4,14 +4,14 @@ import { Submit } from '@/components/Buttons/Submit'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useRouter } from 'next/router'
-import { Tertiary } from '@/components/Buttons/Tertiary'
+
 export default function Vender () {
   const [talles, setTalles] = useState([])
   const [, setFormData] = useState({})
   const router = useRouter()
 
   useEffect(() => {
-    fetch('http://localhost:3001/talle')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/talle`)
       .then(response => response.json())
       .then(data => setTalles(data))
       .catch(error => console.log(error))
@@ -35,13 +35,17 @@ export default function Vender () {
     localStorage.setItem('formData', JSON.stringify(newFormData))
     router.push('/Products/VenderCategory')
   }
+  const handleCancel = () => {
+    localStorage.clear()
+    router.push('/')
+  }
 
   return (
     <div>
       <Header />
       <h2 className='font-bold text-4xl mt-10 mb-10 ml-10'>Vender</h2>
-      <section>
-        <form className='flex justify-center items-center flex-col' onSubmit={handleFormSubmit}>
+      <section className='flex justify-center items-center flex-col'>
+        <form className='flex justify-center items-center flex-col ' onSubmit={handleFormSubmit}>
           <div>
             <Input type='text' placeholder='Titulo' name='title' />
             <p>¿Qué vas a vender? Con este nombre aparecerá publicado tu producto</p>
@@ -58,10 +62,10 @@ export default function Vender () {
             <Input type='text' placeholder='Detalle' name='detail' />
             <p>Describe tu producto, acá deberás aclarar si tiene mucho uso, poco uso o es nuevo</p>
             <Input type='text' placeholder='Precio' name='price' />
-            <Submit className="flex justify-center">Guardar Y Continuar</Submit>
+           <div className='flex justify-center'><Submit className="flex justify-center">Guardar Y Continuar</Submit></div>
           </div>
         </form>
-        <Tertiary>Cancelar</Tertiary>
+        <button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ' onClick={handleCancel}>Cancelar</button>
       </section>
       <Footer />
     </div>

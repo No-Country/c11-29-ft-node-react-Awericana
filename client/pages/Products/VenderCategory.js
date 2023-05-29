@@ -3,7 +3,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Submit } from '@/components/Buttons/Submit'
 import { useRouter } from 'next/router'
-import { Tertiary } from '@/components/Buttons/Tertiary'
+
 export default function VenderCategory () {
   const [categorias, setCategorias] = useState([])
   const [productos, setProductos] = useState([])
@@ -12,7 +12,7 @@ export default function VenderCategory () {
   const router = useRouter()
 
   useEffect(() => {
-    fetch('http://localhost:3001/categoria')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/categoria`)
       .then((response) => response.json())
       .then((data) => setCategorias(data.categorias))
       .catch((error) => console.log(error))
@@ -20,7 +20,7 @@ export default function VenderCategory () {
 
   useEffect(() => {
     if (selectedCategoria) {
-      fetch(`http://localhost:3001/producto?nombreTipoProducto=${selectedCategoria}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/producto?nombreTipoProducto=${selectedCategoria}`)
         .then((response) => response.json())
         .then((data) => setProductos(data))
         .catch((error) => console.log(error))
@@ -28,7 +28,7 @@ export default function VenderCategory () {
   }, [selectedCategoria])
 
   useEffect(() => {
-    fetch('http://localhost:3001/genero')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/personas`)
       .then((response) => response.json())
       .then((data) => {
         setGenders(data)
@@ -58,14 +58,17 @@ export default function VenderCategory () {
     localStorage.setItem('formData', JSON.stringify(updatedFormData))
     router.push('/Products/uploadImage')
   }
-
+  const handleCancel = () => {
+    localStorage.clear()
+    router.push('/')
+  }
   return (
     <div>
       <Header />
       <h2 className="font-bold text-4xl mt-10 mb-10 ml-10">Vender</h2>
-      <section>
-        <form className="flex justify-center items-center flex-col" onSubmit={handleFormSubmit}>
-          <div>
+      <section className='flex justify-center flex-col-reverse'>
+        <form className="flex justify-center items-center flex-col " onSubmit={handleFormSubmit}>
+          <div className='flex gap-6 flex-col'>
             <select className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' value={selectedCategoria} onChange={handleCategoriaChange} name='categoria'>
               <option value="">Seleccione una categoría</option>
               {categorias.map((categoria) => (
@@ -98,7 +101,7 @@ export default function VenderCategory () {
           </div>
         </form>
       </section>
-      <Tertiary>Cancelar</Tertiary>
+      <div className='flex justify-center'> <button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ' onClick={handleCancel}>Cancelar</button></div>
       <Footer />
     </div>
   )
