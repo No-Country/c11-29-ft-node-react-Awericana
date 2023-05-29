@@ -4,6 +4,7 @@ import { Submit } from '@/components/Buttons/Submit'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useRouter } from 'next/router'
+import { Layout } from '@/components/Layout'
 
 export default function Vender () {
   const [talles, setTalles] = useState([])
@@ -41,8 +42,8 @@ export default function Vender () {
   }
 
   return (
-    <div>
-      <Header />
+    <Layout>
+      <Header disabled={true} />
       <h2 className='font-bold text-4xl mt-10 mb-10 ml-10'>Vender</h2>
       <section className='flex justify-center items-center flex-col'>
         <form className='flex justify-center items-center flex-col ' onSubmit={handleFormSubmit}>
@@ -68,6 +69,6 @@ export default function Vender () {
         <button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ' onClick={handleCancel}>Cancelar</button>
       </section>
       <Footer />
-    </div>
+    </Layout>
   )
 }
