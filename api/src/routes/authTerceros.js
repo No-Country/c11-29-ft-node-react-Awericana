@@ -4,6 +4,7 @@ const passport = require("passport");
 const CLIENT_URL = "http://localhost:3000/";
 
 router.get("/login/success", (req, res) => {
+  console.log(req.user);
   if (req.user) {
     res.status(200).json({
       success: true,
