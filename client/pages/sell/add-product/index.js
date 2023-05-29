@@ -33,7 +33,7 @@ export default function Vender () {
 
     setFormData(newFormData)
     localStorage.setItem('formData', JSON.stringify(newFormData))
-    router.push('/Products/VenderCategory')
+    router.push('/sell/add-product/category')
   }
   const handleCancel = () => {
     localStorage.clear()
@@ -54,7 +54,7 @@ export default function Vender () {
               name='talle'
             >
               <option value="talle">Seleccionar talle</option>
-              {talles.map(talle => (
+              {talles.length > 0 && talles?.map(talle => (
                 <option key={talle.id} value={talle.id}>{talle.nombre}</option>
               ))}
             </select>

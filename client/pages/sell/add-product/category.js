@@ -56,7 +56,7 @@ export default function VenderCategory () {
     }
 
     localStorage.setItem('formData', JSON.stringify(updatedFormData))
-    router.push('/Products/uploadImage')
+    router.push('/sell/add-product/upload-image')
   }
   const handleCancel = () => {
     localStorage.clear()
@@ -90,7 +90,7 @@ export default function VenderCategory () {
             }
             <select className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' name='gender'>
               <option value="">Seleccione un Género</option>
-              {gender.map((genders) => (
+              {gender.length > 0 && gender.map((genders) => (
                 <option key={genders.id} value={genders.nombre}>
                   {genders.nombre}
                 </option>

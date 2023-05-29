@@ -100,7 +100,7 @@ export default function UploadImage () {
             </label>
           </div>
           <p className='mt-5 mb-5'>Suelta las imágenes aquí o selecciónalas de tu dispositivo</p>
-          <Link href={'/Products/preview'}>
+          <Link href={'/sell/add-product/preview'}>
             <Submit>Guardar Y Continuar</Submit>
           </Link>
         </form>
