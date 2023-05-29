@@ -7,11 +7,11 @@ import { data } from 'autoprefixer'
 
 const Categories = () => {
   const [categories, setCategories] = useState([])
-  const URL = `${process.env.NEXT_PUBLIC_API_URL}/tipoDeProducto`
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/categoria`
   useEffect(() => {
     fetch(URL)
       .then(response => response.json())
-      .then(data => setCategories(data.tipoProductos))
+      .then(data => setCategories(data.categorias))
     console.log(data)
   }, [])
 
