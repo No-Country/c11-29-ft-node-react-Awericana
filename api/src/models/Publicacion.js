@@ -63,8 +63,38 @@ module.exports = (sequelize) => {
     imagenPortada:{
       type: DataTypes.STRING,
       allowNull: false
+    },
+    estadoReclamo: {
+      type: DataTypes.ENUM("hecho", "permitido", "bloqueado"),
+      allowNull: true
     }
-  });
+
+  }/*,
+  {
+    hooks: {
+      afterUpdate: async (publicacion, options) => {
+
+        if (publicacion.changed('expiracionOferta')) {
+          const ahora = new Date();
+          const sieteDias = new Date(ahora.getTime() + (7 * 24 * 60 * 60 * 1000)); 
+                     
+          const cambios = { 
+            oferta: false,
+            precioOriginal: null,
+            descuento: 0,
+            expiracionOferta: null
+          }
+        
+          publicacion.precioOriginal && (cambios.precio = publicacion.precioOriginal);
+        
+          await publicacion.update(cambios);
+            
+          
+        }
+
+      }
+    }
+  } */);
 };
 
 

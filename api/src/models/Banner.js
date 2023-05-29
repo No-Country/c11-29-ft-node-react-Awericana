@@ -4,17 +4,25 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "persona",
+    "banner",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      nombre: {
-        type: DataTypes.ENUM("HOMBRE", "MUJER", "NENE", "NENA", "BEBE"),
+      imagen: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
+      url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      urlCloudinaryParaBorrar: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
     },
     {
       timestamps: false,

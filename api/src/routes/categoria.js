@@ -5,7 +5,8 @@ const {
     crearCategoria,
     obtenerCategoria,
     actualizarCategoria,
-    eliminarCategoria
+    eliminarCategoria,
+    obtenerProductosCategoria
 } = require("../controllers/categoria");
 
 const router = Router();
@@ -13,6 +14,8 @@ const router = Router();
 
 
 router.get('/' , obtenerCategoria);
+
+router.get('/productos' , obtenerProductosCategoria);
 
 router.post('/', [
     body('nombre', 'El nombre debe tener entre 3 y 50 caracteres').isString().trim().isLength({min:3, max:50}),

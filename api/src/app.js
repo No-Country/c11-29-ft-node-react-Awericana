@@ -5,6 +5,7 @@ const passportSetup = require("./config/passport");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
+const fileUpload = require('express-fileupload')
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
 require("./db.js");
@@ -20,6 +21,7 @@ server.use(
     maxAge: 24 * 60 * 60 * 100,
   })
 );
+
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
@@ -37,6 +39,10 @@ server.use((req, res, next) => {
   next();
 });
 
+server.use(fileUpload({
+  useTempFiles : true,
+  tempFileDir : './uploads'
+}));
 server.use("/", routes);
 
 // Error catching endware.
@@ -47,5 +53,8 @@ server.use((err, req, res, next) => {
   console.error(err);
   res.status(status).send(message);
 });
+
+
+
 
 module.exports = server;

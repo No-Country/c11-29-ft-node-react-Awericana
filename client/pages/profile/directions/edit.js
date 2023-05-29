@@ -3,11 +3,12 @@ import { Header } from '@/components/Header'
 import { Input } from '@/components/Input'
 import { Submit } from '../../../components/Buttons/Submit'
 import { Footer } from '@/components/Footer'
+import { Layout } from '@/components/Layout'
 
 export default function add () {
   return (
-    <div>
-    <Header/>
+    <Layout>
+    <Header disabled={true}/>
     <section className='flex flex-col justify-center items-center'>
     <p className='mt-[70px] mb-[50px] font-medium text-3xl'>Modificar Direccion</p>
     <form className='flex flex-col justify-center items-center'>
@@ -26,6 +27,6 @@ export default function add () {
     </form>
     </section>
         <Footer/>
-    </div>
+    </Layout>
   )
 }

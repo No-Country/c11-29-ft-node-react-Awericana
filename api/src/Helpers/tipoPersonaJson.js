@@ -1,20 +1,24 @@
 let tipoPersonas = [
   {
     id: 1,
-    nombre: "hombre",
+    nombre: "HOMBRE",
   },
   {
     id: 2,
-    nombre: "mujer",
+    nombre: "MUJER",
   },
   {
     id: 3,
-    nombre: "nene",
+    nombre: "NENE",
   },
   {
     id: 4,
-    nombre: "bebe",
+    nombre: "NENA",
   },
+  {
+    id: 5,
+    nombre: "BEBE"
+  }
 ];
 
 module.exports = {

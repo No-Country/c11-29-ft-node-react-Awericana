@@ -3,7 +3,7 @@ const {Publicacion} = require("../db");
 const simularTracking = async (publicacionId, compradorId) => {
     const publicacion = await Publicacion.findOne({
         where: {
-            publicacionId,
+            id: publicacionId,
             compradorId
         }
     });
@@ -36,9 +36,9 @@ const simularTracking = async (publicacionId, compradorId) => {
         }
 
     
-        if(publicacion.estadoEntrega === "enviado" || publicacion.estadoEntrega === "Esperando retiro" ){
+        if(publicacion.estadoEntrega === "Enviado" || publicacion.estadoEntrega === "Esperando retiro" ){
             const cambios = {
-                estadoEntrega: 'entregado',
+                estadoEntrega: 'Entregado',
                 fechaEntrega: new Date()
             }
 

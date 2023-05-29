@@ -8,7 +8,6 @@ import { useSession } from '@/hooks/useSession'
 
 export default function Home ({ userData }) {
   const { session } = useSession(userData)
-  console.log(session)
 
   return (
     <Layout>

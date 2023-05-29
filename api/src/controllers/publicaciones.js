@@ -1,4 +1,6 @@
-const {Publicacion, Talle , Persona, Producto,Pago} = require("../db");
+
+const {Publicacion, Talle , Persona, Producto, Imagen, Pago} = require("../db");
+
 
 const obtenerPublicaciones = async(req, res) => {
 
@@ -36,12 +38,51 @@ const obtenerPublicacion= async(req, res) => {
 
 const crearPublicacion = async(req, res) => {
 
-    const {fecha, precioOriginal, descuento, expiracionOferta, estado, ...resto} = req.body;    
+    let {fecha, precioOriginal, descuento, expiracionOferta, estado, talleId, personaId, productoId, imagenes, ...resto} = req.body;    
 
     try {
-        const publicacion = await Publicacion.create(resto);
+        const talle = await Talle.findByPk(talleId);
+
+        if(!talle){
+            return res.status(400).json({msg: `No existe el talle con el ID: ${talleId}`});
+        }
+
+        const persona = await Persona.findByPk(personaId);
+
+        if(!persona){
+            return res.status(400).json({msg: `No existe la persona con el ID: ${personaId}`});
+        }
+
+        const producto = await Producto.findByPk(productoId);
+
+        if(!producto){
+            return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
+        }
+
+        if(imagenes.length === 0){
+            return res.status(400).json({msg: `Debe incluir por lo menos una imagen`});
+        }
+
+        const imagenPortada = imagenes[0];
+
+        const body = {...resto, talleId, personaId, productoId, imagenPortada}
+
+        const publicacion = await Publicacion.create(body);
         await publicacion.save();
 
+        const subirImagen = async (imagen) => {
+            const imagenParaSubir = await Imagen.create({link: imagen, publicacionId: publicacion.id});
+            await imagenParaSubir.save();
+        }
+
+        if(imagenes.length > 6){
+            imagenes = [imagenes[0], imagenes[1], imagenes[2], imagenes[3], imagenes[4], imagenes[5]];
+        }
+
+        for (let i = 0; i < imagenes.length; i++) {
+            subirImagen(imagenes[i]);
+        }
+            
         res.status(201).json({
             msg: "La publicación fue creada.",
             publicacion
@@ -59,7 +100,7 @@ const crearPublicacion = async(req, res) => {
 const actualizarPublicacion = async(req, res) => {
 
     const {id} = req.params;
-    const {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, ...cambios} = req.body;
+    const {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, talleId, personaId, productoId, ...cambios} = req.body;
     
     try {
         const publicacion = await Publicacion.findByPk(id, {
@@ -72,7 +113,27 @@ const actualizarPublicacion = async(req, res) => {
             return res.status(404).json({msg: `La publicación con el ID: ${id} no existe.`})
         }
 
-        await publicacion.update(cambios);       
+        const talle = await Talle.findByPk(talleId);
+
+        if(!talle){
+            return res.status(400).json({msg: `No existe el talle con el ID: ${talleId}`});
+        }
+
+        const persona = await Persona.findByPk(personaId);
+
+        if(!persona){
+            return res.status(400).json({msg: `No existe la persona con el ID: ${personaId}`});
+        }
+
+        const producto = await Producto.findByPk(productoId);
+
+        if(!producto){
+            return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
+        }
+
+        const body = {...cambios, talleId, personaId, productoId};
+
+        await publicacion.update(body);       
        
         res.status(201).json({
             msg: "La publicación fue actualizada.",
@@ -90,8 +151,8 @@ const actualizarPublicacion = async(req, res) => {
 
 const configurarDescuento = async( req, res) =>{
     const {id} = req.params;
-    const {descuento = 0} = req.body;
-    
+    const {descuento = 0, expiracion} = req.body;
+        
     try {
         const publicacion = await Publicacion.findByPk(id, {
             where:{
@@ -103,13 +164,15 @@ const configurarDescuento = async( req, res) =>{
             return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})
         }
 
-        if(descuento !== 0){
+        if(descuento !== 0 && expiracion){
             const precioCopia = publicacion.precio;
-
+            const expiracionOferta = new Date(Date.parse(expiracion));
+            
             const cambios = {
                 precio : publicacion.precio - (publicacion.precio * (descuento / 100)),
                 precioOriginal: precioCopia,
                 oferta: true,
+                expiracionOferta,
                 descuento
             }
 
@@ -120,12 +183,14 @@ const configurarDescuento = async( req, res) =>{
                 publicacion
             })
         }else{
-            const cambios = {
-                precio: publicacion.precioOriginal,
+            const cambios = { 
                 oferta: false,
                 precioOriginal: null,
-                descuento: 0
+                descuento: 0,
+                expiracionOferta: null
             }
+           
+            publicacion.precioOriginal && (cambios.precio = publicacion.precioOriginal);
             
             await publicacion.update(cambios); 
         
