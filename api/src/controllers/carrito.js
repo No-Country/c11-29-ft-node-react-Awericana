@@ -45,10 +45,26 @@ const agregarAlCarrito = async(req, res) => {
     try {
 
         const usuario = await Usuario.findByPk(usuarioId);
+
+        if( !usuario ){
+            return res.status(404).json({msg: `El usuario no existe.`})
+        }
+
         const publicacion = await Publicacion.findByPk(publicacionId);
 
-        if( !usuario || !publicacion ){
-            return res.status(404).json({msg: `El usuario o publicación no existen.`})
+        if( !publicacion ){
+            return res.status(404).json({msg: `La publicación no existe.`})
+        }
+
+        const esPubliPropia = await Publicacion.findOne({
+            where: {
+                id: publicacionId,
+                usuarioId
+            }
+        });
+
+        if(esPubliPropia){
+            return res.json({msg: 'No puede agregar al carrito su propia publicación'});
         }
 
         const existe = await Carrito.findOne({where: {

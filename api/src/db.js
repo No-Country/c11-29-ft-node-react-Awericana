@@ -51,8 +51,8 @@ const {
   // Carrito,
   Publicacion,
   Usuario,
-  TipoPersona,
-  TipoProducto
+  Persona,
+  Categoria
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -64,8 +64,8 @@ Marca.hasMany(Publicacion);*/
 Publicacion.belongsTo(Talle);
 Talle.hasMany(Publicacion);
 
-Producto.belongsTo(TipoProducto);
-TipoProducto.hasMany(Producto);
+Producto.belongsTo(Categoria);
+Categoria.hasMany(Producto);
 
 Imagen.belongsTo(Publicacion);
 Publicacion.hasMany(Imagen);
@@ -82,8 +82,8 @@ Carrito.belongsTo(Usuario);
 Talle.hasMany(Publicacion);
 Publicacion.belongsTo(Talle);
 
-TipoPersona.hasMany(Publicacion);
-Publicacion.belongsTo(TipoPersona);
+Persona.hasMany(Publicacion);
+Publicacion.belongsTo(Persona);
 
 Producto.hasMany(Publicacion);
 Publicacion.belongsTo(Producto);

@@ -11,10 +11,12 @@ export function useSession (initialState) {
       fetch('/api/session')
         .then(res => res.json())
         .then(res => {
+          console.log(res)
           if (!res?.error) {
             setSession(res)
           }
         })
+        .catch(e => console.error(e))
     } else setSession(prev => prev ? prev : initialState)
   }, [])
 

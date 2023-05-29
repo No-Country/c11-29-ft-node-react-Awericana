@@ -16,7 +16,6 @@ export async function registerUser (data) {
   })
 
   const response = await request
-  const json = await response.json()
 
-  return json
+  return response
 }

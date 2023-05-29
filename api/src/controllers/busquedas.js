@@ -1,19 +1,24 @@
 const { Op } = require("sequelize");
-const {Publicacion, Talle, TipoPersona, TipoProducto} = require("../db");
+const {Publicacion, Talle, Persona, Producto, Categoria} = require("../db");
 
 const buscar = async(req, res) => {
     const {
         orden = 'DESC',
-        genero,
+        persona,
+        producto,
         categoria,
         precioMin,
         precioMax,
         talle,
         termino,
         oferta,
+        limit,
+        offset
     } = req.query;
 
-    const filtroPublicacion = {};
+    const filtroPublicacion = {
+        estado: 'habilitada'
+    };
 
     //si la variable es True se agregara el campo al filtro   
     
@@ -31,16 +36,18 @@ const buscar = async(req, res) => {
     let filtrosRelaciones = [];
 
     talle       &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Talle, where: {nombre: talle}}]);
-    genero      &&  (filtrosRelaciones = [...filtrosRelaciones, {model: TipoPersona, where: {nombre: genero}}]);
-    categoria   &&  (filtrosRelaciones = [...filtrosRelaciones, {model: TipoProducto, where: {nombre: categoria}}]);
-    
-    const publicaciones = await Publicacion.findAll({
+    persona      &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Persona, where: {nombre: persona}}]);
+    producto   &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Producto, where: {nombre: producto}}]);
+
+    const {rows, count} = await Publicacion.findAndCountAll({
        where: filtroPublicacion,
        include: filtrosRelaciones,
+       offset,
+       limit,
        order: [['precio', orden]]
     }); 
 
-    res.json(publicaciones);
+    res.json({coincidencias: count, publicaciones: rows, });
 }
 
 module.exports = {

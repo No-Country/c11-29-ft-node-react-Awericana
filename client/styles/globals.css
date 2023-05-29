@@ -45,3 +45,10 @@ body, html {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(119, 181, 169, 1);
 }
+
+/* Disable appearence in number input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
