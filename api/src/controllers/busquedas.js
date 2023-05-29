@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, literal } = require("sequelize");
 const {Publicacion, Talle, Persona, Producto, Categoria} = require("../db");
 
 const buscar = async(req, res) => {
@@ -35,16 +35,47 @@ const buscar = async(req, res) => {
 
     let filtrosRelaciones = [];
 
-    talle       &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Talle, where: {nombre: talle}}]);
-    persona      &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Persona, where: {nombre: persona}}]);
-    producto   &&  (filtrosRelaciones = [...filtrosRelaciones, {model: Producto, where: {nombre: producto}}]);
+    talle       &&  (filtrosRelaciones = [...filtrosRelaciones, {   
+                                                                    model: Talle,
+                                                                    where: {nombre: talle}
+                                                                }
+                                         ]);
+
+    persona      &&  (filtrosRelaciones = [...filtrosRelaciones, {
+                                                                    model: Persona, 
+                                                                    where: {nombre: persona}
+                                                                 }
+                                          ]);
+
+    producto   &&  (filtrosRelaciones = [...filtrosRelaciones, {
+                                                                    model: Producto,
+                                                                    where: {nombre: producto}
+                                                                }
+                                          ]);
+
+    categoria   &&  (filtrosRelaciones = [...filtrosRelaciones, {
+                                                                    model: Producto,
+                                                                    include: [{
+                                                                                model: Categoria,
+                                                                                where:{nombre: categoria}
+                                                                            }]
+                                                                }
+                                          ]);
+
+    let tipoOrden = null;
+
+    if(orden === 'random' ){
+        tipoOrden =  [[literal('RANDOM()')]];
+    }else{
+        tipoOrden = [['precio', orden]];
+    }  
 
     const {rows, count} = await Publicacion.findAndCountAll({
        where: filtroPublicacion,
        include: filtrosRelaciones,
        offset,
        limit,
-       order: [['precio', orden]]
+       order: tipoOrden
     }); 
 
     res.json({coincidencias: count, publicaciones: rows, });
