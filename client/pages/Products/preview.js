@@ -36,7 +36,7 @@ export default function Preview () {
             </div>
         </div>
       )}
-      <div className='flex justify-center ite flex-col'>
+      <div className='flex justify-center items-center flex-col '>
         <div><Submit>Subir</Submit></div>
         <div><Tertiary>Cancelar</Tertiary></div>
         </div>
