@@ -1,13 +1,13 @@
-const {Publicacion, Talle , Persona, Producto} = require("../db");
+const {Publicacion, Talle , Persona, Producto,Pago} = require("../db");
 
 const obtenerPublicaciones = async(req, res) => {
 
     const { limit = 25, offset= 0 } = req.query;
     
     const { rows } = await Publicacion.findAndCountAll({
-        include:[Talle, Persona, Producto],
+        include:[Talle, Persona, Producto, Pago],
         where:{
-            estado: 'habilitada'
+            // estado: 'habilitada'
         },
         offset,
         limit
