@@ -52,7 +52,8 @@ const {
   Publicacion,
   Usuario,
   Persona,
-  Categoria
+  Categoria,
+  Banner
 } = sequelize.models;
 
 // Aca vendrian las relaciones

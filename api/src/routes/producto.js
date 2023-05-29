@@ -5,13 +5,15 @@ const {
     crearProducto,
     obtenerProducto,
     actualizarProducto,
-    eliminarProducto
+    eliminarProducto,
+    obtenerTodosLosProductos
 } = require("../controllers/producto.js");
 
 const router = Router();
 
 
 router.get('/', obtenerProducto)
+router.get('/todos', obtenerTodosLosProductos)
 
 router.post('/', [
     body('nombre', 'El nombre debe tener entre 3 y 50 caracteres').isString().trim().isLength({min:3, max:50}),
