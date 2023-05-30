@@ -9,25 +9,25 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true
     },
-    ciudad: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     calle: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    numero: {
-        type: DataTypes.INTEGER,
+    numeracion: {
+        type: DataTypes.STRING,
         allowNull: false
     },
-    piso: {
+    codigoPostal: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
-    departamento: {
+    ciudad: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false,
+    },
+    provincia: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
   });
 };
