@@ -13,6 +13,8 @@ const finalizarPublicacion = async (publicacionId, compradorId) => {
   const cambios = {
     compradorId,
     estado: "finalizada",
+    estadoEntrega: "Empacando",
+    fechaCompra : new Date()
   };
 
   publicacion.update(cambios);
