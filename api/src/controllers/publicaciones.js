@@ -1,12 +1,14 @@
+
+const {Publicacion, Talle , Persona, Producto, Imagen, Pago} = require("../db");
+
 const { quitarPublicacionDeListas } = require("../Helpers/quitarPublicacionDeListas");
-const {Publicacion, Talle , Persona, Producto, Imagen} = require("../db");
 
 const obtenerPublicaciones = async(req, res) => {
 
     const { limit = 25, offset= 0 } = req.query;
     
     const { rows } = await Publicacion.findAndCountAll({
-        include:[Talle, Persona, Producto],
+        include:[Talle, Persona, Producto, Pago],
         where:{
             estado: 'habilitada'
         },

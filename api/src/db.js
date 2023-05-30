@@ -53,7 +53,8 @@ const {
   Usuario,
   Persona,
   Categoria,
-  Banner
+  Pago,
+  Banner,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -74,9 +75,12 @@ Publicacion.hasMany(Imagen);
 Usuario.hasMany(Publicacion);
 Publicacion.belongsTo(Usuario);
 
-Usuario.belongsToMany(Publicacion, {through: 'Carrito'});
-Publicacion.belongsToMany(Usuario, {through: 'Carrito'});
-const {Carrito} = sequelize.models; 
+Pago.belongsToMany(Publicacion, { through: 'PagoPublicacion' });
+Publicacion.belongsToMany(Pago, { through: 'PagoPublicacion' });
+
+Usuario.belongsToMany(Publicacion, { through: "Carrito" });
+Publicacion.belongsToMany(Usuario, { through: "Carrito" });
+const { Carrito } = sequelize.models;
 Carrito.belongsTo(Publicacion);
 Carrito.belongsTo(Usuario);
 
@@ -89,13 +93,11 @@ Publicacion.belongsTo(Persona);
 Producto.hasMany(Publicacion);
 Publicacion.belongsTo(Producto);
 
-Usuario.belongsToMany(Publicacion, {through: 'Favoritos'});
-Publicacion.belongsToMany(Usuario, {through: 'Favoritos'});
-const {Favoritos} = sequelize.models; 
+Usuario.belongsToMany(Publicacion, { through: "Favoritos" });
+Publicacion.belongsToMany(Usuario, { through: "Favoritos" });
+const { Favoritos } = sequelize.models;
 Favoritos.belongsTo(Publicacion);
 Favoritos.belongsTo(Usuario);
-
-
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
