@@ -40,7 +40,7 @@ const obtenerPublicacion= async(req, res) => {
 const crearPublicacion = async(req, res) => {
 
     let {fecha, precioOriginal, descuento, expiracionOferta, estado, talleId, personaId, productoId, imagenes, ...resto} = req.body;    
-
+    const limiteImagenes = 10;
     try {
         const talle = await Talle.findByPk(talleId);
 
@@ -65,6 +65,7 @@ const crearPublicacion = async(req, res) => {
         }
 
         const imagenPortada = imagenes[0];
+        //imagenes.shift();
 
         const body = {...resto, talleId, personaId, productoId, imagenPortada}
 
@@ -76,8 +77,14 @@ const crearPublicacion = async(req, res) => {
             await imagenParaSubir.save();
         }
 
-        if(imagenes.length > 6){
-            imagenes = [imagenes[0], imagenes[1], imagenes[2], imagenes[3], imagenes[4], imagenes[5]];
+        if(imagenes.length > limiteImagenes ){
+            imagenes = imagenes.slice(0, 10);
+        }
+
+        if(imagenes.length < limiteImagenes ){
+            for (let i = 0; i < (limiteImagenes  - imagenes.length) ; index++) {
+                imagenes = [...imagenes, ''];
+            }
         }
 
         for (let i = 0; i < imagenes.length; i++) {
@@ -101,12 +108,15 @@ const crearPublicacion = async(req, res) => {
 const actualizarPublicacion = async(req, res) => {
 
     const {id} = req.params;
-    const {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, talleId, personaId, productoId, ...cambios} = req.body;
-    
+    let {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, talleId, personaId, productoId, imagenes, ...cambios} = req.body;
+    const limiteImagenes = 10;
+
     try {
-        const publicacion = await Publicacion.findByPk(id, {
+        const publicacion = await Publicacion.findOne({
             where:{
-                estado: 'habilitada'
+                id,
+                estado: 'habilitada',
+                usuarioId
             },
         });
 
@@ -132,9 +142,29 @@ const actualizarPublicacion = async(req, res) => {
             return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
         }
 
-        const body = {...cambios, talleId, personaId, productoId};
+        const imagenPortada = imagenes[0].link;
 
-        await publicacion.update(body);       
+        const body = {...cambios, talleId, personaId, productoId, imagenPortada};
+
+        await publicacion.update(body); 
+        
+        if(imagenes.length > limiteImagenes ){
+            imagenes = imagenes.slice(0, 10);
+        }
+
+        imagenes.forEach(async(imagen) => {
+            let imagenAModificar = await Imagen.findOne({
+                where: {
+                    publicacionId: id,
+                    id: imagen.id
+                }
+            });
+
+            if(imagenAModificar){
+                imagenAModificar.update({link: imagen.link});
+            }
+
+        });
        
         res.status(201).json({
             msg: "La publicación fue actualizada.",

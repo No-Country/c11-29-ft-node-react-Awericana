@@ -12,7 +12,8 @@ const obtenerImagenes = async(req, res) => {
     const imagenes = await Imagen.findAll({
         where: {
             publicacionId
-        }
+        },
+        order: [['id', 'asc']]
     });
 
     res.json(imagenes);
