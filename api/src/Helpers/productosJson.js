@@ -9,7 +9,7 @@ let productos = [
   { nombre: "JEAN" , categoriumId: 2},
   { nombre: "SHORTS ELEGANTES", categoriumId: 2 },
   { nombre: "CAMISETAS MANGA CORTA", categoriumId: 3 },
-  { nombre: "CAMISETAS MANGA LARGAimage.png", categoriumId: 3 },
+  { nombre: "CAMISETAS MANGA LARGA", categoriumId: 3 },
   { nombre: "BLUSA", categoriumId: 3 },
   { nombre: "REMERAS MANGA CORTA", categoriumId: 3 },
   { nombre: "REMERAS MANGA LARGA", categoriumId: 3 },
