@@ -1,3 +1,4 @@
+const { quitarPublicacionDeListas } = require("../Helpers/quitarPublicacionDeListas");
 const {Publicacion, Talle , Persona, Producto, Imagen} = require("../db");
 
 const obtenerPublicaciones = async(req, res) => {
@@ -217,6 +218,8 @@ const eliminarPublicacion = async(req, res) => {
     }
 
     await publicacion.destroy();
+
+    quitarPublicacionDeListas(id);
 
     res.json({
         msg: "La publicación fue eliminada.",
