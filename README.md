@@ -69,6 +69,6 @@ Awericana es un proyecto de e-commerce de compra venta de ropa usada. Permite a 
         <p>SEBASTIAN TORREIRO - Github <a src="https://github.com/SebastianTorreiro">SebastianTorreiro</a></p>
     </li>
     <li>
-        <p>IGNACIO COLETTA - Github <a src="https://github.com/nachocoletta">nachocoletta</a></p>
+        <p>IGNACIO COLETTA - Github https://github.com/nachocoletta - nachocoletta</a></p>
     </li>
 </ul>
