@@ -14,24 +14,26 @@ const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
     });   
     
     if(!publicacion){
-        return 'El usuario no realizo la compra de la publicación indicada'
+        return '';
     }
 
     estado = publicacion.estadoReclamo;
 
-    if(publicacion.estadoReclamo !== 'hecho' && publicacion.estadoReclamo !== 'bloqueado' ){
+    if(publicacion.estadoReclamo !== 'procesando' && publicacion.estadoReclamo !== 'bloqueado' && publicacion.estadoReclamo !== 'devuelto' ){
          
         const fechaInicio = new Date(publicacion.fechaEntrega); // fecha inicial
         const fechaActual = new Date(); // fecha actual
+        const limite = 60000; // 7 dias , 60000 milisegundos para pruebas
 
         const tiempoTranscurrido = fechaActual.getTime() - fechaInicio.getTime(); // diferencia de tiempo en milisegundos
-        const diasTranscurridos = Math.floor(tiempoTranscurrido / (1000 * 60 * 60 * 24)); // diferencia de tiempo en días
+       // const diasTranscurridos = Math.floor(tiempoTranscurrido / (1000 * 60 * 60 * 24)); // diferencia de tiempo en días
+        const diasTranscurridos = tiempoTranscurrido; //Solo para pruebas
 
-        if( diasTranscurridos <= 7 ){
+        if( diasTranscurridos <= limite ){
             publicacion.update({ estadoReclamo: 'permitido' })
             estado = 'permitido';
         }
-        if( diasTranscurridos > 7 ){
+        if( diasTranscurridos > limite ){
             publicacion.update({ estadoReclamo: 'bloqueado' })
             estado = 'bloqueado';
         } 
@@ -42,14 +44,14 @@ const verificarDisponibilidadReclamo= async (publicacionId, compradorId) => {
 
 
 
-const enviarReclamo = async ({nombre, correo, subject, message, compradorId, publicacionId }) => {
-    console.log('Mail enviado');
+const enviarReclamo = async ({name, mail, subject, message, image, compradorId, publicacionId }) => {
+    console.log(name, mail, subject, message, image, compradorId, publicacionId );
     /*await transporter.sendMail({
-        from: `"${nombre}" <${correo}>'`, 
+        from: `"${name}" <${mail}>'`, 
         to: 'awericana@gmail.com', 
         subject, 
         text: `[ Comprador: ${compradorId} ] [ reclamo sobre:  ${publicacionId} ] ${message}` 
-        //html: "<b>Hello world?</b>", // html body
+        html: "<img src = `${image}` width = "500" height = "500" />", 
       });*/
 
       return true;
@@ -64,11 +66,11 @@ const chequearReclamo = async (req, res) => {
 }
 
 const iniciarReclamo = async (req, res) => {
-    const {nombre, correo, subject, message, compradorId, publicacionId} = req.body;
+    const {nombre, correo, subject, message, image, compradorId, publicacionId} = req.body;
 
     if(await verificarDisponibilidadReclamo(publicacionId, compradorId) === 'permitido'){
 
-        const exito = await enviarReclamo({nombre, correo, subject, message, compradorId, publicacionId });
+        const exito = await enviarReclamo({nombre, correo, subject, message, image, compradorId, publicacionId });
 
         if(exito){
             
@@ -81,7 +83,7 @@ const iniciarReclamo = async (req, res) => {
                 }
             });
 
-            await publicacion.update({ estadoReclamo: 'hecho' });
+            await publicacion.update({ estadoReclamo: 'procesando' });
 
             res.json({msg: "El reclamo ha sido enviado"});
         }else{
@@ -123,9 +125,46 @@ const revelarVendedor = async (req, res) => {
 
 }
 
+const avanzarDevolucion = async (req, res) => {
+    const {publicacionId, compradorId} = req.body;
+
+    const publicacion = await Publicacion.findOne({
+        where: {
+            id: publicacionId,
+            compradorId
+        }
+    })
+
+    if(!publicacion){
+        return res.status(400).json({msg: 'El usuario no ha realizado la compra que se indica.'});
+    }
+
+    if(publicacion.estadoReclamo === 'procesando'){
+        let resolucion = 0;
+
+        const numeroAzar = Math.floor(Math.random() * 2) + 1; //Math.random retorna numero entre 0 y 1, Math.floor redondea hacia abajo
+
+        if(numeroAzar === 1){
+            resolucion = 'aceptado'
+        }
+        
+        if(numeroAzar === 2){
+            resolucion = 'rechazado'
+        }
+
+        publicacion.update({estadoReclamo : resolucion});
+       
+    }else if(publicacion.estadoReclamo === 'aceptado'){
+        publicacion.update({estadoReclamo : 'devuelto'});
+    }
+
+    res.json({msg:'Estado actualizado.'});
+}
+
 module.exports = {
     actualizarEstadoEnvio,
     iniciarReclamo,
     revelarVendedor,
-    chequearReclamo
+    chequearReclamo,
+    avanzarDevolucion
 }

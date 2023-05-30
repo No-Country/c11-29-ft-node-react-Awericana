@@ -4,12 +4,14 @@ import { Footer } from '@/components/Footer'
 import { Submit } from '@/components/Buttons/Submit'
 import { useRouter } from 'next/router'
 import { Layout } from '@/components/Layout'
+import { useError } from '@/hooks/useError'
 
 export default function VenderCategory () {
   const [categorias, setCategorias] = useState([])
   const [productos, setProductos] = useState([])
   const [selectedCategoria, setSelectedCategoria] = useState('')
   const [gender, setGenders] = useState([])
+  const { error, setError } = useError()
   const router = useRouter()
 
   useEffect(() => {
@@ -56,8 +58,12 @@ export default function VenderCategory () {
       selectedGender
     }
 
-    localStorage.setItem('formData', JSON.stringify(updatedFormData))
-    router.push('/sell/add-product/upload-image')
+    if (updatedFormData?.selectedCategoria && updatedFormData?.selectedGender && updatedFormData?.selectedSubCategoria) {
+      localStorage.setItem('formData', JSON.stringify(updatedFormData))
+      router.push('/sell/add-product/upload-image')
+    } else {
+      setError({ category: 'Algo salió mal, revisa las categorías e intentalo de nuevo.' })
+    }
   }
   const handleCancel = () => {
     localStorage.clear()
@@ -80,7 +86,7 @@ export default function VenderCategory () {
             </select>
             {
               <select className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' name='subCategoria'>
-                <option value="">Seleccione una SubCategoría</option>
+                <option value="">Seleccione una sub-categoría</option>
                 {Array.isArray(productos) &&
                   productos.map((producto) => (
                     <option key={producto.id} value={producto.id}>
@@ -97,7 +103,7 @@ export default function VenderCategory () {
                 </option>
               ))}
             </select>
-
+            {error?.category ? <p className='text-red text-big font-extrabold text-center'>{error?.category}</p> : null}
             <Submit className="flex justify-center">Guardar Y Continuar</Submit>
           </div>
         </form>

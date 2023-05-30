@@ -1,18 +1,21 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Submit } from '@/components/Buttons/Submit'
-import { useState } from 'react'
-import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { BiUpload } from 'react-icons/bi'
 import { Layout } from '@/components/Layout'
+import { useError } from '@/hooks/useError'
 
 export default function UploadImage () {
   const [, setSelectedImages] = useState([])
   const [uploadedImageUrls, setUploadedImageUrls] = useState([])
+  const { error, setError } = useError()
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const handleImageUpload = async (event) => {
+    setIsLoading(true)
     const files = event.target.files
     const uploadPromises = Array.from(files).map(async (file) => {
       const data = new FormData()
@@ -41,24 +44,38 @@ export default function UploadImage () {
     const uploadedUrls = await Promise.all(uploadPromises)
     const filteredUrls = uploadedUrls.filter((url) => url !== null)
 
-    setSelectedImages(Array.from(files))
-    setUploadedImageUrls(filteredUrls)
+    setSelectedImages(prev => prev.concat(Array.from(files)))
+    setUploadedImageUrls(prev => prev.concat(filteredUrls))
 
     const storedFormData = localStorage.getItem('formData')
     if (storedFormData) {
       const parsedFormData = JSON.parse(storedFormData)
       const updatedFormData = {
         ...parsedFormData,
-        imageUrls: filteredUrls
+        imageUrls: parsedFormData?.imageUrls ? parsedFormData.imageUrls.concat(filteredUrls) : filteredUrls
       }
       localStorage.setItem('formData', JSON.stringify(updatedFormData))
+      setIsLoading(false)
+    } else {
+      setIsLoading(false)
+      router.push('/sell')
     }
   }
 
-  const handleImageDelete = (index) => {
+  const handleImageDelete = (event, index) => {
     event.preventDefault()
     const updatedImageUrls = [...uploadedImageUrls]
     updatedImageUrls.splice(index, 1)
+    const storedFormData = localStorage.getItem('formData')
+    if (storedFormData) {
+      const parsedFormData = JSON.parse(storedFormData)
+      const updatedFormData = {
+        ...parsedFormData,
+        imageUrls: updatedImageUrls
+      }
+      localStorage.setItem('formData', JSON.stringify(updatedFormData))
+      setIsLoading(false)
+    }
     setUploadedImageUrls(updatedImageUrls)
   }
 
@@ -67,10 +84,27 @@ export default function UploadImage () {
     router.push('/')
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (uploadedImageUrls.length > 0) {
+      router.push('/sell/add-product/preview')
+    } else {
+      setError({ images: 'Por favor, añade al menos una imagen' })
+    }
+  }
+
+  useEffect(() => {
+    const storedFormData = localStorage.getItem('formData')
+    if (storedFormData && storedFormData !== 'undefined') {
+      const { imageUrls } = JSON.parse(storedFormData)
+      setUploadedImageUrls(res => imageUrls ? imageUrls : res)
+    }
+  }, [])
+
   return (
     <Layout>
       <Header disabled={true} />
-      <h2 className="font-bold text-4xl mt-10 mb-10 ml-10">Sube las fotos de tu producto</h2>
+      <h2 className="font-bold text-4xl mt-10 mb-10 ml-10 md:text-left text-center">Sube las fotos de tu producto</h2>
       <section className='flex flex-col justify-center items-center'>
         <form className="flex justify-center items-center flex-col">
           <div className='flex justify-center flex-col items-center'>
@@ -81,7 +115,7 @@ export default function UploadImage () {
                     <img className='w-[120px] h-[120px]' src={imageUrl} alt={`Uploaded ${index + 1}`} />
                     <button
                       className="absolute top-2 right-2 text-white bg-red-500 rounded-full w-6 h-6 flex justify-center items-center"
-                      onClick={() => handleImageDelete(index)}
+                      onClick={(e) => handleImageDelete(e, index)}
                     >
                       X
                     </button>
@@ -100,16 +134,17 @@ export default function UploadImage () {
               <BiUpload className='bg-slate-300 rounded-[100px] py-2' />
             </label>
           </div>
-          <p className='mt-5 mb-5'>Suelta las imágenes aquí o selecciónalas de tu dispositivo</p>
-          <Link href={'/sell/add-product/preview'}>
-            <Submit>Guardar Y Continuar</Submit>
-          </Link>
+          <p className='mt-5 mb-5 text-normal font-bold text-center'>Suelta las imágenes aquí o selecciónalas de tu dispositivo</p>
+            {error?.images ? <p className='text-red text-big font-extrabold text-center'>{error?.images}</p> : null}
+          <Submit center={true} onClick={handleSubmit} isLoading={isLoading}>Guardar Y Continuar</Submit>
         </form>
       </section>
 
-      <div className='flex justify-center'>
+      {!isLoading
+        ? <div className='flex justify-center'>
         <button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg' onClick={handleCancel}>Cancelar</button>
       </div>
+        : null}
       <Footer />
     </Layout>
   )

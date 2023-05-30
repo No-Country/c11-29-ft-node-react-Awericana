@@ -5,13 +5,18 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useRouter } from 'next/router'
 import { Layout } from '@/components/Layout'
+import { useError } from '@/hooks/useError'
+import Head from 'next/head'
 
 export default function Vender () {
   const [talles, setTalles] = useState([])
   const [, setFormData] = useState({})
+  const { error, setError } = useError()
   const router = useRouter()
 
   useEffect(() => {
+    const isExistant = localStorage.getItem('formData')
+    if (isExistant) localStorage.clear()
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/talle`)
       .then(response => response.json())
       .then(data => setTalles(data))
@@ -32,9 +37,13 @@ export default function Vender () {
       price
     }
 
-    setFormData(newFormData)
-    localStorage.setItem('formData', JSON.stringify(newFormData))
-    router.push('/sell/add-product/category')
+    if (title && selectedTalle && detail && price) {
+      setFormData(newFormData)
+      localStorage.setItem('formData', JSON.stringify(newFormData))
+      router.push('/sell/add-product/category')
+    } else {
+      setError({ addProduct: 'Algo salio mal, revisa los campos nuevamente' })
+    }
   }
   const handleCancel = () => {
     localStorage.clear()
@@ -43,6 +52,9 @@ export default function Vender () {
 
   return (
     <Layout>
+      <Head>
+        <title>Agregar producto | Awericana</title>
+      </Head>
       <Header disabled={true} />
       <h2 className='font-bold text-4xl mt-10 mb-10 ml-10'>Vender</h2>
       <section className='flex justify-center items-center flex-col'>
@@ -63,6 +75,7 @@ export default function Vender () {
             <Input type='text' placeholder='Detalle' name='detail' />
             <p>Describe tu producto, acá deberás aclarar si tiene mucho uso, poco uso o es nuevo</p>
             <Input type='text' placeholder='Precio' name='price' />
+            {error?.addProduct ? <p className='text-red text-big font-extrabold text-center'>{error?.addProduct}</p> : null}
            <div className='flex justify-center'><Submit className="flex justify-center">Guardar Y Continuar</Submit></div>
           </div>
         </form>

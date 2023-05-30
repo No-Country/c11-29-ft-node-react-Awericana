@@ -50,7 +50,12 @@ const agregarAlCarrito = async(req, res) => {
             return res.status(404).json({msg: `El usuario no existe.`})
         }
 
-        const publicacion = await Publicacion.findByPk(publicacionId);
+        const publicacion = await Publicacion.findOne({
+            where: {
+                id: publicacionId,
+                estado: 'habilitada'
+            } 
+        });
 
         if( !publicacion ){
             return res.status(404).json({msg: `La publicación no existe.`})

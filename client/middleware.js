@@ -3,7 +3,6 @@ import { checkSession } from '@/lib/checkSession'
 
 export async function middleware (request) {
   const userData = await checkSession(request.headers)
-  console.log(userData)
   const path = request.nextUrl.pathname
   const isOnAuthPage = ['/auth/signin', '/auth/signup'].includes(path)
 
