@@ -35,17 +35,17 @@ Awericana es un proyecto de e-commerce de compra venta de ropa usada. Permite a 
 
 <ul>
     <li>
-        <p>VALERIA  DEL CAMPO - Github: https://github.com/valdcm - valdcm</p>
+        <p>VALERIA  DEL CAMPO - Github: https://github.com/valdcm - LinkedIn: https://www.linkedin.com/in/valeriadelcampo/</p>
     </li>
     <li>
-        <p>NICOLAS MONSALVE - Github: https://github.com/nicmons - nicmons</p>
+        <p>NICOLAS MONSALVE - Github: https://github.com/nicmons - LinkedIn: https://www.linkedin.com/in/nicolas-monsalve23/</p>
     </li>
 </ul>
 
 <p><b>Diseño UX/UI</b></p>
 <ul>
     <li>
-        ROMINA GARAVAGLIA - Behance: https://www.behance.net/rominagaravag - rominagaravag
+        ROMINA GARAVAGLIA - Behance: https://www.behance.net/rominagaravag - LinkedIn: https://www.linkedin.com/in/rominaggaravaglia/
     </li>
 </ul>
 
@@ -54,21 +54,21 @@ Awericana es un proyecto de e-commerce de compra venta de ropa usada. Permite a 
 <p><b>Front-End</b></P>
 <ul>
     <li>
-        <p>LAZARO SANCHEZ - Github: https://github.com/Lazajs - Lazajs </p>
+        <p>LAZARO SANCHEZ - Github: https://github.com/Lazajs - LinkedIn https://www.linkedin.com/in/lazajs/ </p>
     </li>
     <li>
-        <p>JOSE ARIAS - Github: https://github.com/jooseariias - jooseariias</p>
+        <p>JOSE ARIAS - Github: https://github.com/jooseariias - LinkedIn https://www.linkedin.com/in/joose-ari-b08729233/</p>
     </li>
 </ul>
 <p><b>Back-End</b></p>
 <ul>
     <li>
-        <p>MARCO ROMERO - Github: https://github.com/marcodromero - marcodromero</p>
+        <p>MARCO ROMERO - Github: https://github.com/marcodromero - LinkedIn: https://www.linkedin.com/in/marcodromero/</p>
     </li>
     <li>
-        <p>SEBASTIAN TORREIRO - Github: https://github.com/SebastianTorreiro - SebastianTorreiro</p>
+        <p>SEBASTIAN TORREIRO - Github: https://github.com/SebastianTorreiro - LinkedIn: https://www.linkedin.com/in/sebastian-torreiro</p>
     </li>
     <li>
-        <p>IGNACIO COLETTA - Github: https://github.com/nachocoletta - nachocoletta</a></p>
+        <p>IGNACIO COLETTA - Github: https://github.com/nachocoletta - LinkedIn: https://www.linkedin.com/in/ignacio-coletta/</a></p>
     </li>
 </ul>
