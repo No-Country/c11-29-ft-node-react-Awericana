@@ -82,7 +82,7 @@ const crearPublicacion = async(req, res) => {
         }
 
         if(imagenes.length < limiteImagenes ){
-            for (let i = 0; i < (limiteImagenes  - imagenes.length) ; index++) {
+            for (let i = 0; i < (limiteImagenes  - imagenes.length) ; i++) {
                 imagenes = [...imagenes, ''];
             }
         }
