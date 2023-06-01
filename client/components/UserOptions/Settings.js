@@ -5,7 +5,6 @@ import { BsFillHouseDoorFill, BsTrash3Fill } from 'react-icons/bs'
 import { AiFillHeart, AiFillCloseSquare } from 'react-icons/ai'
 import { ImPriceTag } from 'react-icons/im'
 import { useAuth } from '@/hooks/useAuth'
-// import { IoBagHandle } from 'react-icons/io'
 import { useSession } from '@/hooks/useSession'
 
 function SettingsComponent () {
@@ -24,9 +23,6 @@ function SettingsComponent () {
         <Label href='#' Icon={AiFillHeart}>
           Mis Favoritos
         </Label>
-        {/* <Label href='/' Icon={IoBagHandle}>
-          Mis Compras
-        </Label> */}
         <Label href='/sell' Icon={ImPriceTag}>
           Vender
         </Label>
