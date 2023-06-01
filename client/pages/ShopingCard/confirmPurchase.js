@@ -23,6 +23,18 @@ export default function Index () {
     fetchCarritoData()
   }, [])
 
+  const pagarConMercadoPago = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/pagos/url/${session?.id}`
+      )
+      const data = await response.text()
+      window.location.href = data
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <Layout>
       <Header />
@@ -60,7 +72,10 @@ export default function Index () {
           <p>${carritoData?.montoTotal}</p>
         </div>
         <div className="flex items-center flex-col gap-4 ">
-          <button className="w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition">
+        <button
+            className="w-full md:w-[28rem] min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition"
+            onClick={pagarConMercadoPago}
+          >
             PAGAR CON MERCADO PAGO
           </button>
           <button className="border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ">
