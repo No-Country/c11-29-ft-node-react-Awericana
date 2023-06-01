@@ -8,7 +8,7 @@ const obtenerPublicaciones = async(req, res) => {
     const { limit = 25, offset= 0 } = req.query;
     
     const { rows } = await Publicacion.findAndCountAll({
-        include:[Talle, Persona, Producto, Pago],
+        include:[Talle, Persona, Producto, Pago, Imagen],
         where:{
             estado: 'habilitada'
         },
@@ -28,6 +28,7 @@ const obtenerPublicacion= async(req, res) => {
         where:{
             estado: 'habilitada'
         },
+        include: [{ model: Imagen }]
     });
 
     if(!publicacion){

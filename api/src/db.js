@@ -72,7 +72,7 @@ Producto.belongsTo(Categoria);
 Categoria.hasMany(Producto);
 
 Imagen.belongsTo(Publicacion);
-Publicacion.hasMany(Imagen);
+Publicacion.hasMany(Imagen, { order: [['id', 'DESC']] }); 
 
 Usuario.hasMany(Publicacion);
 Publicacion.belongsTo(Usuario);
