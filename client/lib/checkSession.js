@@ -1,8 +1,8 @@
 export async function checkSession (headers) {
-  console.log(headers)
   const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/loginLocal/success`
-  const request = fetch(URL, { headers, credentials: 'include' })
-  const response = await request
+  // const OPTIONS = process.env.NEXT_PUBLIC_API_URL.includes('localhost') ? { credentials: 'include', headers } : { credentials: 'include' }
+  const request = await fetch(URL, { credentials: 'include', headers })
+  const response = request
   const json = await response.json()
 
   return json
