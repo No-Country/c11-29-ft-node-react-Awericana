@@ -1,4 +1,5 @@
 const { Direccion, Usuario, Pais } = require("../db");
+const axios = require('axios');
 
 // obtenerDirecciones,
 //     obtenerDireccion,
@@ -50,8 +51,8 @@ const eliminarDireccion = async (req, res) => {
 
 const crearDireccion = async (req, res) => {
     const { idUsuario } = req.query
-    const { calle, numeracion, codigoPostal, ciudad, provincia, idPais } = req.body
-
+    let { calle, numeracion, codigoPostal, ciudad, provincia, idPais} = req.body
+    // idPais
     try {
         const usuario = await Usuario.findByPk(idUsuario)
 
@@ -59,17 +60,38 @@ const crearDireccion = async (req, res) => {
             return res.status(404).json({msg: `Usuario con ID: ${idUsuario} no encontrado`})
         }
 
+        calle = calle.toLowerCase()
+        ciudad = ciudad.toLowerCase()
+        provincia = provincia.toLowerCase()
+        
+
+
+        const apiKey = 'AIzaSyAwTdbSN0Fg920LnRkk2zxw-c2C_TupLZc';
+        const direccionCompleta = `${calle} ${numeracion}, ${codigoPostal} ${ciudad}, ${provincia}`;
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccionCompleta)}&key=${apiKey}`;
+
+        const response = await axios.get(url);
+        const { status, results } = response.data;
+
+        // console.log( status, results )
+        const { lat, lng } = results[0].geometry.location;
+        
         const direccion = await Direccion.create({
             calle,
             numeracion,
             codigoPostal,
             ciudad,
-            provincia
+            provincia,
+            latitud: lat,
+            longitud: lng
         })
+
+
+        // console.log('coordenadas', lat, lng )
 
         const pais = await Pais.findByPk(idPais)
 
-        console.log(pais)
+        // console.log(pais)
         await direccion.setUsuario(usuario)
         await direccion.setPai(pais)
 
