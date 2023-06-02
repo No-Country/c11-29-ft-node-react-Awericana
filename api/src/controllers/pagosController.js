@@ -1,7 +1,7 @@
 const mercadopago = require("mercadopago");
 const { Publicacion, Carrito, Usuario, Direccion } = require("../db");
 const { finalizarPublicacion } = require("../Helpers/finalizarPublicacion");
-const { ACCESS_TOKEN_MP, URL, URL_NOTIFICATION } = process.env;
+const { ACCESS_TOKEN_MP, URL_FRONT, URL,  URL_NOTIFICATION } = process.env;
 const { createPago } = require("../Helpers/pagos.Helper");
 const calcularDistancia = require("../Helpers/calcularEnvio");
 
@@ -11,7 +11,7 @@ mercadopago.configure({
 
 async function getUrlPago(req, res) {
   const { userid } = req.params;
-
+  const {direccionId } = req.query
   // verificar que no te puedas comprar a vos mismo.
   // implementar que en la funcion que aniade al carrito, no pueda si el id del usuario que quiere agregar al carrito
   // es igual al del duenio la publicacion.
@@ -33,7 +33,7 @@ async function getUrlPago(req, res) {
   
   // const carritoData = carrito.get({plain:true})
   const compradorUserData = compradorUser.get({plain:true})
-  const vendedorUserData = vendedorUser .get({plain:true})
+  const vendedorUserData = vendedorUser.get({plain:true})
 
   // console.log( 'ashee', compradorUserData,"olaf",  vendedorUserData)
   
@@ -50,7 +50,6 @@ async function getUrlPago(req, res) {
   // console.log(latitudOrigen, longitudOrigen, latitudDestino, longitudDestino)
     
   const cost = await calcularDistancia(latitudOrigen, longitudOrigen, latitudDestino, longitudDestino);
-  console.log(cost)
     
   let UrlNotification = URL_NOTIFICATION ? URL_NOTIFICATION : URL;
 
@@ -79,9 +78,9 @@ async function getUrlPago(req, res) {
   try {
     const result = await mercadopago.preferences.create({
       back_urls: {
-        success: `${URL}/pagos/success`,
-        pending: `${URL}/pagos/pending`,
-        failure: `${URL}/pagos/failure`,
+        success: `${URL_FRONT}/pagos/success`,
+        pending: `${URL_FRONT}/pagos/pending`,
+        failure: `${URL_FRONT}/pagos/failure`,
       },
       items: carritoMapeado,
       shipments: {
@@ -91,7 +90,7 @@ async function getUrlPago(req, res) {
       notification_url: `${UrlNotification}/pagos/notificar?userid=${userid}`,
     });
 
-    res.send(`<a href=${result.body.init_point}> pagar <a/>`);
+    res.send(result.body.init_point);
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
   }
@@ -121,13 +120,11 @@ async function notificarYConfirmarPago(req, res) {
       switch (data.response.status) {
         case "approved":
 
-          // finalizo las publicaciones del carrito
 
-          // for (let i = 0; i < carritoIds.length; i++) {
-          //   finalizarPublicacion(carritoIds[i], payment.userid);
-          // }
+          for (let i = 0; i < carritoIds.length; i++) {
+            finalizarPublicacion(carritoIds[i], payment.userid);
+          }
 
-          // creo un pago con al informacion de la transaccion
           await createPago(
             (ultimosdigitos = data.response.card.last_four_digits),
             (estado = data.response.status),
@@ -139,7 +136,6 @@ async function notificarYConfirmarPago(req, res) {
             (precioDeEnvio =  data.response.shipping_amount),
           );
 
-          // vacio el carrito
           await Carrito.destroy({
             where: { usuarioId: payment.userid },
           });
@@ -171,7 +167,6 @@ async function notificarYConfirmarPago(req, res) {
           break;
         default:
           console.log("Estado desconocido.");
-
           break;
       }
     }

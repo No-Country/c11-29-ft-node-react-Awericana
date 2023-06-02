@@ -22,7 +22,7 @@ const finalizarPublicacion = async (publicacionId, compradorId) => {
 
   quitarPublicacionDeListas(publicacionId);
 
-  await notificarCompraVenta(usuarioId, publicacionId);
+  await notificarCompraVenta(compradorId, publicacionId);
 };
 
 module.exports = {
