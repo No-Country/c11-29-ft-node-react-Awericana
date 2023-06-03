@@ -21,18 +21,12 @@ const usuario = require("./usuario");
 const pagos = require("./pagosRoutes");
 const busquedas = require("./busquedas");
 const posventa = require("./posventa");
-<<<<<<< HEAD
 const talle = require("./talle");
 const genero = require("./genero");
 const banner = require("./banner");
+const imagenes = require("./imagenes");
+const direcciones = require("./direccion");
 const review = require("./review");
-=======
-const talle = require('./talle')
-const genero = require('./genero')
-const banner = require('./banner')
-const imagenes = require('./imagenes')
-const direcciones = require('./direccion')
->>>>>>> f5d65fad33732e0fba272a47c02d54478ee5d3c6
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
@@ -52,13 +46,9 @@ router.use("/talle", talle);
 
 router.use("/banner", banner);
 
-<<<<<<< HEAD
 router.use("/personas", genero);
+router.use("/imagenes", imagenes);
+router.use("/direcciones", direcciones);
 router.use("/review", review);
-=======
-router.use('/personas', genero)
-router.use('/imagenes', imagenes)
-router.use('/direcciones', direcciones)
->>>>>>> f5d65fad33732e0fba272a47c02d54478ee5d3c6
 
 module.exports = router;

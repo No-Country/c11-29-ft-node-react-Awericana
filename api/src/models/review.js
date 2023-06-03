@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     puntaje: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     fecha: {

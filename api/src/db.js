@@ -58,6 +58,7 @@ const {
   Pago,
   Banner,
   Pais,
+  Review,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -107,6 +108,11 @@ Publicacion.belongsToMany(Usuario, { through: "Favoritos" });
 const { Favoritos } = sequelize.models;
 Favoritos.belongsTo(Publicacion);
 Favoritos.belongsTo(Usuario);
+
+Usuario.hasMany(Review, { foreignKey: "usuario_id" });
+Usuario.hasMany(Review, { foreignKey: "usuario_admin_id" });
+Review.belongsTo(Usuario, { foreignKey: "usuario_id" });
+Review.belongsTo(Usuario, { foreignKey: "usuario_admin_id" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
