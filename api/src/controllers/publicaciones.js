@@ -1,11 +1,14 @@
-const {Publicacion, Talle , Persona, Producto} = require("../db");
+
+const {Publicacion, Talle , Persona, Producto, Imagen, Pago} = require("../db");
+
+const { quitarPublicacionDeListas } = require("../Helpers/quitarPublicacionDeListas");
 
 const obtenerPublicaciones = async(req, res) => {
 
     const { limit = 25, offset= 0 } = req.query;
     
     const { rows } = await Publicacion.findAndCountAll({
-        include:[Talle, Persona, Producto],
+        include:[Talle, Persona, Producto, Pago, Imagen],
         where:{
             estado: 'habilitada'
         },
@@ -25,6 +28,7 @@ const obtenerPublicacion= async(req, res) => {
         where:{
             estado: 'habilitada'
         },
+        include: [{ model: Imagen }]
     });
 
     if(!publicacion){
@@ -35,9 +39,12 @@ const obtenerPublicacion= async(req, res) => {
 }
 
 const crearPublicacion = async(req, res) => {
-
-    const {fecha, precioOriginal, descuento, expiracionOferta, estado, talleId, personaId, productoId, ...resto} = req.body;    
-
+    
+    let {fecha, precioOriginal, descuento, expiracionOferta, estado, talleId, personaId, productoId, imagenes, usuarioId: x, ...resto} = req.body;    
+    const {id : usuarioId} = req.user;
+    resto = {...resto, usuarioId}
+    
+    const limiteImagenes = 10;
     try {
         const talle = await Talle.findByPk(talleId);
 
@@ -57,11 +64,37 @@ const crearPublicacion = async(req, res) => {
             return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
         }
 
-        const body = {...resto, talleId, personaId, productoId}
+        if(imagenes.length === 0){
+            return res.status(400).json({msg: `Debe incluir por lo menos una imagen`});
+        }
+
+        const imagenPortada = imagenes[0];
+       
+
+        const body = {...resto, talleId, personaId, productoId, imagenPortada}
 
         const publicacion = await Publicacion.create(body);
         await publicacion.save();
 
+        const subirImagen = async (imagen) => {
+            const imagenParaSubir = await Imagen.create({link: imagen, publicacionId: publicacion.id});
+            await imagenParaSubir.save();
+        }
+
+        if(imagenes.length > limiteImagenes ){
+            imagenes = imagenes.slice(0, 10);
+        }
+
+        if(imagenes.length < limiteImagenes ){
+            for (let i = 0; i < (limiteImagenes  - imagenes.length) ; i++) {
+                imagenes = [...imagenes, ''];
+            }
+        }
+
+        for (let i = 0; i < imagenes.length; i++) {
+            subirImagen(imagenes[i]);
+        }
+            
         res.status(201).json({
             msg: "La publicación fue creada.",
             publicacion
@@ -79,12 +112,17 @@ const crearPublicacion = async(req, res) => {
 const actualizarPublicacion = async(req, res) => {
 
     const {id} = req.params;
-    const {fecha, precioOriginal, descuento, expiracionOferta, usuarioId , estado, talleId, personaId, productoId, ...cambios} = req.body;
-    
+    let {fecha, precioOriginal, descuento, expiracionOferta, usuarioId: x , estado, talleId, personaId, productoId, imagenes, ...cambios} = req.body;
+    const {id : usuarioId} = req.user;
+    cambios = {...cambios, usuarioId}
+    const limiteImagenes = 10;
+
     try {
-        const publicacion = await Publicacion.findByPk(id, {
+        const publicacion = await Publicacion.findOne({
             where:{
-                estado: 'habilitada'
+                id,
+                estado: 'habilitada',
+                usuarioId
             },
         });
 
@@ -110,9 +148,29 @@ const actualizarPublicacion = async(req, res) => {
             return res.status(400).json({msg: `No existe el producto con el ID: ${productoId}`});
         }
 
-        const body = {...cambios, talleId, personaId, productoId};
+        const imagenPortada = imagenes[0].link;
 
-        await publicacion.update(body);       
+        const body = {...cambios, talleId, personaId, productoId, imagenPortada};
+
+        await publicacion.update(body); 
+        
+        if(imagenes.length > limiteImagenes ){
+            imagenes = imagenes.slice(0, 10);
+        }
+
+        imagenes.forEach(async(imagen) => {
+            let imagenAModificar = await Imagen.findOne({
+                where: {
+                    publicacionId: id,
+                    id: imagen.id
+                }
+            });
+
+            if(imagenAModificar){
+                imagenAModificar.update({link: imagen.link});
+            }
+
+        });
        
         res.status(201).json({
             msg: "La publicación fue actualizada.",
@@ -130,12 +188,15 @@ const actualizarPublicacion = async(req, res) => {
 
 const configurarDescuento = async( req, res) =>{
     const {id} = req.params;
-    const {descuento = 0, expiracion} = req.body;
+    const {id : usuarioId} = req.user;
+    const {descuento} = req.body;
         
     try {
-        const publicacion = await Publicacion.findByPk(id, {
+        const publicacion = await Publicacion.findOne({
             where:{
-                estado: 'habilitada'
+                id,
+                estado: 'habilitada',
+                usuarioId
             },
         });
 
@@ -143,15 +204,13 @@ const configurarDescuento = async( req, res) =>{
             return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})
         }
 
-        if(descuento !== 0 && expiracion){
+        if(!publicacion.oferta){
             const precioCopia = publicacion.precio;
-            const expiracionOferta = new Date(Date.parse(expiracion));
             
             const cambios = {
                 precio : publicacion.precio - (publicacion.precio * (descuento / 100)),
                 precioOriginal: precioCopia,
                 oferta: true,
-                expiracionOferta,
                 descuento
             }
 
@@ -165,8 +224,7 @@ const configurarDescuento = async( req, res) =>{
             const cambios = { 
                 oferta: false,
                 precioOriginal: null,
-                descuento: 0,
-                expiracionOferta: null
+                descuento: 0
             }
            
             publicacion.precioOriginal && (cambios.precio = publicacion.precioOriginal);
@@ -191,13 +249,23 @@ const configurarDescuento = async( req, res) =>{
 const eliminarPublicacion = async(req, res) => {
 
     const {id} = req.params;
-    const publicacion = await Publicacion.findByPk(id);
+    const {id : usuarioId} = req.user;
+
+    const publicacion = await Publicacion.findOne({
+        where: {
+            id,
+            estado: 'habilitada',
+            usuarioId
+        }
+    });
 
     if(!publicacion){
         return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})
     }
 
     await publicacion.destroy();
+
+    quitarPublicacionDeListas(id);
 
     res.json({
         msg: "La publicación fue eliminada.",

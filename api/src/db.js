@@ -46,6 +46,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 console.log(sequelize.models);
 const {
   // Categoria,
+  Direccion,
   Imagen,
   Producto,
   Talle,
@@ -54,7 +55,9 @@ const {
   Usuario,
   Persona,
   Categoria,
+  Pago,
   Banner,
+  Pais,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -70,10 +73,19 @@ Producto.belongsTo(Categoria);
 Categoria.hasMany(Producto);
 
 Imagen.belongsTo(Publicacion);
-Publicacion.hasMany(Imagen);
+Publicacion.hasMany(Imagen, { order: [["id", "DESC"]] });
 
 Usuario.hasMany(Publicacion);
 Publicacion.belongsTo(Usuario);
+
+Usuario.hasMany(Direccion);
+Direccion.belongsTo(Usuario);
+
+Pais.hasMany(Direccion);
+Direccion.belongsTo(Pais);
+
+Pago.belongsToMany(Publicacion, { through: "PagoPublicacion" });
+Publicacion.belongsToMany(Pago, { through: "PagoPublicacion" });
 
 Usuario.belongsToMany(Publicacion, { through: "Carrito" });
 Publicacion.belongsToMany(Usuario, { through: "Carrito" });

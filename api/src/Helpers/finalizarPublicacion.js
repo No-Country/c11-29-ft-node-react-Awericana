@@ -1,5 +1,6 @@
 const { Publicacion } = require("../db.js");
 const { notificarCompraVenta } = require("./notificarCompraVenta.js");
+const { quitarPublicacionDeListas } = require("../Helpers/quitarPublicacionDeListas");
 
 const finalizarPublicacion = async (publicacionId, compradorId) => {
   const publicacion = await Publicacion.findByPk(publicacionId);
@@ -13,11 +14,15 @@ const finalizarPublicacion = async (publicacionId, compradorId) => {
   const cambios = {
     compradorId,
     estado: "finalizada",
+    estadoEntrega: "Empacando",
+    fechaCompra : new Date()
   };
 
   publicacion.update(cambios);
 
-  await notificarCompraVenta(usuarioId, publicacionId);
+  quitarPublicacionDeListas(publicacionId);
+
+  await notificarCompraVenta(compradorId, publicacionId);
 };
 
 module.exports = {

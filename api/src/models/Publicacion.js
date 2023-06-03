@@ -53,11 +53,11 @@ module.exports = (sequelize) => {
       allowNull: true
     },
     estadoEntrega: {
-      type: DataTypes.ENUM("Esperando retiro", "Enviado", "Entregado"),
+      type: DataTypes.ENUM("Empacando", "En camino", "Esperando retiro", "Entregado"),
       allowNull: true
     },
     tipoEntrega: {
-      type: DataTypes.ENUM("Retiro", "Envio"),
+      type: DataTypes.ENUM("Retiro", "Envio", "Convenir"),
       defaultValue: "Envio"
     },
     imagenPortada:{
@@ -65,8 +65,12 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     estadoReclamo: {
-      type: DataTypes.ENUM("hecho", "permitido", "bloqueado"),
+      type: DataTypes.ENUM("devuelto", "rechazado","aceptado","procesando", "permitido", "bloqueado"),
       allowNull: true
+    },
+    fechaCompra:{
+      type: DataTypes.DATE,
+      allowNull: true 
     }
 
   }/*,

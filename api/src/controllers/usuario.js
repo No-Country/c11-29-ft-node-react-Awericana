@@ -36,7 +36,7 @@ const obtenerUsuario = async (req, res) => {
 };
 
 const actualizarUsuario = async (req, res) => {
-  const { id } = req.params;
+  const {id} = req.user;
 //   const { nombre, apellido, email, rol, imagen, fechaNacimiento } = req.body;
 
   const { nombre, apellido, fechaNacimiento, dni } = req.body;
@@ -77,7 +77,7 @@ const actualizarUsuario = async (req, res) => {
 };
 
 const inhabilitarOHabilitarUsuario = async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.user;
     const { habilitado } = req.query
     try {
         const usuario = await Usuario.findByPk(id)
@@ -117,7 +117,7 @@ const obtenerPublicaciones = async (req, res) => {
 }
 
 const obtenerVentas = async (req, res) => {
-  const {id} = req.params;
+  const {id} = req.user;
 
   const ventasConcretadas = await Publicacion.findAll({
     where: {
@@ -130,7 +130,7 @@ const obtenerVentas = async (req, res) => {
 }
 
 const obtenerCompras = async (req, res) => {
-  const {id} = req.params;
+  const {id} = req.user;
 
   const comprasHechas = await Publicacion.findAll({
     where: {

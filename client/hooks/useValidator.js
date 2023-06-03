@@ -17,6 +17,8 @@ export function useValidator () {
         return isEmailValid(data[key]) ? null : 'El email es inválido'
       case 'passwordConfirmation':
         return data[key] && data?.password === data[key] ? null : 'Las contraseñas no coinciden'
+      case 'emailConfirmation':
+        return data[key] && data?.email === data[key] ? null : 'Los email no coinciden'
       case 'nombre':
         return Boolean(data[key]) && data[key].length > 3 ? null : 'El nombre es muy corto'
       case 'apellido':

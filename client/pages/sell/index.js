@@ -7,9 +7,9 @@ function Sell () {
   return (
     <Layout>
       <Head>
-        <title>Ventas</title>
+        <title>Ventas | Awericana</title>
       </Head>
-      <Header/>
+      <Header disabled={true}/>
       <section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit flex flex-col'>
       <h1 className='py-12 px-4 font-normal text-lg leading-5'>Vender</h1>
       <div className='flex px-6 py-4 mb-2 shadow-md min-h-[80px]'>
