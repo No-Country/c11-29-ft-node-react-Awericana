@@ -43,8 +43,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
+console.log(sequelize.models);
 const {
   // Categoria,
+  Direccion,
   Imagen,
   Producto,
   Talle,
@@ -53,7 +55,10 @@ const {
   Usuario,
   Persona,
   Categoria,
-  Banner
+  Pago,
+  Banner,
+  Pais,
+  Review,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -69,14 +74,23 @@ Producto.belongsTo(Categoria);
 Categoria.hasMany(Producto);
 
 Imagen.belongsTo(Publicacion);
-Publicacion.hasMany(Imagen);
+Publicacion.hasMany(Imagen, { order: [["id", "DESC"]] });
 
 Usuario.hasMany(Publicacion);
 Publicacion.belongsTo(Usuario);
 
-Usuario.belongsToMany(Publicacion, {through: 'Carrito'});
-Publicacion.belongsToMany(Usuario, {through: 'Carrito'});
-const {Carrito} = sequelize.models; 
+Usuario.hasMany(Direccion);
+Direccion.belongsTo(Usuario);
+
+Pais.hasMany(Direccion);
+Direccion.belongsTo(Pais);
+
+Pago.belongsToMany(Publicacion, { through: "PagoPublicacion" });
+Publicacion.belongsToMany(Pago, { through: "PagoPublicacion" });
+
+Usuario.belongsToMany(Publicacion, { through: "Carrito" });
+Publicacion.belongsToMany(Usuario, { through: "Carrito" });
+const { Carrito } = sequelize.models;
 Carrito.belongsTo(Publicacion);
 Carrito.belongsTo(Usuario);
 
@@ -89,13 +103,16 @@ Publicacion.belongsTo(Persona);
 Producto.hasMany(Publicacion);
 Publicacion.belongsTo(Producto);
 
-Usuario.belongsToMany(Publicacion, {through: 'Favoritos'});
-Publicacion.belongsToMany(Usuario, {through: 'Favoritos'});
-const {Favoritos} = sequelize.models; 
+Usuario.belongsToMany(Publicacion, { through: "Favoritos" });
+Publicacion.belongsToMany(Usuario, { through: "Favoritos" });
+const { Favoritos } = sequelize.models;
 Favoritos.belongsTo(Publicacion);
 Favoritos.belongsTo(Usuario);
 
-
+Usuario.hasMany(Review, { foreignKey: "usuario_id" });
+Usuario.hasMany(Review, { foreignKey: "usuario_admin_id" });
+Review.belongsTo(Usuario, { foreignKey: "usuario_id" });
+Review.belongsTo(Usuario, { foreignKey: "usuario_admin_id" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

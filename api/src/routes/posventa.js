@@ -5,14 +5,31 @@ const {
     iniciarReclamo,
     actualizarEstadoEnvio,
     revelarVendedor,
-    chequearReclamo
+    chequearReclamo,
+    avanzarDevolucion
 } = require("../controllers/posventa");
+const authMiddleware = require("../middlewares/session");
 
 const router = Router();
 
-router.post('/solicitar_devolucion' , iniciarReclamo );
-router.post('/tracking' , actualizarEstadoEnvio );
-router.post('/revelar_vendedor' , revelarVendedor );
-router.post('/estado_devolucion' , chequearReclamo );
+router.post('/solicitar_devolucion', [
+    authMiddleware
+], iniciarReclamo );
+
+router.post('/tracking' ,[
+    authMiddleware
+], actualizarEstadoEnvio );
+
+router.post('/revelar_vendedor' , [
+    authMiddleware
+]  , revelarVendedor );
+
+router.post('/estado_devolucion' , [
+    authMiddleware
+] , chequearReclamo );
+
+router.post('/avanzar_devolucion' , [
+    authMiddleware
+], avanzarDevolucion );
 
 module.exports = router

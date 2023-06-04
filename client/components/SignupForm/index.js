@@ -17,6 +17,7 @@ export function SignupForm () {
     nombre: '',
     apellido: '',
     email: '',
+    emailConfirmation: '',
     password: '',
     passwordConfirmation: '',
     fechaNacimiento: '',
@@ -54,10 +55,11 @@ export function SignupForm () {
         <Input error={error?.nombre} name={'nombre'} type='text' placeholder={'Nombre(s)*'} label={'Nombre(s)*'} onChange={handleChange}/>
         <Input error={error?.apellido} name={'apellido'} type='text' placeholder={'Apellido(s)*'} label={'Apellido(s)*'} onChange={handleChange} />
         <Input error={error?.email} name={'email'} type='email' placeholder={'Email*'} label={'Email*'} onChange={handleChange}/>
+        <Input error={error?.emailConfirmation} name={'emailConfirmation'} type='email' placeholder={'Repetir email*'} label={'Repetir email*'} onChange={handleChange}/>
         <Input error={error?.password} name={'password'} type={'password'} placeholder={'Contraseña*'} label={'Contraseña*'} onChange={handleChange} />
         <Input error={error?.passwordConfirmation} name={'passwordConfirmation'} type={'password'} placeholder={'Repetir contraseña*'} label={'Repetir contraseña*'} onChange={handleChange} />
-        <Input error={error?.fechaNacimiento} name={'fechaNacimiento'} type={'date'} placeholder={'Fecha de nacimiento*'} label={'Fecha de nacimiento*'} onChange={handleChange} />
         <Input error={error?.dni} name={'dni'} type='number' placeholder={'DNI*'} label={'DNI*'} onChange={handleChange} />
+        <Input error={error?.fechaNacimiento} name={'fechaNacimiento'} type={'date'} placeholder={'Fecha de nacimiento*'} label={'Fecha de nacimiento*'} onChange={handleChange} />
       </div>
       <Submit center={true} isLoading={isLoading}>REGISTRARSE</Submit>
       {submitError ? <p className='text-red text-big text-center'>{'Hubo un error al registrarse, intentalo de nuevo'}</p> : null}

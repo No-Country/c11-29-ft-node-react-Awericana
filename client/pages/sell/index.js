@@ -7,7 +7,7 @@ function Sell () {
   return (
     <Layout>
       <Head>
-        <title>Ventas</title>
+        <title>Ventas | Awericana</title>
       </Head>
       <Header disabled={true}/>
       <section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit flex flex-col'>

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const fakeRouter = require("../Helpers/fakeGenerator");
+const fakeRouter = require("../helpers/fakeGenerator");
 
 const router = Router();
 
@@ -21,9 +21,12 @@ const usuario = require("./usuario");
 const pagos = require("./pagosRoutes");
 const busquedas = require("./busquedas");
 const posventa = require("./posventa");
-const talle = require('./talle')
-const genero = require('./genero')
-const banner = require('./banner')
+const talle = require("./talle");
+const genero = require("./genero");
+const banner = require("./banner");
+const imagenes = require("./imagenes");
+const direcciones = require("./direccion");
+const review = require("./review");
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
@@ -34,15 +37,18 @@ router.use("/categoria", categoria);
 router.use("/favoritos", favoritos);
 router.use("/auth", authTerceros);
 
-router.use('/pagos', pagos)
-router.use('/busqueda', busquedas)
-router.use('/posventa', posventa)
+router.use("/pagos", pagos);
+router.use("/busqueda", busquedas);
+router.use("/posventa", posventa);
 
-router.use('/usuario', usuario)
-router.use('/talle', talle)
+router.use("/usuario", usuario);
+router.use("/talle", talle);
 
-router.use('/banner', banner)
+router.use("/banner", banner);
 
-router.use('/personas', genero)
+router.use("/personas", genero);
+router.use("/imagenes", imagenes);
+router.use("/direcciones", direcciones);
+router.use("/review", review);
 
 module.exports = router;

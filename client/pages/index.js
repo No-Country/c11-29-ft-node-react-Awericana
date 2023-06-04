@@ -5,52 +5,59 @@ import Banner from '@/components/Banner'
 import Card from '@/components/Card'
 import Categories from '@/components/Category/Categories'
 import { useSession } from '@/hooks/useSession'
+import Link from 'next/link'
 
-export default function Home ({ userData }) {
+export default function Home ({ userData, publicaciones = [] }) {
   const { session } = useSession(userData)
-  // fix
+
   return (
     <Layout>
-
       <Head>
-        <title>Inicio</title>
+        <title>Inicio | Awericana</title>
       </Head>
       <Header />
 
-      <Banner/>
+      <Banner />
 
-      <div className='p-4'>
+      <div className="p-4">
         <section>
-            <Categories/>
+          <Categories />
         </section>
         <section className='flex flex-wrap justify-center'>
-            <Card
-                precio={400}
-                titulo={'Remera'}
-                talleMedidas={'M'}
-            />
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
+    {console.log(publicaciones)}
+          {publicaciones.length > 0 && publicaciones.map(pub => {
+            console.log(pub)
+            return (
+              <Link href={'/detail/:id'} as={`/detail/${pub.id}`} key={pub.id}>
+                <Card
+                  precio={pub.precio}
+                  titulo={pub.titulo}
+                  talleMedidas={pub.talle.nombre}
+                  imgSrc={pub.imagenPortada || null}
+                   />
+              </Link>
+            )
+          })}
         </section>
       </div>
-
     </Layout>
-  )
+  );
 }
 
+
 export async function getServerSideProps (ctx) {
-  const domain = ctx.req.headers.host
-  const response = await fetch('http://' + domain + '/api/session')
-  const userData = await response.json()
+  const userDataResponse = await fetch('http://' + ctx.req.headers.host + '/api/session')
+  const userData = await userDataResponse.json()
+  const publicacionesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/publicaciones?offset=0&limit=100`)
+  const publicaciones = await publicacionesResponse.json()
+
+  // const bannerResponse = await fetch(domain + '/banner')
+  // const banner = await bannerResponse.json() // Las imagenes no estan cargadas
 
   return {
     props: {
-      userData: userData?.error ? null : userData.user
+      userData: userData?.error ? null : userData.user,
+      publicaciones: publicaciones.publicaciones
     }
   }
 }

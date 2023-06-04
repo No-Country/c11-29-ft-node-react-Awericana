@@ -4,12 +4,16 @@ import { Footer } from '@/components/Footer'
 import { Submit } from '@/components/Buttons/Submit'
 import { useRouter } from 'next/router'
 import { Layout } from '@/components/Layout'
+import { useError } from '@/hooks/useError'
+import { Form } from '@/components/Form'
+import { Tertiary } from '@/components/Buttons/Tertiary'
 
 export default function VenderCategory () {
   const [categorias, setCategorias] = useState([])
   const [productos, setProductos] = useState([])
   const [selectedCategoria, setSelectedCategoria] = useState('')
   const [gender, setGenders] = useState([])
+  const { error, setError } = useError()
   const router = useRouter()
 
   useEffect(() => {
@@ -45,8 +49,10 @@ export default function VenderCategory () {
 
   const handleFormSubmit = (event) => {
     event.preventDefault()
-    const selectedSubCategoria = event.target.elements.subCategoria.value
-    const selectedGender = event.target.elements.gender.value
+    const idCategoria = event.target.elements.subCategoria.value
+    const selectedSubCategoria = productos.find(producto => producto.id === +idCategoria)
+    const idGender = event.target.elements.gender.value
+    const selectedGender = gender.find(singleGender => singleGender.id === +idGender)
 
     const formData = JSON.parse(localStorage.getItem('formData')) || {}
     const updatedFormData = {
@@ -56,8 +62,12 @@ export default function VenderCategory () {
       selectedGender
     }
 
-    localStorage.setItem('formData', JSON.stringify(updatedFormData))
-    router.push('/sell/add-product/upload-image')
+    if (updatedFormData?.selectedCategoria && updatedFormData?.selectedGender && updatedFormData?.selectedSubCategoria) {
+      localStorage.setItem('formData', JSON.stringify(updatedFormData))
+      router.push('/sell/add-product/upload-image')
+    } else {
+      setError({ category: 'Algo salió mal, revisa las categorías e intentalo de nuevo.' })
+    }
   }
   const handleCancel = () => {
     localStorage.clear()
@@ -67,8 +77,8 @@ export default function VenderCategory () {
     <Layout>
       <Header disabled={true} />
       <h2 className="font-bold text-4xl mt-10 mb-10 ml-10">Vender</h2>
-      <section className='flex justify-center flex-col-reverse'>
-        <form className="flex justify-center items-center flex-col " onSubmit={handleFormSubmit}>
+      <section className='flex justify-center flex-col-reverse max-w-[500px] m-auto'>
+        <Form onSubmit={handleFormSubmit}>
           <div className='flex gap-6 flex-col'>
             <select className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' value={selectedCategoria} onChange={handleCategoriaChange} name='categoria'>
               <option value="">Seleccione una categoría</option>
@@ -80,7 +90,7 @@ export default function VenderCategory () {
             </select>
             {
               <select className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' name='subCategoria'>
-                <option value="">Seleccione una SubCategoría</option>
+                <option value="">Seleccione una sub-categoría</option>
                 {Array.isArray(productos) &&
                   productos.map((producto) => (
                     <option key={producto.id} value={producto.id}>
@@ -92,17 +102,17 @@ export default function VenderCategory () {
             <select className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400' name='gender'>
               <option value="">Seleccione un Género</option>
               {gender.length > 0 && gender.map((genders) => (
-                <option key={genders.id} value={genders.nombre}>
+                <option key={genders.id} value={genders.id}>
                   {genders.nombre}
                 </option>
               ))}
             </select>
-
-            <Submit className="flex justify-center">Guardar Y Continuar</Submit>
+            {error?.category ? <p className='text-red text-big font-extrabold text-center'>{error?.category}</p> : null}
+            <Submit center={true} className="flex justify-center">Guardar Y Continuar</Submit>
+            <Tertiary center={true} onClick={handleCancel}>Cancelar</Tertiary>
           </div>
-        </form>
+        </Form>
       </section>
-      <div className='flex justify-center'> <button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ' onClick={handleCancel}>Cancelar</button></div>
       <Footer />
     </Layout>
   )

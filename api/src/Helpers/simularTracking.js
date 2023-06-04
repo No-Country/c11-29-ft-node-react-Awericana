@@ -14,38 +14,48 @@ const simularTracking = async (publicacionId, compradorId) => {
 
     if(publicacion.estadoEntrega !== 'Entregado'){
 
-        if(publicacion.tipoEntrega === 'Retiro'){
-            if(publicacion.estadoEntrega === null){
+        if(publicacion.tipoEntrega === 'Retiro'|| publicacion.tipoEntrega === 'Convenir'){
+            if(publicacion.estadoEntrega === 'Empacando'){
                 const cambios = {
                     estadoEntrega: 'Esperando retiro'
                 }
 
+                await publicacion.update(cambios);
+
+            }else if(publicacion.estadoEntrega === "Esperando retiro" ){
+                const cambios = {
+                    estadoEntrega: 'Entregado',
+                    fechaEntrega: new Date()
+                }
+    
                 await publicacion.update(cambios);
             }
         
         }
 
         if(publicacion.tipoEntrega === 'Envio'){
-            if(publicacion.estadoEntrega === null){
+            if(publicacion.estadoEntrega === 'Empacando'){
                 const cambios = {
-                    estadoEntrega: 'Enviado'
+                    estadoEntrega: 'En camino'
                 }
 
+                await publicacion.update(cambios);
+                
+            }else if(publicacion.estadoEntrega === "En camino" ){
+                const cambios = {
+                    estadoEntrega: 'Entregado',
+                    fechaEntrega: new Date()
+                }
+    
                 await publicacion.update(cambios);
             }
         }
 
     
-        if(publicacion.estadoEntrega === "Enviado" || publicacion.estadoEntrega === "Esperando retiro" ){
-            const cambios = {
-                estadoEntrega: 'Entregado',
-                fechaEntrega: new Date()
-            }
-
-            await publicacion.update(cambios);
-        }
+        
        
     }
+    
 
 }
 

@@ -5,13 +5,18 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useRouter } from 'next/router'
 import { Layout } from '@/components/Layout'
+import { useError } from '@/hooks/useError'
+import Head from 'next/head'
 
 export default function Vender () {
   const [talles, setTalles] = useState([])
   const [, setFormData] = useState({})
+  const { error, setError } = useError()
   const router = useRouter()
 
   useEffect(() => {
+    const isExistant = localStorage.getItem('formData')
+    if (isExistant) localStorage.clear()
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/talle`)
       .then(response => response.json())
       .then(data => setTalles(data))
@@ -21,7 +26,8 @@ export default function Vender () {
   const handleFormSubmit = (event) => {
     event.preventDefault()
     const title = event.target.elements.title.value
-    const selectedTalle = event.target.elements.talle.value
+    const idTalle = event.target.elements.talle.value
+    const selectedTalle = talles.find(talle => talle.id === +idTalle)
     const detail = event.target.elements.detail.value
     const price = event.target.elements.price.value
 
@@ -32,10 +38,19 @@ export default function Vender () {
       price
     }
 
-    setFormData(newFormData)
-    localStorage.setItem('formData', JSON.stringify(newFormData))
-    router.push('/sell/add-product/category')
+    if (title && selectedTalle && detail && price) {
+      if (detail.length < 11 || detail.length > 99) {
+        setError({ addProduct: 'La descripcion debe tener entre 10 y 100 caracteres' })
+        return
+      }
+      setFormData(newFormData)
+      localStorage.setItem('formData', JSON.stringify(newFormData))
+      router.push('/sell/add-product/category')
+    } else {
+      setError({ addProduct: 'Algo salio mal, revisa los campos nuevamente' })
+    }
   }
+
   const handleCancel = () => {
     localStorage.clear()
     router.push('/')
@@ -43,9 +58,12 @@ export default function Vender () {
 
   return (
     <Layout>
+      <Head>
+        <title>Agregar producto | Awericana</title>
+      </Head>
       <Header disabled={true} />
       <h2 className='font-bold text-4xl mt-10 mb-10 ml-10'>Vender</h2>
-      <section className='flex justify-center items-center flex-col'>
+      <section className='flex justify-center items-center flex-col p-layoutSides'>
         <form className='flex justify-center items-center flex-col ' onSubmit={handleFormSubmit}>
           <div>
             <Input type='text' placeholder='Titulo' name='title' />
@@ -62,7 +80,8 @@ export default function Vender () {
             <p>Toma las medidas de tu producto, revisa nuestra tabla de talles y coloca el talle correspondiente a las medidas</p>
             <Input type='text' placeholder='Detalle' name='detail' />
             <p>Describe tu producto, acá deberás aclarar si tiene mucho uso, poco uso o es nuevo</p>
-            <Input type='text' placeholder='Precio' name='price' />
+            <Input type='number' placeholder='Precio' name='price' />
+            {error?.addProduct ? <p className='text-red text-big font-extrabold text-center'>{error?.addProduct}</p> : null}
            <div className='flex justify-center'><Submit className="flex justify-center">Guardar Y Continuar</Submit></div>
           </div>
         </form>

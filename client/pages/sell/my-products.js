@@ -7,7 +7,7 @@ function MyProducts () {
   return (
     <Layout>
       <Head>
-        <title>Mis productos</title>
+        <title>Mis productos | Awericana</title>
       </Head>
       <Header disabled={true}/>
       <section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit flex flex-col'>
