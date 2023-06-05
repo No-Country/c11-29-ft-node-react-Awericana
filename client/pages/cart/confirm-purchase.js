@@ -26,7 +26,8 @@ export default function Index () {
   const pagarConMercadoPago = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/pagos/url/${session?.id}`
+        `http://localhost:3001/pagos/url/${session?.id}`,
+        { credentials: 'include' }
       )
       const data = await response.text()
       window.location.href = data

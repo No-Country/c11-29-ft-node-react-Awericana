@@ -17,7 +17,7 @@ export default function add () {
     provincia: '',
     pais: ''
   })
-
+  
   const [paises, setPaises] = useState([])
 
   useEffect(() => {
@@ -47,6 +47,7 @@ export default function add () {
         headers: {
           'Content-Type': 'application/json'
         },
+
         body: JSON.stringify({
           calle: direccion?.calle,
           numeracion: direccion?.numeracion,
@@ -55,6 +56,7 @@ export default function add () {
           provincia: direccion?.provincia,
           idPais: parseInt(direccion?.pais)
         })
+
       })
 
       if (response.ok) {
@@ -73,6 +75,7 @@ export default function add () {
         <title>Agregar Direccion</title>
       </Head>
       <Header disabled={true} />
+
       <section className="flex flex-col justify-center items-center">
         <p className="mt-[70px] mb-[50px] font-medium text-3xl">Agregar Direccion</p>
         <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit}>
@@ -89,6 +92,7 @@ export default function add () {
               <Input
                 name={'Numero'}
                 type="text"
+
                 placeholder={'Numero*'}
                 label={'Numero*'}
                 value={direccion.numeracion}
