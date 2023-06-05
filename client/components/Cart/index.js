@@ -8,7 +8,7 @@ export function Cart () {
 
   const handleClick = () => {
     if (checkAndRedirect()) {
-      push('/hoppingCard/myCart')
+      push('/cart')
     }
   }
   return (

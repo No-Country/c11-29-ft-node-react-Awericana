@@ -10,7 +10,7 @@ export default function Detail ({ postData = {} }) {
   const [images, setImages] = useState([])
   const [notFound, setNotFound] = useState(false)
   const [sellerData, setSellerData] = useState({})
-  console.log(sellerData)
+
   useEffect(() => {
     if (postData?.id) {
       console.log(postData)
