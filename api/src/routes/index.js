@@ -37,16 +37,12 @@ router.use("/cargaBaseDeDatos", rutaBaseDeDatos);
 router.use("/categoria", categoria);
 router.use("/favoritos", favoritos);
 router.use("/auth", authTerceros);
-
 router.use("/pagos", pagos);
 router.use("/busqueda", busquedas);
 router.use("/posventa", posventa);
-
 router.use("/usuario", usuario);
 router.use("/talle", talle);
-
 router.use("/banner", banner);
-
 router.use("/personas", genero);
 router.use("/imagenes", imagenes);
 router.use("/direcciones", direcciones);
