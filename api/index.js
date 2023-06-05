@@ -26,8 +26,8 @@ const poblarBaseDeDatos = require("./src/seeders/cargaBaseDeDatos.js");
 // hooks
 require("./src/Helpers/updateReviews.js");
 
-conn.sync({ force: true }).then(() => {
-  //poblarBaseDeDatos(); //comentada para evitar muchas consultas, usar endpoint
+conn.sync({ force: false }).then(() => {
+  // poblarBaseDeDatos(); //comentada para evitar muchas consultas, usar endpoint
   server.listen(3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
