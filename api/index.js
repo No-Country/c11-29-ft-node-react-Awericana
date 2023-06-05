@@ -26,9 +26,11 @@ const poblarBaseDeDatos = require("./src/seeders/cargaBaseDeDatos.js");
 // hooks
 require("./src/Helpers/updateReviews.js");
 
+const PORT = process.env.PORT || 3001
+
 conn.sync({ force: false }).then(() => {
   // poblarBaseDeDatos(); //comentada para evitar muchas consultas, usar endpoint
-  server.listen(3001, () => {
-    console.log("%s listening at 3001"); // eslint-disable-line no-console
+  server.listen(PORT, () => {
+    console.log(`listening at ${PORT}`); // eslint-disable-line no-console
   });
 });
