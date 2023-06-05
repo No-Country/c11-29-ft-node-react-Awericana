@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer'
 import { Layout } from '@/components/Layout'
 import Head from 'next/head'
 import { useSession } from '@/hooks/useSession'
+
 export default function add () {
   const { session } = useSession()
   const [direccion, setDireccion] = useState({
@@ -16,7 +17,7 @@ export default function add () {
     provincia: '',
     pais: ''
   })
-  console.log(direccion)
+  
   const [paises, setPaises] = useState([])
 
   useEffect(() => {
@@ -46,7 +47,16 @@ export default function add () {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(direccion)
+
+        body: JSON.stringify({
+          calle: direccion?.calle,
+          numeracion: direccion?.numeracion,
+          codigoPostal: direccion?.codigoPostal,
+          ciudad: direccion?.ciudad,
+          provincia: direccion?.provincia,
+          idPais: parseInt(direccion?.pais)
+        })
+
       })
 
       if (response.ok) {
@@ -65,22 +75,24 @@ export default function add () {
         <title>Agregar Direccion</title>
       </Head>
       <Header disabled={true} />
-      <section className='flex flex-col justify-center items-center'>
-        <p className='mt-[70px] mb-[50px] font-medium text-3xl'>Agregar Direccion</p>
-        <form className='flex flex-col justify-center items-center' onSubmit={handleSubmit}>
-          <div className='ml-4 mr-4 mt-5 flex flex-col gap-3'>
+
+      <section className="flex flex-col justify-center items-center">
+        <p className="mt-[70px] mb-[50px] font-medium text-3xl">Agregar Direccion</p>
+        <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit}>
+          <div className="ml-4 mr-4 mt-5 flex flex-col gap-3">
             <Input
               name={'Calle'}
-              type='text'
+              type="text"
               placeholder={'Calle*'}
               label={'Calle*'}
               value={direccion.calle}
               onChange={(e) => setDireccion({ ...direccion, calle: e.target.value })}
             />
-            <div className='flex gap-5 justify-center items-center w-full'>
+            <div className="flex gap-5 justify-center items-center w-full">
               <Input
                 name={'Numero'}
-                type='text'
+                type="text"
+
                 placeholder={'Numero*'}
                 label={'Numero*'}
                 value={direccion.numeracion}
@@ -88,7 +100,7 @@ export default function add () {
               />
               <Input
                 name={'C.Postal'}
-                type='text'
+                type="text"
                 placeholder={'C.Postal*'}
                 label={'C.Postal*'}
                 value={direccion.codigoPostal}
@@ -116,7 +128,9 @@ export default function add () {
               value={direccion.pais}
               onChange={(e) => setDireccion({ ...direccion, pais: e.target.value })}
             >
-              <option className='' value=''>Seleccione un país*</option>
+              <option className="" value="">
+                Seleccione un país*
+              </option>
               {paises.map((pais) => (
                 <option key={pais.id} value={pais.id}>
                   {pais.nombre}
@@ -125,7 +139,7 @@ export default function add () {
             </select>
           </div>
           <Submit>Agregar</Submit>
-          <button className='w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400'>
+          <button className="w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400">
             Cancelar
           </button>
         </form>
