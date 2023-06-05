@@ -9,19 +9,19 @@ const Card = ({
 }) => {
   return (
         <div className='inline-flex flex-col'>
-            <div className='m-3'>
+            <div className='my-3'>
                 <Image
-                    className='rounded-lg'
+                    className='rounded-lg aspect-video'
                     src={imgSrc}
                     width={297}
                     height={154}
                     alt="producto"
                 />
             </div>
-            <div className='mx-3'>
-                <p>${precio}</p>
-                <p>{titulo}</p>
-                <p>{talleMedidas}</p>
+            <div className='ml-0'>
+                <p className='font-bold text-3xl'>${precio}</p>
+                <p className='font-normal text-2xl'>{titulo}</p>
+                <p className='font-normal text-xl'>{talleMedidas}</p>
             </div>
         </div>
   )

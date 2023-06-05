@@ -1,12 +1,14 @@
 import { BsFillCartFill } from 'react-icons/bs'
 import { useSession } from '@/hooks/useSession'
+import { useRouter } from 'next/router'
 
 export function Cart () {
   const { checkAndRedirect } = useSession()
+  const { push } = useRouter()
 
   const handleClick = () => {
     if (checkAndRedirect()) {
-      // Abrir carrito
+      push('/hoppingCard/myCart')
     }
   }
   return (

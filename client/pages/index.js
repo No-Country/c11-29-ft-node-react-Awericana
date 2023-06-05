@@ -23,10 +23,9 @@ export default function Home ({ userData, publicaciones = [] }) {
         <section>
           <Categories />
         </section>
+        <h1 className='text-2xl font-semibold ml-5 mt-10'>Productos destacados</h1>
         <section className='flex flex-wrap justify-center'>
-    {console.log(publicaciones)}
           {publicaciones.length > 0 && publicaciones.map(pub => {
-            console.log(pub)
             return (
               <Link href={'/detail/:id'} as={`/detail/${pub.id}`} key={pub.id}>
                 <Card
@@ -41,9 +40,8 @@ export default function Home ({ userData, publicaciones = [] }) {
         </section>
       </div>
     </Layout>
-  );
+  )
 }
-
 
 export async function getServerSideProps (ctx) {
   const userDataResponse = await fetch('http://' + ctx.req.headers.host + '/api/session')
