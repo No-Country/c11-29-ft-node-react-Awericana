@@ -15,12 +15,19 @@ async function getUrlPago(req, res) {
   // verificar que no te puedas comprar a vos mismo.
   // implementar que en la funcion que aniade al carrito, no pueda si el id del usuario que quiere agregar al carrito
   // es igual al del duenio la publicacion.
-
+  
   let carrito = await Carrito.findAll({
     include: [Publicacion],
     where: { usuarioId: userid },
   });
-
+  
+  if (!carrito || carrito.length === 0){
+    return res.status(404).json({
+      Error:
+        "No se ha encontrado un carrito con publicaciones para el usuario enviado!",
+    });
+  }
+  
   const compradorUser = await Usuario.findOne({
     where: { id: userid },
     include: [Direccion],
@@ -57,12 +64,6 @@ async function getUrlPago(req, res) {
 
   // console.log(carrito[0].publicacion)
 
-  if (!carrito || carrito.length === 0){
-    return res.status(404).json({
-      Error:
-        "No se ha encontrado un carrito con publicaciones para el usuario enviado!",
-    });
-  }
 
   let carritoMapeado = carrito?.map((p) => {
     return {
