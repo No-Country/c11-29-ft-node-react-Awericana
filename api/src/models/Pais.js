@@ -13,5 +13,10 @@ module.exports = (sequelize) => {
       allowNull: false,
 			unique: true
     },
+    link: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null
+    }
   });
 };
