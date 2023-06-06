@@ -1,12 +1,10 @@
 import Image from 'next/image'
-import card from '@/public/assets/img-category/category.webp'
-
-const Category = ({ name = 'sin nombre' }) => {
+const Category = ({ name = 'sin nombre', img }) => {
   return (
         <div className='inline-block text-center m-6'>
             <Image
                 className='rounded-full'
-                src={card}
+                src={img}
                 width={104}
                 height={104}
                 alt="categoria"
