@@ -17,7 +17,6 @@ export default function add () {
     provincia: '',
     pais: ''
   })
-  
   const [paises, setPaises] = useState([])
 
   useEffect(() => {

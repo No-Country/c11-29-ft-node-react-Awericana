@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Layout } from '@/components/Layout'
 import { Header } from '@/components/Header'
 import { useSession } from '@/hooks/useSession'
-
+import Head from 'next/head'
 export default function Index () {
   const [carritoData, setCarritoData] = useState(null)
   const { session } = useSession()
@@ -38,6 +38,9 @@ export default function Index () {
 
   return (
     <Layout>
+      <Head>
+        <title>Mi Carrito</title>
+      </Head>
       <Header />
 
       <div className="px-[10%]">
