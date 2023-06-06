@@ -59,7 +59,7 @@ const poblarBaseDeDatos = async () => {
     if(!existenDatosProductos){
       await Producto.bulkCreate(productos);
     }
-    /*
+    
     const existenDatosPublicaciones = await Publicacion.findOne({
       where:{
         titulo: "Remera pokemon",
@@ -68,7 +68,7 @@ const poblarBaseDeDatos = async () => {
     });    
     if(!existenDatosPublicaciones){
       await Publicacion.bulkCreate(publicaciones);
-    }  */
+    }  
 
     
 
