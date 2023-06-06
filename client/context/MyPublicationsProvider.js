@@ -1,43 +1,41 @@
 import { useProduct } from '@/hooks/useProduct'
 import { useSession } from '@/hooks/useSession'
-import { createContext, useEffect, useReducer } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 
-export const MyPublicationsContext = createContext({})
+export const MyPublicationsContext = createContext([])
 
 const ACTION_TYPES = {
   PUPULATE: 'POPULATE'
 }
 
-function reducer (state, action) {
+function reducer (state = null, action) {
   const { type, payload } = action
   switch (type) {
     case ACTION_TYPES.PUPULATE:
-      return payload
+      return payload || []
     default:
       return state
   }
 }
 
 export function MyPublicationsProvider ({ children }) {
+  const [publications, dispatch] = useReducer(reducer, null)
   const { session } = useSession()
   const { getAllPosts } = useProduct()
-  const { publications, dispatch } = useReducer(reducer, {})
 
   useEffect(() => {
-    if (session?.id) {
+    if (session?.id && !publications) {
       getAllPosts(session.id)
+        .then(res => res.json())
         .then(res => {
-          if (res.ok) {
-            res.json()
-          }
+          dispatch({ type: ACTION_TYPES.PUPULATE, payload: res })
         })
-        .then(res => {
-          console.log(res)
-          // dispatch({ type: ACTION_TYPES.PUPULATE, payload: res })
+        .catch((e) => {
+          console.error(e)
+          dispatch({ type: ACTION_TYPES.PUPULATE, payload: [] })
         })
-        .catch(console.error)
     }
-  }, [])
+  }, [session])
 
   return (
     <MyPublicationsContext.Provider value={{ publications, dispatch, ACTION_TYPES }}>

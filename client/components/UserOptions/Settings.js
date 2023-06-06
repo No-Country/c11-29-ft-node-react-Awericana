@@ -10,6 +10,7 @@ import { useSession } from '@/hooks/useSession'
 function SettingsComponent () {
   const { session } = useSession()
   const { logout } = useAuth()
+
   return (
     <nav className="w-screen shadow-down px-2 max-w-[400px] h-fit z-20 absolute top-20 bg-white right-0 lg:right-32 xl:right-40">
       <h3 className='m-small mt-medium font-bold'>{session?.nombre + ' ' + session?.apellido}</h3> {/* Cambiar por nombre y apellido correspondientes */}
