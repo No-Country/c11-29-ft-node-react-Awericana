@@ -1,4 +1,4 @@
-let publicaciones = [
+/* let publicaciones = [
     {    
         "usuarioId": 2,
         "titulo": "Remera pokemon",
@@ -19,8 +19,8 @@ let publicaciones = [
         "productoId": 8,
         "imagenPortada": "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/231/400/products/d_701612-mla51094003746_082022-o-f43d8e3103670f150616608407925290-240-0.jpg"
     }
-];
+]; 
 
 module.exports = {
     publicaciones,
-  };
+  }; */
