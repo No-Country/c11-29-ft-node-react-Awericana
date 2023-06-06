@@ -27,6 +27,14 @@ const { usuarios } = require('./usuarios.js');
 //Volcar datos de los seeders en la Base de datos
 const poblarBaseDeDatos = async () => {
   try {
+    const existeUsuarios = await Usuario.findOne(); 
+    if(!existeUsuarios){
+      await Usuario.bulkCreate(admin);
+      
+      //Cargar usuarios para pruebas
+      await Usuario.bulkCreate(usuarios); 
+    }
+
     const existenDatosPais = await Pais.findOne();
     if(!existenDatosPais){
       await Pais.bulkCreate(paises);
@@ -51,7 +59,7 @@ const poblarBaseDeDatos = async () => {
     if(!existenDatosProductos){
       await Producto.bulkCreate(productos);
     }
-    
+    /*
     const existenDatosPublicaciones = await Publicacion.findOne({
       where:{
         titulo: "Remera pokemon",
@@ -60,15 +68,9 @@ const poblarBaseDeDatos = async () => {
     });    
     if(!existenDatosPublicaciones){
       await Publicacion.bulkCreate(publicaciones);
-    } 
+    }  */
 
-    const existeUsuarios = await Usuario.findOne(); 
-    if(!existeUsuarios){
-      await Usuario.bulkCreate(admin);
-      
-      //Cargar usuarios para pruebas
-      await Usuario.bulkCreate(usuarios); 
-    }
+    
 
     return true;
     
