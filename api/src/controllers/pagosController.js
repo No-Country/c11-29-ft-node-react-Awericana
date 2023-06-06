@@ -9,6 +9,21 @@ mercadopago.configure({
   access_token: ACCESS_TOKEN_MP,
 });
 
+async function getPrecioEnvio(req, res){
+  const {compradorId, vendedorId } = req.params // puede ser por query tambien. 
+
+  const compradorUser = await Usuario.findOne({
+    where: { id: compradorId },
+    include: [Direccion],
+  });
+  
+  const vendedorUser = await Usuario.findOne({
+    where: { id: vendedorId },
+    include: [Direccion],
+  });
+
+}
+
 async function getUrlPago(req, res) {
   const { userid } = req.params;
   const {direccionId } = req.query
@@ -43,7 +58,7 @@ async function getUrlPago(req, res) {
   const vendedorUserData = vendedorUser.get({plain:true})
 
   // console.log( 'ashee', compradorUserData,"olaf",  vendedorUserData)
-  
+   
   // console.log(compradorUser, vendedorUser)
   // console.log(compradorUserData)
   let latitudOrigen = compradorUserData.direccions[0].latitud
@@ -182,4 +197,6 @@ async function notificarYConfirmarPago(req, res) {
 module.exports = {
   getUrlPago,
   notificarYConfirmarPago,
+  getPrecioEnvio,
+
 };
