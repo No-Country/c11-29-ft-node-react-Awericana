@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer'
 import { Layout } from '@/components/Layout'
 import Head from 'next/head'
 import { useSession } from '@/hooks/useSession'
-
+import Link from 'next/link'
 export default function add () {
   const { session } = useSession()
   const [direccion, setDireccion] = useState({
@@ -26,7 +26,7 @@ export default function add () {
 
   const fetchPaises = async () => {
     try {
-      const response = await fetch('http://localhost:3001/paises')
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/paises`)
       if (response.ok) {
         const data = await response.json()
         setPaises(data)
@@ -41,7 +41,7 @@ export default function add () {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`http://localhost:3001/direcciones/?idUsuario=${session.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/?idUsuario=${session.id}`, {
         credentials: 'include',
         method: 'POST',
         headers: {
@@ -123,6 +123,7 @@ export default function add () {
               name={'Pais'}
               value={direccion.pais}
               onChange={(e) => setDireccion({ ...direccion, pais: e.target.value })}
+              className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400'
             >
               <option className="" value="">
                 Seleccione un país*
@@ -135,9 +136,9 @@ export default function add () {
             </select>
           </div>
           <Submit>Agregar</Submit>
-          <button className="w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400">
+          <Link href={'/profile/directions'} ><button className='w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400`'>
             Cancelar
-          </button>
+          </button></Link>
         </form>
       </section>
       <Footer />

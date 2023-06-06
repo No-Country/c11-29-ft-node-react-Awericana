@@ -11,7 +11,7 @@ export default function Index () {
     const fetchCarritoData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/carrito/${session?.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`
         )
         const data = await response.json()
         setCarritoData(data)
@@ -26,7 +26,7 @@ export default function Index () {
   const pagarConMercadoPago = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/pagos/url/${session?.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/pagos/url/${session?.id}`
       )
       const data = await response.text()
       window.location.href = data

@@ -8,7 +8,7 @@ export default function Direccion () {
   useEffect(() => {
     async function fetchDirecciones () {
       try {
-        const response = await fetch('http://localhost:3001/direcciones', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones`, {
           credentials: 'include'
         })
         if (response.ok) {
@@ -41,7 +41,7 @@ export default function Direccion () {
                 <p>{direccion.calle}</p>
                 <p>{direccion.codigoPostal}</p>
               </div>
-              <Link href={`/profile/directions/edit/${direccion.id}`} className='my-auto font-normal text-xs leading-5 underline'>
+              <Link href={'/profile/directions/edit/[id]'} as={`/profile/directions/edit/${direccion.id}`} className='my-auto font-normal text-xs leading-5 underline'>
                 Modificar
               </Link>
             </div>

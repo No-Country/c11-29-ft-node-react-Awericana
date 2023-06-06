@@ -1,14 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/Input'
-import { Submit } from '../../../components/Buttons/Submit'
+import { Submit } from '@/components/Buttons/Submit'
 import { Footer } from '@/components/Footer'
 import { Layout } from '@/components/Layout'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 export default function add () {
   const router = useRouter()
   const { id } = router.query
-
+  const [paises, setPaises] = useState([])
   const [direccion, setDireccion] = useState({
     calle: '',
     numero: '',
@@ -18,18 +20,43 @@ export default function add () {
     pais: ''
   })
 
+  const fetchPaises = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/paises`)
+      if (response.ok) {
+        const data = await response.json()
+        setPaises(data)
+      } else {
+        console.error('Error al obtener los países')
+      }
+    } catch (error) {
+      console.error('Error al conectar con el servidor', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchPaises()
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      const response = await fetch(`http://localhost:3001/direcciones/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/${id}`, {
+        credentials: 'include',
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(direccion)
+        body: JSON.stringify({
+          calle: direccion.calle,
+          numeracion: direccion.numero,
+          codigoPostal: direccion.codigoPostal,
+          ciudad: direccion.ciudad,
+          provincia: direccion.provincia,
+          idPais: parseInt(direccion.pais)
+        })
       })
-
       if (response.ok) {
         console.log('Dirección modificada')
       } else {
@@ -66,7 +93,7 @@ export default function add () {
               />
               <Input
                 name={'C.Postal'}
-                type='email'
+                type='Number'
                 placeholder={'C.Postal*'}
                 label={'C.Postal*'}
                 value={direccion.codigoPostal}
@@ -89,19 +116,25 @@ export default function add () {
               value={direccion.provincia}
               onChange={(e) => setDireccion({ ...direccion, provincia: e.target.value })}
             />
-            <Input
-              name={'Pais'}
-              type={'text'}
-              placeholder={'Pais*'}
-              label={'Pais*'}
-              value={direccion.pais}
-              onChange={(e) => setDireccion({ ...direccion, pais: e.target.value })}
-            />
+            <select
+                 name={'Pais'}
+                 value={direccion.pais}
+                 onChange={(e) => setDireccion({ ...direccion, pais: e.target.value })}
+                 className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400'
+                 >
+                  <option className="" value="">
+                      Seleccione un país*
+                  </option>
+                   {paises.map((pais) => (
+                     <option key={pais.id} value={pais.id}>
+                   {pais.nombre}
+                </option>))}
+                </select>
           </div>
           <Submit>Guardar Cambios</Submit>
-          <button className='w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400`'>
+          <Link href={'/profile/directions'} ><button className='w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400`'>
             Cancelar
-          </button>
+          </button></Link>
         </form>
       </section>
       <Footer />
