@@ -6,7 +6,8 @@ const {
   Producto,
   Pais,
   Persona,
-  Usuario
+  Usuario,
+  Publicacion
 } = require("../db.js"); 
 
 //const router = Router();
@@ -18,6 +19,7 @@ const { personas } = require("./personas.js");
 const { categorias } = require("./categorias.js");
 const { productos } = require('./productos.js');
 const { admin } = require('./admin.js');
+const { publicaciones } = require('./publicaciones.js');
 
 //Importar usuarios de prueba para el desarrollo
 const { usuarios } = require('./usuarios.js');
@@ -47,7 +49,17 @@ const poblarBaseDeDatos = async () => {
 
     const existenDatosProductos = await Producto.findOne();    
     if(!existenDatosProductos){
-      await Producto.bulkCreate(productos)
+      await Producto.bulkCreate(productos);
+    }
+    
+    const existenDatosPublicaciones = await Publicacion.findOne({
+      where:{
+        titulo: "Remera pokemon",
+        usuarioId: 2
+      }
+    });    
+    if(!existenDatosPublicaciones){
+      await Publicacion.bulkCreate(publicaciones);
     } 
 
     const existeUsuarios = await Usuario.findOne(); 
