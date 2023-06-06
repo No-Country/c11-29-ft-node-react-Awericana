@@ -1,7 +1,7 @@
 
 const {Publicacion, Talle , Persona, Producto, Imagen, Pago} = require("../db");
 
-const { quitarPublicacionDeListas } = require("../helpers/quitarPublicacionDeListas");
+const { quitarPublicacionDeListas } = require("../Helpers/quitarPublicacionDeListas");
 
 const obtenerPublicaciones = async(req, res) => {
 
@@ -23,13 +23,15 @@ const obtenerPublicacion= async(req, res) => {
 
     const {id} = req.params;
 
+   
+
     const publicacion = await Publicacion.findByPk(id, {
         include:[Talle, Persona, Producto],
         where:{
             estado: 'habilitada'
         },
         include: [{ model: Imagen }]
-    });
+    });  
 
     if(!publicacion){
         return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})

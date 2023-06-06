@@ -11,7 +11,7 @@ export default function Index () {
   useEffect(() => {
     const fetchCarritoData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, { credentials: 'include' })
         const data = await response.json()
         setCarritoData(data)
       } catch (error) {
@@ -78,7 +78,7 @@ export default function Index () {
        <p>${carritoData?.montoTotal}</p>
        </div>
        <div className='flex items-center flex-col gap-4 ' >
-    <Link href={'/ShopingCard/confirmPurchase'}><button className='w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition'>Continuar</button></Link>
+    <Link href={'/cart/confirm-purchase'}><button className='w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition'>Continuar</button></Link>
      <Link href={'/'}><button className='border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg '>Cancelar</button></Link>
        </div>
     </div>
