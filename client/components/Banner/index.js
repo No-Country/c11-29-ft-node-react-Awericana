@@ -4,9 +4,9 @@ import 'slick-carousel/slick/slick-theme.css'
 import Image from 'next/image'
 
 /* importar las imagenes que van a ir en el Slider */
-import banner1 from '@/public/assets/img-banner/banner1.png'
-import banner2 from '@/public/assets/img-banner/banner2.png'
-import banner3 from '@/public/assets/img-banner/banner3.png'
+import banner1 from '@/public/assets/img-banner/1.jpg'
+import banner2 from '@/public/assets/img-banner/2.jpg'
+import banner3 from '@/public/assets/img-banner/3.jpg'
 
 const Banner = () => {
   const settings = {
