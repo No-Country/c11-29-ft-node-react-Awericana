@@ -11,7 +11,7 @@ export default function Index () {
   useEffect(() => {
     const fetchCarritoData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/carrito/${session?.id}`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`)
         const data = await response.json()
         setCarritoData(data)
       } catch (error) {
@@ -24,7 +24,7 @@ export default function Index () {
 
   const handleDeleteItem = async (itemId) => {
     try {
-      await fetch(`http://localhost:3001/carrito/${session?.id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
