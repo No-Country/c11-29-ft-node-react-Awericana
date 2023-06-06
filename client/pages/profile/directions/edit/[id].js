@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer'
 import { Layout } from '@/components/Layout'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
 
 export default function add () {
   const router = useRouter()
@@ -69,6 +70,9 @@ export default function add () {
 
   return (
     <Layout>
+      <Head>
+        <title>Modificar Direccion</title>
+      </Head>
       <Header disabled={true} />
       <section className='flex flex-col justify-center items-center'>
         <p className='mt-[70px] mb-[50px] font-medium text-3xl'>Modificar Direccion</p>
