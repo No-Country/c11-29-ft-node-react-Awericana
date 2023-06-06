@@ -3,6 +3,7 @@ import { Header } from '@/components/Header'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { Submit } from '@/components/Buttons/Submit'
 import Head from 'next/head'
+
 export default function paymentPonfirmed () {
   return (
     <Layout>

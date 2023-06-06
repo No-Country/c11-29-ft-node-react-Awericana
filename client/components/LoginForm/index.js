@@ -39,11 +39,11 @@ export function LoginForm () {
     setError(validator(data))
   }
 
-  const handleGoogle = (e) => {
-    e.preventDefault()
+  // const handleGoogle = (e) => {
+  //   e.preventDefault()
 
-    googleLogin()
-  }
+  //   googleLogin()
+  // }
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -53,9 +53,9 @@ export function LoginForm () {
         <Link href={'#'} className="ml-18 underline cursor-pointer text-black">¿Olvidaste Tu Contraseña?</Link>
         <Submit center={true} isLoading={isLoading} >INICIAR SESIÓN</Submit>
         {submitError ? <p className='text-red text-big text-center'>Credenciales inválidas, intentalo de nuevo</p> : null}
-        <footer className='flex flex-col w-full md:w-9/12 m-auto'>
+        {/* <footer className='flex flex-col w-full md:w-9/12 m-auto'>
           <Secondary onClick={handleGoogle}>Ingresar con Google</Secondary>
-        </footer>
+        </footer> */}
     </Form>
   )
 }

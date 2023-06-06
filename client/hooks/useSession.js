@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useCallback } from 'react'
 import { SessionContext } from '@/context/SessionProvider'
 import { useRouter } from 'next/router'
 
@@ -7,26 +7,17 @@ export function useSession (initialState) {
   const { push } = useRouter()
 
   useEffect(() => {
-    if (!session && !initialState) {
-      fetch('/api/session')
-        .then(res => res.json())
-        .then(res => {
-          if (!res?.error) {
-            setSession(res)
-          }
-        })
-        .catch(e => console.error(e))
-    } else setSession(prev => prev ? prev : initialState)
+    if (initialState?.nombre && !session?.nombre) setSession(initialState)
   }, [])
 
-  function checkAndRedirect () {
-    if (!session) {
+  const checkAndRedirect = useCallback(() => {
+    if (!session?.nombre) {
       push('/auth/signin')
       return false
     }
 
     return true
-  }
+  }, [session])
 
   return { session, setSession, checkAndRedirect }
 }

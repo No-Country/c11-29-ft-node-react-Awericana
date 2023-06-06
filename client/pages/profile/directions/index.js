@@ -3,6 +3,8 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import Head from 'next/head'
 import Link from 'next/link'
+import { Layout } from '@/components/Layout'
+
 export default function Direccion () {
   const [direcciones, setDirecciones] = useState([])
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function Direccion () {
   }, [])
 
   return (
-    <div>
+    <Layout>
       <Head>
         <title>Mis Direcciones</title>
       </Head>
@@ -60,6 +62,6 @@ export default function Direccion () {
         </div>
       </section>
       <Footer />
-    </div>
+    </Layout>
   )
 }
