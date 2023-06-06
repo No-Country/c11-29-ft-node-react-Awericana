@@ -26,6 +26,7 @@ export default function Index () {
     try {
       await fetch(`http://localhost:3001/carrito/${session?.id}`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -84,7 +85,7 @@ export default function Index () {
         </section>
 
         <div className="flex items-center flex-col gap-4 mt-7 ">
-        <Link href={'/ShopingCard'}>
+        <Link href={'/cart/delivery'}>
         <button className="w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition">
             Comprar Carrito
           </button></Link>

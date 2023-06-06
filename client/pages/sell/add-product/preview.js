@@ -44,7 +44,7 @@ export default function Preview () {
         })
         .then(res => {
           console.log(res)
-          push('/')
+          push('/sell/my-products')
         })
         .catch(err => {
           setIsLoading(false)

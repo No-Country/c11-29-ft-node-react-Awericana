@@ -4,8 +4,11 @@ import { Input } from '@/components/Input'
 import { Submit } from '../../../components/Buttons/Submit'
 import { Footer } from '@/components/Footer'
 import { Layout } from '@/components/Layout'
-
+import { useRouter } from 'next/router'
 export default function add () {
+  const router = useRouter()
+  const { id } = router.query
+
   const [direccion, setDireccion] = useState({
     calle: '',
     numero: '',
@@ -19,7 +22,7 @@ export default function add () {
     e.preventDefault()
 
     try {
-      const response = await fetch('http://localhost:3001/direcciones/1', {
+      const response = await fetch(`http://localhost:3001/direcciones/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
