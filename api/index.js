@@ -26,9 +26,9 @@ const poblarBaseDeDatos = require("./src/seeders/cargaBaseDeDatos.js");
 // hooks
 require("./src/Helpers/updateReviews.js");
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   poblarBaseDeDatos(); //comentada para evitar muchas consultas, usar endpoint
   server.listen(PORT, () => {
     console.log(`listening at ${PORT}`); // eslint-disable-line no-console
