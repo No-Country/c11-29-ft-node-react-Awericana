@@ -49,7 +49,7 @@ const Categories = () => {
   return (
     <Slider {...settings}>
       {categories.map(category => (
-        <Category key={category.id} name={category.nombre}/>
+        <Category key={category.id} name={category.nombre} img={category.link}/>
       ))}
     </Slider>
   )
