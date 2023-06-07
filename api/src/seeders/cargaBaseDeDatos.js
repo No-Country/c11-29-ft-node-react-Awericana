@@ -7,7 +7,8 @@ const {
   Pais,
   Persona,
   Usuario,
-  Publicacion
+  Publicacion,
+  Imagen
 } = require("../db.js"); 
 
 //const router = Router();
@@ -23,6 +24,7 @@ const { publicaciones } = require('./publicaciones.js');
 
 //Importar usuarios de prueba para el desarrollo
 const { usuarios } = require('./usuarios.js');
+const { crearPublicacion } = require("../controllers/publicaciones.js");
 
 //Volcar datos de los seeders en la Base de datos
 const poblarBaseDeDatos = async () => {
@@ -60,14 +62,23 @@ const poblarBaseDeDatos = async () => {
       await Producto.bulkCreate(productos);
     }
     
-    const existenDatosPublicaciones = await Publicacion.findOne({
-      where:{
-        titulo: "Remera pokemon",
-        usuarioId: 2
-      }
-    });    
+    const existenDatosPublicaciones = await Publicacion.findOne();    
     if(!existenDatosPublicaciones){
-      await Publicacion.bulkCreate(publicaciones);
+
+      publicaciones.forEach(async(publicacion) => {
+        let publicacionASubir = await Publicacion.create(publicacion.body);
+        await publicacionASubir.save();
+
+        publicacion.images.forEach(async(imagen) => {
+          let imagenParaSubir = await Imagen.create({
+            link: imagen.link,
+            publicacionId : publicacionASubir.id
+          });
+          await imagenParaSubir.save(); 
+        });
+
+      });
+        
     }  
 
     
