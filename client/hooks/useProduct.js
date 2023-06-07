@@ -13,7 +13,7 @@ export function useProduct () {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/publicaciones/${id}/descuento`
     console.log('descuento:', { id, discount })
     const BODY = {
-      descuento: discount || undefined
+      descuento: discount || 0
     }
     return fetch(URL, {
       credentials: 'include',
