@@ -90,9 +90,9 @@ async function getUrlPago(req, res) {
     });
     const result = await mercadopago.preferences.create({
       back_urls: {
-        success: `${URL_FRONT}/pagos/success`,
+        success: `${URL_FRONT}/cart/payment-ponfirmed`,
         pending: `${URL_FRONT}/pagos/pending`,
-        failure: `${URL_FRONT}/pagos/failure`,
+        failure: `${URL_FRONT}/cart/error-payment`,
       },
       items: carritoMapeado,
       shipments: {
