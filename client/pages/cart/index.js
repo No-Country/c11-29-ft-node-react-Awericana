@@ -12,7 +12,9 @@ export default function Index () {
   useEffect(() => {
     const fetchCarritoData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
+          credentials: 'include'
+        })
         const data = await response.json()
         setCarritoData(data)
       } catch (error) {
