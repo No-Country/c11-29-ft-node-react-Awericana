@@ -4,13 +4,12 @@ import { Input } from '@/components/Input'
 import { Form } from '@/components/Form'
 import { useFormFields } from '@/hooks/useFormFields'
 import { Submit } from '../Buttons/Submit'
-import { Secondary } from '@/components/Buttons/Secondary'
 import { useState, useEffect } from 'react'
 import { useValidator } from '@/hooks/useValidator'
 import { useAuth } from '@/hooks/useAuth'
 
 export function LoginForm () {
-  const { login, error: submitError, googleLogin } = useAuth()
+  const { login, error: submitError } = useAuth()
   const [error, setError] = useState(null)
   const validator = useValidator()
   const [isLoading, setIsLoading] = useState(false)
@@ -39,12 +38,6 @@ export function LoginForm () {
     setError(validator(data))
   }
 
-  // const handleGoogle = (e) => {
-  //   e.preventDefault()
-
-  //   googleLogin()
-  // }
-
   return (
     <Form onSubmit={handleSubmit}>
         {query?.success ? <p className='text-primary text-big text-center'>Usuario registrado, inicia sesión para continuar</p> : null}
@@ -53,9 +46,6 @@ export function LoginForm () {
         <Link href={'#'} className="ml-18 underline cursor-pointer text-black">¿Olvidaste Tu Contraseña?</Link>
         <Submit center={true} isLoading={isLoading} >INICIAR SESIÓN</Submit>
         {submitError ? <p className='text-red text-big text-center'>Credenciales inválidas, intentalo de nuevo</p> : null}
-        {/* <footer className='flex flex-col w-full md:w-9/12 m-auto'>
-          <Secondary onClick={handleGoogle}>Ingresar con Google</Secondary>
-        </footer> */}
     </Form>
   )
 }

@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { Post } from '@/components/Post'
 import { useProduct } from '@/hooks/useProduct'
 import { useError } from '@/hooks/useError'
+import { useMyPublications } from '@/hooks/useMyPublications'
 
 export default function Preview () {
   const [formData, setFormData] = useState(null)
@@ -15,6 +16,7 @@ export default function Preview () {
   const { error, setError } = useError({})
   const { push } = useRouter()
   const { createPost, sellerData } = useProduct()
+  const { dispatch, ACTION_TYPES } = useMyPublications()
 
   useEffect(() => {
     const storedFormData = localStorage.getItem('formData')
@@ -39,11 +41,11 @@ export default function Preview () {
         .then(res => {
           if (res.ok) {
             setIsLoading(false)
-            res.json()
+            return res.json()
           }
         })
         .then(res => {
-          console.log(res)
+          dispatch({ type: ACTION_TYPES.ADD_ONE, payload: res.publicacion })
           push('/sell/my-products')
         })
         .catch(err => {

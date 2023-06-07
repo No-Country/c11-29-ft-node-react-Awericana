@@ -21,7 +21,7 @@ export default function Home ({ publicaciones = [] }) {
           <Categories />
         </section>
         <h1 className='text-2xl font-semibold ml-5 mt-10'>Productos destacados</h1>
-        <section className='flex flex-wrap justify-center'>
+        <section className='flex flex-wrap justify-center gap-4'>
           {publicaciones.length > 0 && publicaciones.map(pub => {
             return (
               <Link href={'/detail/:id'} as={`/detail/${pub.id}`} key={pub.id}>
@@ -30,6 +30,8 @@ export default function Home ({ publicaciones = [] }) {
                   titulo={pub.titulo}
                   talleMedidas={pub.talle.nombre}
                   imgSrc={pub.imagenPortada || null}
+                  precioOriginal={pub.precioOriginal}
+                  descuento={pub.descuento}
                    />
               </Link>
             )
