@@ -50,7 +50,7 @@ router.put('/:id' , [
 router.put('/:id/descuento' , [
     authMiddleware,
     param('id', 'El id de la publicación debe ser entero mayor a 0').isInt({min:1}),
-    body('descuento', 'El valor del descuento debe ser entero entre 1 y 99').optional().isInt({min:1, max:99}),
+    body('descuento', 'El valor del descuento debe ser entero').isInt({min:0}),
     validarCampos
 ], configurarDescuento);
 

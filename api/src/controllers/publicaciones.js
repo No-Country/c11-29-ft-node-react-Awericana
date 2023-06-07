@@ -206,7 +206,7 @@ const configurarDescuento = async( req, res) =>{
             return res.status(404).json({msg: `La publicación con el id:${id} no existe.`})
         }
 
-        if(!publicacion.oferta){
+        if(descuento > 0 && publicacion.oferta === false){
             const precioCopia = publicacion.precio;
             
             const cambios = {
@@ -218,26 +218,45 @@ const configurarDescuento = async( req, res) =>{
 
             await publicacion.update(cambios); 
         
-            res.status(201).json({
+            res.status(200).json({
                 msg: "El descuento fue aplicado.",
                 publicacion
             })
-        }else{
+        }else if(descuento > 0 && publicacion.oferta === true){
+            const cambios = {
+                precio : publicacion.precioOriginal - (publicacion.precioOriginal * (descuento / 100)),
+                descuento
+            }
+
+            await publicacion.update(cambios); 
+        
+            res.status(200).json({
+                msg: "El descuento fue aplicado.",
+                publicacion
+            })
+        }else if(descuento === 0 && publicacion.oferta === true){
             const cambios = { 
                 oferta: false,
                 precioOriginal: null,
-                descuento: 0
+                descuento: 0,
+                precio: publicacion.precioOriginal
             }
-           
-            publicacion.precioOriginal && (cambios.precio = publicacion.precioOriginal);
             
             await publicacion.update(cambios); 
         
-            res.status(201).json({
+            res.status(200).json({
                 msg: "El descuento fue quitado.",
                 publicacion
             })
-        } 
+        }else if(descuento === 0 && publicacion.oferta === false){
+                   
+            res.status(200).json({
+                msg: "No hubo cambios",
+                publicacion
+            })
+        }
+
+        
 
     } catch (error) {
         console.log(error);
