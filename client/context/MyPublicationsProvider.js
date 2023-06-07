@@ -7,7 +7,8 @@ export const MyPublicationsContext = createContext([])
 const ACTION_TYPES = {
   PUPULATE: 'POPULATE',
   DELETE_ID: 'DELETE_ID',
-  ADD_ONE: 'ADD_ONE'
+  ADD_ONE: 'ADD_ONE',
+  ADD_DISCOUNT: 'ADD_DISCOUNT'
 }
 
 function reducer (state = null, action) {
@@ -19,6 +20,14 @@ function reducer (state = null, action) {
       return state.filter(pub => pub.id !== payload)
     case ACTION_TYPES.ADD_ONE:
       return state.concat([{ ...payload }])
+    case ACTION_TYPES.ADD_DISCOUNT:
+      const index = state.findIndex(el => el.id === payload.id)
+      const clone = structuredClone(state)
+      if (clone[index]) {
+        clone[index] = payload
+        return clone
+      }
+      return state
     default:
       return state
   }
@@ -43,6 +52,10 @@ export function MyPublicationsProvider ({ children }) {
         })
     }
   }, [session])
+
+  useEffect(() => {
+    console.log(publications)
+  }, [publications])
 
   return (
     <MyPublicationsContext.Provider value={{ publications, dispatch, ACTION_TYPES }}>

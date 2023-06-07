@@ -19,6 +19,10 @@ export default function MyProducts () {
     setIsLocalLoading(false)
   }
 
+  const handleDiscount = (publication) => {
+    dispatch({ type: ACTION_TYPES.ADD_DISCOUNT, payload: publication })
+  }
+
   return (
     <Layout>
       <Head>
@@ -29,7 +33,7 @@ export default function MyProducts () {
       <h1 className='py-12 px-4 font-normal text-lg leading-5 xl:text-3xl xl:leading-loose'>Mis productos</h1>
       {!isLoading && !isLocalLoading
         ? publications.map(pub => {
-          return <MyProductsCard key={pub.id} id={pub.id} title={pub.titulo} price={pub.precio} applyDiscount={applyDiscount} handleDelete={handleDelete} imgUrl={pub.imagenPortada}/>
+          return <MyProductsCard key={pub.id} id={pub.id} title={pub.titulo} price={pub.precioOriginal || pub.precio} discount={pub.descuento} discountPrice={pub.precio} applyDiscount={applyDiscount} handleDiscount={handleDiscount} handleDelete={handleDelete} imgUrl={pub.imagenPortada}/>
         })
         : <Loading />}
       </section>

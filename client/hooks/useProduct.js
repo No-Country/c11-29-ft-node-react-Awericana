@@ -10,15 +10,19 @@ export function useProduct () {
   }
 
   const applyDiscount = (id, discount) => {
-    const URL = `${process.env.NEXT_PUBLIC_API_URL}/publicaciones/${id}`
-
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/publicaciones/${id}/descuento`
+    console.log('descuento:', { id, discount })
+    const BODY = {
+      descuento: discount || undefined
+    }
     return fetch(URL, {
       credentials: 'include',
-      method: 'PATCH',
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
 
-      body: JSON.stringify({
-        descuento: discount | undefined
-      })
+      body: JSON.stringify(BODY)
     })
   }
 

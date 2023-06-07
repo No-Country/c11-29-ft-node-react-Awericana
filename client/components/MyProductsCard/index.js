@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Select } from '@/components/Input/Select'
 
-function MyProductsCard ({ title, price, imgUrl, id, handleDelete, discount = '0%', applyDiscount }) {
+function MyProductsCard ({ title, price, imgUrl, id, handleDelete, handleDiscount, discount = '0%', discountPrice, applyDiscount }) {
   const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState(discount || 0)
   const [isLoading, setIsLoading] = useState(false)
@@ -15,21 +15,22 @@ function MyProductsCard ({ title, price, imgUrl, id, handleDelete, discount = '0
 
   useEffect(() => {
     if (isLoading) {
-      console.log(selected)
       const discountNumber = +selected.replace('%', '')
-
       if (!isNaN(discountNumber)) {
-        applyDiscount(id, selected)
+        applyDiscount(id, discountNumber)
           .then(res => {
             if (res.ok) return res.json()
             else throw new Error({ error: 'Something went wrong.' })
           })
           .then(res => {
-            console.log(res)
+            handleDiscount(res?.publicacion)
+            console.log(res.publicacion)
             setIsLoading(false)
+            setIsOpen(false)
           })
           .catch(e => {
             setIsLoading(false)
+            setIsOpen(false)
             console.error(e)
           })
       }
@@ -40,11 +41,21 @@ function MyProductsCard ({ title, price, imgUrl, id, handleDelete, discount = '0
 
   return (
     <div className='bg-white'>
-      <div className='flex px-5 py-4 mb-2 justify-stretch items-center gap-4 xl:gap-8 shadow-[1px_1px_4px_rgba(0,0,0,0.25)] h-[112px] xl:h-[160px] xl:py-6'>
-        <Image width={100} alt='Product image' height={100} className='h-[80px] w-[80px] xl:h-[112px] xl:w-[112px] bg-gray-700' src={imgUrl}/>
+      <div className={`flex px-5 py-4 mb-2 justify-stretch items-center gap-4 xl:gap-8 ${isOpen ? 'shadow-none' : 'shadow-down'} h-[112px] xl:h-[160px] xl:py-6`}>
+        <Link href={'/detail/:id'} as={`/detail/${id}`}>
+          <Image width={100} alt='Product image' height={100} className='h-[80px] w-[80px] xl:h-[112px] xl:w-[112px] bg-gray-700' src={imgUrl}/>
+        </Link>
+
         <div className='flex flex-col self-stretch justify-between font-light text-sm leading-5 max-[480px]:w-3/5 min-[480px]:w-2/3 min-[540px]:w-3/4 min-[768px]:w-4/5'>
-          <div className='text-base font-light leading-5 text-black xl:text-2xl'>{title}</div>
-          <div className='text-base font-light leading-5 text-black xl:text-2xl'>${price}</div>
+          <Link href={'/detail/:id'} as={`/detail/${id}`} className='text-base font-normal leading-5 text-black xl:text-2xl'>{title}</Link>
+          {
+            discount
+              ? <div className='flex gap-4'>
+                  <p className='text-base font-normal leading-5 text-black line-through xl:text-2xl'>${price}</p>
+                  <p className='text-base font-normal leading-5 text-red xl:text-2xl'>${discountPrice}</p>
+                </div>
+              : <p className='text-base font-normal leading-5 text-black xl:text-2xl'>${price}</p>
+          }
           <div className='flex justify-around'>
             <Link className='text-xs font-normal leading-5 text-black underline xl:text-primary xl:text-lg xl:no-underline xl:hover:underline' href={'#'}>Editar publicación</Link>
             <p onClick={() => setIsOpen(!isOpen)} className='text-xs cursor-pointer font-normal leading-5 text-black underline xl:text-primary xl:text-lg xl:no-underline xl:hover:underline'>{discount !== '0%' ? 'Modificar descuento' : 'Agregar descuento'}</p>
@@ -55,7 +66,7 @@ function MyProductsCard ({ title, price, imgUrl, id, handleDelete, discount = '0
       </div>
         {isOpen
           ? (
-            <div className='block max-w-[500px]'>
+            <div className='block max-w-[500px] m-auto'>
               <Select onChange={handleSelect} defaultValue={`${discount}%`} buttons={true} label={'Selecciona el porcentaje de descuento'} close={close}>
                 {DISCOUNT_OPTIONS.map(num => {
                   return <option key={num} value={num === 0 ? 0 : `${num}%`}>{num === 0 ? 'Sin descuento' : `${num}%`}</option>

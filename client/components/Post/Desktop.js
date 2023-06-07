@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Submit } from '@/components/Buttons/Submit'
 import { Tertiary } from '@/components/Buttons/Tertiary'
 
-export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido }) {
+export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, originalPrice }) {
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
 
@@ -41,7 +41,14 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
         </figure>
         <div className="flex flex-col mt-5 gap-10">
             <div className='flex flex-col justify-between h-[150px]'>
-              <p className="text-5xl font-extrabold">${price}</p>
+              {
+                 originalPrice !== price
+                   ? <div className='flex gap-4'>
+                <p className='text-5xl font-extrabold leading-5 text-black line-through'>${originalPrice}</p>
+                 <p className='text-5xl font-extrabold leading-5 text-red'>${price}</p>
+                </div>
+                   : <p className='text-5xl font-extrabold leading-5 text-black'>${originalPrice}</p>
+              }
               <p className="text-3xl font-bold">{title}</p>
               <p className="text-2xl">{size.nombre}</p>
               <p className="text-small underline">Ver tabla de talles</p>

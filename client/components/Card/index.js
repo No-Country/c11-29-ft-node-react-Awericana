@@ -5,7 +5,9 @@ const Card = ({
   precio = 'No especificado',
   titulo = 'No especificado',
   talleMedidas = 'No especificado',
-  imgSrc = card
+  imgSrc = card,
+  precioOriginal,
+  descuento
 }) => {
   return (
         <div className='inline-flex flex-col'>
@@ -19,7 +21,14 @@ const Card = ({
                 />
             </div>
             <div className='ml-0'>
-                <p className='font-bold text-3xl'>${precio}</p>
+                {
+                  descuento > 0
+                    ? <div className='flex gap-4'>
+                        <p className='font-bold text-3xl leading-5 text-black line-through xl:text-2xl'>${precioOriginal}</p>
+                        <p className='font-bold text-3xl leading-5 text-red xl:text-2xl'>${precio}</p>
+                      </div>
+                    : <p className='font-bold text-3xl leading-5 text-black xl:text-2xl'>${precio}</p>
+                            }
                 <p className='font-normal text-2xl'>{titulo}</p>
                 <p className='font-normal text-xl'>{talleMedidas}</p>
             </div>

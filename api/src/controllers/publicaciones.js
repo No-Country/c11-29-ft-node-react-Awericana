@@ -192,7 +192,7 @@ const configurarDescuento = async( req, res) =>{
     const {id} = req.params;
     const {id : usuarioId} = req.user;
     const {descuento} = req.body;
-        
+        console.log(id, descuento)
     try {
         const publicacion = await Publicacion.findOne({
             where:{

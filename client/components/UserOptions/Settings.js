@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { Label } from './Label'
 import { HiUser } from 'react-icons/hi2'
-import { BsFillHouseDoorFill, BsTrash3Fill } from 'react-icons/bs'
+import { BsFillHouseDoorFill } from 'react-icons/bs'
 import { AiFillHeart, AiFillCloseSquare } from 'react-icons/ai'
 import { ImPriceTag } from 'react-icons/im'
 import { useAuth } from '@/hooks/useAuth'
@@ -29,9 +29,6 @@ function SettingsComponent () {
         </Label>
         <Label href='/auth/signin' onClick={logout} Icon={AiFillCloseSquare}>
           Cerrar sesión
-        </Label>
-        <Label href='#' red={true} Icon={BsTrash3Fill}>
-          Eliminar cuenta
         </Label>
       </div>
     </nav>
