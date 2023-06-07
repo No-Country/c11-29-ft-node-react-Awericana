@@ -5,7 +5,9 @@ import { createContext, useReducer, useEffect } from 'react'
 export const MyPublicationsContext = createContext([])
 
 const ACTION_TYPES = {
-  PUPULATE: 'POPULATE'
+  PUPULATE: 'POPULATE',
+  DELETE_ID: 'DELETE_ID',
+  ADD_ONE: 'ADD_ONE'
 }
 
 function reducer (state = null, action) {
@@ -13,6 +15,10 @@ function reducer (state = null, action) {
   switch (type) {
     case ACTION_TYPES.PUPULATE:
       return payload || []
+    case ACTION_TYPES.DELETE_ID:
+      return state.filter(pub => pub.id !== payload)
+    case ACTION_TYPES.ADD_ONE:
+      return state.concat([{ ...payload }])
     default:
       return state
   }
@@ -29,6 +35,7 @@ export function MyPublicationsProvider ({ children }) {
         .then(res => res.json())
         .then(res => {
           dispatch({ type: ACTION_TYPES.PUPULATE, payload: res })
+          console.log(res)
         })
         .catch((e) => {
           console.error(e)

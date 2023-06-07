@@ -17,7 +17,7 @@ export function useSession (initialState) {
     }
 
     return true
-  }, [session])
+  }, [session?.nombre])
 
   return { session, setSession, checkAndRedirect }
 }

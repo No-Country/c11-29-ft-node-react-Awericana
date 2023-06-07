@@ -136,7 +136,7 @@ export default function UploadImage () {
               <BiUpload className='bg-slate-300 rounded-[100px] py-2' />
             </label>
           </div>
-          <p className='mt-5 mb-5 text-normal font-bold text-center'>Suelta las imágenes aquí o selecciónalas de tu dispositivo</p>
+          <p className='mt-5 mb-5 text-normal font-bold text-center'>Selecciona las imágenes de tu dispositivo</p>
             {error?.images ? <p className='text-red text-big font-extrabold text-center'>{error?.images}</p> : null}
           <Submit center={true} onClick={handleSubmit} isLoading={isLoading}>Guardar Y Continuar</Submit>
         </form>

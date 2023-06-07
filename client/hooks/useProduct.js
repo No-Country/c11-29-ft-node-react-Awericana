@@ -3,6 +3,25 @@ import { useSession } from './useSession'
 export function useProduct () {
   const { session } = useSession()
 
+  const deletePostById = (id) => {
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/publicaciones/${id}`
+
+    return fetch(URL, { credentials: 'include', method: 'DELETE' })
+  }
+
+  const applyDiscount = (id, discount) => {
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/publicaciones/${id}`
+
+    return fetch(URL, {
+      credentials: 'include',
+      method: 'PATCH',
+
+      body: JSON.stringify({
+        descuento: discount | undefined
+      })
+    })
+  }
+
   const getAllPosts = (id) => {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/usuario/${id}/publicaciones`
 
@@ -33,5 +52,5 @@ export function useProduct () {
     })
   }
 
-  return { sellerData: session, createPost, getAllPosts }
+  return { sellerData: session, createPost, getAllPosts, deletePostById, applyDiscount }
 }
