@@ -5,8 +5,7 @@ export async function checkSession (headers) {
   const request = await fetch(URL, {
     credentials: 'include',
     headers: {
-      ...headers,
-      'Access-Control-Allow-Credentials': true
+      ...headers
     }
   })
   const response = request
