@@ -6,13 +6,13 @@ import { useState } from 'react'
 import { Submit } from '@/components/Buttons/Submit'
 import { Tertiary } from '@/components/Buttons/Tertiary'
 
-export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido }) {
+export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, originalPrice }) {
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
 
   return (
     <Layout>
-      <article className="p-layoutSides gap-10 mb-10 flex w-full justify-center">
+      <article className="p-layoutSides gap-10 mb-10 mt-10 flex w-full justify-center">
         <figure className='w-[800px] max-h-[500px] max-w-[800px] aspect-video'>
           {imageList.map((src, i) => {
             if (i === shown) {
@@ -29,7 +29,7 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
                   return (
                   <Image key={src + i} src={src} className='w-[140px] h-[140px] inline-block mt-4 cursor-pointer' alt='Product image' onClick={() => setShown(i)} width={100} height={100}/>
                   )
-                } else if (i === 5) {
+                } else if (i === 6) {
                   return (
                     <span onClick={() => setImageList(prev => prev.reverse())} key={i} className='w-[140px] h-[140px] bg-grayish inline-block mt-4 cursor-pointer text-white text-6xl text-center pt-10'>+{imageList.length - 6}</span>
                   )
@@ -41,7 +41,14 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
         </figure>
         <div className="flex flex-col mt-5 gap-10">
             <div className='flex flex-col justify-between h-[150px]'>
-              <p className="text-5xl font-extrabold">${price}</p>
+              {
+                 originalPrice !== price
+                   ? <div className='flex gap-4'>
+                <p className='text-5xl font-extrabold leading-5 text-black line-through'>${originalPrice}</p>
+                 <p className='text-5xl font-extrabold leading-5 text-red'>${price}</p>
+                </div>
+                   : <p className='text-5xl font-extrabold leading-5 text-black'>${originalPrice}</p>
+              }
               <p className="text-3xl font-bold">{title}</p>
               <p className="text-2xl">{size.nombre}</p>
               <p className="text-small underline">Ver tabla de talles</p>

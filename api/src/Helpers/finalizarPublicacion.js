@@ -1,6 +1,6 @@
 const { Publicacion } = require("../db.js");
 const { notificarCompraVenta } = require("./notificarCompraVenta.js");
-const { quitarPublicacionDeListas } = require("../Helpers/quitarPublicacionDeListas");
+const { quitarPublicacionDeListas } = require("./quitarPublicacionDeListas.js");
 
 const finalizarPublicacion = async (publicacionId, compradorId) => {
   const publicacion = await Publicacion.findByPk(publicacionId);

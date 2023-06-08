@@ -22,7 +22,10 @@ export function useAuth () {
   async function login (data) {
     const response = await loginUser(data)
     const json = await response.json()
-    if (response.ok) return json
+    if (response.ok) {
+      setSession(json.user)
+      return json
+    }
     setError(json)
     return false
   }
@@ -34,7 +37,7 @@ export function useAuth () {
       return false
     }
     setSession(null)
-    push('/auth/signin')
+    push('/')
     return true
   }
 

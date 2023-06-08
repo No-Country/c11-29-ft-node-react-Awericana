@@ -6,14 +6,14 @@ const axios = require('axios');
 //     crearDireccion,
 //     modificarDireccion
 const obtenerDirecciones = async (req, res) => {
-    const { idUsuario } = req.query;
+    const { id } = req.user;
 
     const direcciones = await Direccion.findAll({
         include: [
             {
                 model: Usuario,
                 where: {
-                    id: idUsuario
+                    id: id
                 }
             },
             {
@@ -28,7 +28,6 @@ const obtenerDirecciones = async (req, res) => {
 }
 
 const eliminarDireccion = async (req, res) => {
-    const { idUsuario } = req.query;
     const { id } = req.params
     
     try {
@@ -50,14 +49,15 @@ const eliminarDireccion = async (req, res) => {
 }
 
 const crearDireccion = async (req, res) => {
-    const { idUsuario } = req.query
+    // const { idUsuario } = req.query
+    const { id } = req.user
     let { calle, numeracion, codigoPostal, ciudad, provincia, idPais} = req.body
     // idPais
     try {
-        const usuario = await Usuario.findByPk(idUsuario)
+        const usuario = await Usuario.findByPk(id)
 
         if(!usuario){
-            return res.status(404).json({msg: `Usuario con ID: ${idUsuario} no encontrado`})
+            return res.status(404).json({msg: `Usuario con ID: ${id} no encontrado`})
         }
 
         calle = calle.toLowerCase()

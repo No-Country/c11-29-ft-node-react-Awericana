@@ -7,6 +7,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        loading: {
+          '0%': { transform: 'rotate(180deg)', scale: '1.5' },
+          '25%': { transform: 'rotate(180deg)', scale: '1.5' },
+          '75%': { transform: 'rotate(0deg)', scale: '1.5' },
+          '100%': { transform: 'rotate(0deg) ', scale: '1.5' }
+        }
+      },
+      animation: {
+        'loading-w': 'loading 1.3s ease-in-out alternate 1s infinite'
+      },
       colors: {
         primary: 'rgba(34, 131, 112, 1)',
         secondary: 'rgba(119, 181, 169, 1)',
