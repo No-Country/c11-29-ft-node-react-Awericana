@@ -210,7 +210,7 @@ const configurarDescuento = async( req, res) =>{
             const precioCopia = publicacion.precio;
             
             const cambios = {
-                precio : publicacion.precio - (publicacion.precio * (descuento / 100)),
+                precio : Number((publicacion.precio - (publicacion.precio * (descuento / 100))).toFixed(2)),
                 precioOriginal: precioCopia,
                 oferta: true,
                 descuento
@@ -224,7 +224,7 @@ const configurarDescuento = async( req, res) =>{
             })
         }else if(descuento > 0 && publicacion.oferta === true){
             const cambios = {
-                precio : publicacion.precioOriginal - (publicacion.precioOriginal * (descuento / 100)),
+                precio : Number((publicacion.precioOriginal - (publicacion.precioOriginal * (descuento / 100))).toFixed(2)),
                 descuento
             }
 
