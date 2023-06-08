@@ -9,6 +9,21 @@ export function useProduct () {
     return fetch(URL, { credentials: 'include', method: 'DELETE' })
   }
 
+  const toggleFav = (id, postId) => {
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/favoritos/${id}`
+
+    return fetch(URL, {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        publicacionId: postId
+      })
+    })
+  }
+
   const applyDiscount = (id, discount) => {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/publicaciones/${id}/descuento`
     console.log('descuento:', { id, discount })
@@ -56,5 +71,5 @@ export function useProduct () {
     })
   }
 
-  return { sellerData: session, createPost, getAllPosts, deletePostById, applyDiscount }
+  return { sellerData: session, createPost, getAllPosts, deletePostById, applyDiscount, toggleFav }
 }
