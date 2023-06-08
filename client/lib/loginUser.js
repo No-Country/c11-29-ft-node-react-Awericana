@@ -6,8 +6,7 @@ export async function loginUser (data) {
     method: 'POST',
     credentials: 'include',
     headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': true
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(BODY)
   })
