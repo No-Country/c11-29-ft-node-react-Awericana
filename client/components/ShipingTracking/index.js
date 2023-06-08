@@ -17,13 +17,17 @@ export function TrackingComponent ({ estado }) {
         <div className={`-mt-1 w-4 h-4 rounded-full bg-${estado === 'Recibido' ? 'primary' : 'grayish'} z-10`}></div>
       </div>
       </div>
-      <div className="ml-4">
-        <div className="flex flex-col items-center justify-between" style={containerStyle}>
-          <p className="text-sm">Empacando</p>
-          <p className="text-sm">En camino</p>
-          <p className="text-sm">Recibido</p>
+      <div className="ml-8">
+        <div
+          className="flex flex-col items-center justify-between"
+          style={containerStyle}
+        >
+          <p className="text-xl font-medium text-primary">Empacando</p>
+          <p className={`text-xl font-medium text-${estado === "Empacando" ? "grayish" : "primary"}`}>En camino</p>
+          <p className={`text-xl font-medium text-${estado === "Entregado" ? "primary" : "grayish"}`}>Entregado</p>
         </div>
       </div>
     </div>
   )
 };
+
