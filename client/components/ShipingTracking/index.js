@@ -23,11 +23,10 @@ export function TrackingComponent ({ estado }) {
           style={containerStyle}
         >
           <p className="text-xl font-medium text-primary">Empacando</p>
-          <p className={`text-xl font-medium text-${estado === "Empacando" ? "grayish" : "primary"}`}>En camino</p>
-          <p className={`text-xl font-medium text-${estado === "Entregado" ? "primary" : "grayish"}`}>Entregado</p>
+          <p className={`text-xl font-medium text-${estado === 'Empacando' ? 'grayish' : 'primary'}`}>En camino</p>
+          <p className={`text-xl font-medium text-${estado === 'Entregado' ? 'primary' : 'grayish'}`}>Entregado</p>
         </div>
       </div>
     </div>
   )
 };
-

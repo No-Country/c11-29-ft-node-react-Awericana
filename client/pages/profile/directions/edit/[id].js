@@ -36,16 +36,15 @@ export default function add () {
   }
 
   const fetchDireccion = async () => {
-    
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/${id}`, {
         credentials: 'include'
-      });
+      })
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json()
         setDireccion({
           calle: data.calle,
-          numeracion:  data.numeracion,
+          numeracion: data.numeracion,
           codigoPostal: data.codigoPostal,
           ciudad: data.ciudad,
           provincia: data.provincia,
@@ -60,25 +59,23 @@ export default function add () {
   }
 
   useEffect(() => {
-    fetchPaises();
-    fetchDireccion();
-  }, []);
-  
+    fetchPaises()
+    fetchDireccion()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-   /* const completedFields = Object.values(direccion).filter((value) => value.trim() !== '').length
+    /* const completedFields = Object.values(direccion).filter((value) => value.trim() !== '').length
     if (completedFields < 6) {
       alert('Por favor, complete  6 campos.')
       return
-    }*/
-    const calle = (direccion.calle).trim();               if( calle === ''){return}
-    const numeracion = (direccion.numeracion).trim();     if( numeracion === ''){return}
-    const codigoPostal = (direccion.codigoPostal).trim(); if( codigoPostal === ''){return}
-    const ciudad = (direccion.ciudad).trim();             if( ciudad === ''){return}
-    const provincia = (direccion.provincia).trim();       if( provincia === ''){return}
-    const idPais = direccion.idPais;                      if( idPais ==  0){return}
-    
+    } */
+    const calle = (direccion.calle).trim(); if (calle === '') { return }
+    const numeracion = (direccion.numeracion).trim(); if (numeracion === '') { return }
+    const codigoPostal = (direccion.codigoPostal).trim(); if (codigoPostal === '') { return }
+    const ciudad = (direccion.ciudad).trim(); if (ciudad === '') { return }
+    const provincia = (direccion.provincia).trim(); if (provincia === '') { return }
+    const idPais = direccion.idPais; if (+idPais === 0) { return }
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/${id}`, {
@@ -169,7 +166,7 @@ export default function add () {
                       Seleccione un país*
                   </option>
                    {paises.map((pais) => (
-                      
+
                      <option key={pais.id} value={pais.id}>
 
                    {pais.nombre}
