@@ -84,7 +84,7 @@ export default function Index () {
           >
             PAGAR CON MERCADO PAGO
           </button>
-          <button className="border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ">
+          <button className="border-green-700 border hover:scale-110 w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ">
             Cancelar
           </button>
         </div>

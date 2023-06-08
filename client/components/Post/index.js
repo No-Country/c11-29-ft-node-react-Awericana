@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { Mobile } from '@/components/Post/Mobile'
 import { Desktop } from '@/components/Post/Desktop'
 
-export function Post ({ title, price, imageUrls, detail, selectedTalle, sellerData, originalPrice }) {
+
+export function Post ({ title, price, imageUrls, detail, selectedTalle, sellerData, id }) {
+
   const [isBig, setIsBig] = useState(false)
 
   useEffect(() => {
@@ -12,7 +14,9 @@ export function Post ({ title, price, imageUrls, detail, selectedTalle, sellerDa
 
   if (isBig) {
     return (
-    <Desktop {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, originalPrice }}/>
+
+    <Desktop {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, id }}/>
+
     )
   }
 

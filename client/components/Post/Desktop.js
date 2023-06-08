@@ -4,11 +4,30 @@ import { AiOutlineHeart } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
 import { Submit } from '@/components/Buttons/Submit'
-import { Tertiary } from '@/components/Buttons/Tertiary'
+import { useSession } from '@/hooks/useSession'
+export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, id }) {
 
-export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, originalPrice }) {
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
+  const { session } = useSession()
+
+  const addToCart = () => {
+    fetch(`http://localhost:3001/carrito/${session?.id}`, {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ publicacionId: id })
+    })
+      .then(response => {
+        console.log('Producto agregado al carrito:', response)
+        alert("Producto agregado")
+      })
+      .catch(error => {
+        console.error('Error al agregar el producto al carrito:', error)
+      })
+  }
 
   return (
     <Layout>
@@ -65,8 +84,7 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
               </div>
             </div>
         <div className='flex flex-col'>
-            <Submit>COMPRAR</Submit>
-            <Tertiary>Agregar al carrito</Tertiary>
+            <Submit onClick={addToCart}>Agregar al carrito</Submit>
         </div>
         </div>
       </article>
