@@ -81,12 +81,12 @@ export default function add () {
   return (
     <Layout>
       <Head>
-        <title>Agregar Direccion</title>
+        <title>Agregar Dirección</title>
       </Head>
       <Header disabled={true} />
 
       <section className="flex flex-col justify-center items-center">
-        <p className="mt-[70px] mb-[50px] font-medium text-3xl">Agregar Direccion</p>
+        <p className="mt-[70px] mb-[50px] font-medium text-3xl">Agregar Dirección</p>
         <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit}>
           <div className="ml-4 mr-4 mt-5 flex flex-col gap-3">
             <Input
