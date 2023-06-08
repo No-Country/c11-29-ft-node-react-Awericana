@@ -34,6 +34,10 @@ const obtenerUsuario = async (req, res) => {
   }
 };
 
+const obtenerUsuarioLogin = (req, res) => {
+  res.json(req.user);
+}
+
 const actualizarUsuario = async (req, res) => {
   const { id } = req.user;
   //   const { nombre, apellido, email, rol, imagen, fechaNacimiento } = req.body;
@@ -160,4 +164,5 @@ module.exports = {
   obtenerPublicaciones,
   obtenerVentas,
   obtenerCompras,
+  obtenerUsuarioLogin
 };
