@@ -8,7 +8,7 @@ export function useFav (initialState, userId, id) {
 
   useEffect(() => {
     if (isLoading) {
-      toggleFav(userId, id)
+      toggleFav(id)
         .then(res => res.ok ? res.json() : res)
         .then(res => {
           setIsLoading(false)

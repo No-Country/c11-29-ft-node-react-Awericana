@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Layout } from '@/components/Layout'
 import { Header } from '@/components/Header'
-import { useSession } from '@/hooks/useSession'
 import Head from 'next/head'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function index () {
   const [favoritos, setFavoritos] = useState([])
-  const { session } = useSession()
 
   useEffect(() => {
     obtenerFavoritos()
@@ -14,7 +14,7 @@ export default function index () {
 
   const obtenerFavoritos = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${session?.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos`, {
         credentials: 'include'
       })
       const data = await response.json()
@@ -28,7 +28,7 @@ export default function index () {
   const eliminarFavorito = async (favoritoId) => {
     try {
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${favoritoId}`, {
-        method: 'DELETE',
+        method: 'POST',
         credentials: 'include'
       })
       const nuevosFavoritos = favoritos.filter(
@@ -49,24 +49,25 @@ export default function index () {
       <h3 className='mt-16 ml-10 mb-8 text-4xl '>Mis Favoritos</h3>
       { favoritos.length > 0
         ? (
-        <div className=' mr-10 ml-10 flex flex-col gap-5'>
+        <div className='flex flex-col gap-5 h-fit w-full m-auto max-w-[800px]'>
           {favoritos.map((publicacion) => (
             <div className='shadow-down' key={publicacion.id}>
               <div className='flex'>
-                <div>
-                  <img
+                  <Image
+                    width={90}
+                    height={90}
+                    alt='Imagen de producto'
                     className='w-[90px] h-[90px] mx-5 my-5'
                     src={publicacion.imagenPortada}
                   />
-                </div>
                 <div className='flex flex-col justify-center'>
-                  <p className='text-3xl'>{publicacion.titulo}</p>
-                  <p className='text-2xl'>{publicacion.precio}</p>
+                  <p className='text-2xl'>{publicacion.titulo}</p>
+                  <p className='text-xl'>${publicacion.precio}</p>
                 </div>
               </div>
-              <div className='flex justify-between  px-5 py-5'>
-                <a>Ver Producto</a>
-                <a className='underline cursor-pointer' onClick={() => eliminarFavorito(publicacion.id)}>Quitar Favorito</a>
+              <div className='flex justify-between text-primary text-lg px-5 py-5'>
+                <Link className='hover:underline' href={'/detail/:id'} as={`/detail/${publicacion.id}`}>Ver Producto</Link>
+                <p className='underline cursor-pointer' onClick={() => eliminarFavorito(publicacion.id)}>Quitar Favorito</p>
               </div>
             </div>
           ))}
