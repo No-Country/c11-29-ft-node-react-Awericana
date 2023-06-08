@@ -4,9 +4,7 @@ export async function checkSession (headers) {
   // const request = await fetch(URL, { credentials: 'include', headers })
   const request = await fetch(URL, {
     credentials: 'include',
-    headers: {
-      ...headers
-    }
+    headers
   })
   const response = request
   const json = await response.json()
