@@ -16,7 +16,7 @@ export default function Detail ({ postData = {} }) {
   const { session } = useSession()
 
   useEffect(() => {
-    if (postData.usuarioId !== session?.id && session?.id && initialFav === null) {
+    if (postData.usuarioId && initialFav === null) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${postData.id}`, { credentials: 'include' })
         .then(res => {
           if (res.ok) return res.json()
