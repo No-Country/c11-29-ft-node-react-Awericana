@@ -1,8 +1,6 @@
 import { Stars } from './Stars'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Submit } from '@/components/Buttons/Submit'
-import { Tertiary } from '../Buttons/Tertiary'
 import { Fav } from '@/components/Post/Fav'
 
 export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title, isFav, price, size, detail, calificacion, nombre, apellido, originalPrice }) {

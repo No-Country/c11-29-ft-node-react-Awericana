@@ -13,14 +13,13 @@ export function useFav (initialState, userId, id) {
         .then(res => {
           setIsLoading(false)
           setIsFav(!isFav)
-          console.log(res?.message)
+          console.log(res)
         })
         .catch(e => {
           setIsLoading(false)
           console.error(e)
         })
     }
-    setIsLoading(false)
   }, [isLoading])
 
   const toggle = () => {
