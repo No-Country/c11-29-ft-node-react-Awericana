@@ -22,7 +22,7 @@ export default function Shiptracking () {
 
       </div>
       <section className=" max-w-screen-sm lg:max-w-5x2  m-auto mt-12 h-fit flex flex-col xl:flex-row xl:mt-20">
-       
+
         <div className="flex px-5 py-4 mb-12 justify-stretch items-center gap-4 xl:gap-8 shadow-[1px_1px_4px_rgba(0,0,0,0.25)] h-[120px] xl:ml-20 ">
             <img
               className="h-[80px] w-[80px] bg-gray-700"
