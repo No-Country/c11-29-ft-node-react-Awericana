@@ -5,7 +5,7 @@ import { Footer } from '@/components/Footer'
 import Head from 'next/head'
 // import Link from 'next/link'
 import { Layout } from '@/components/Layout'
-import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { AiOutlineStar } from 'react-icons/ai'
 import { Submit } from '../../components/Buttons/Submit'
 import { useSession } from '@/hooks/useSession'
 export default function Index () {
@@ -18,15 +18,15 @@ export default function Index () {
 
   const obtenerCompras = async () => {
     try {
-		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/7/compras`, {
-		  credentials: 'include'
-		})
-		const data = await response.json()
-		setCompras(data)
-	  } catch (error) {
-		console.error('Error al obtener las Compras:', error)
-	  }
-	}
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/7/compras`, {
+        credentials: 'include'
+      })
+      const data = await response.json()
+      setCompras(data)
+    } catch (error) {
+      console.error('Error al obtener las Compras:', error)
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault()
     return true
@@ -46,9 +46,9 @@ export default function Index () {
 					<div>
 						<p>Compraste</p>
 						<div className='rounded-sm shadow-down'>
-						{compras.map((publicacion, id) => { 
-						return (
-							<div key={id}>
+						{compras.map((publicacion, id) => {
+						  return (
+						<div key={id}>
 								<div>
 									<img src={publicacion.imagenPortada} alt='fotoProducto' />
 								</div>

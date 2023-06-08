@@ -1,37 +1,21 @@
-import React from "react";
+import React from 'react'
 
-export function TrackingComponent({ estado }) {
-  const seguimientoEnvioHeight = "295px";
+export function TrackingComponent ({ estado }) {
+  const seguimientoEnvioHeight = '285px'
 
   const containerStyle = {
-    height: seguimientoEnvioHeight,
-  };
+    height: seguimientoEnvioHeight
+  }
   return (
     <div className="flex">
       <div>
         <div className="flex flex-col items-center content-start">
-          <div className={`w-5 h-5 rounded-full bg-primary z-10`}></div>
-          <div
-            className={`-mt-1 w-2 h-32 bg-${
-              estado === "Empacando" ? "grayish" : "primary"
-            }`}
-          ></div>
-          <div
-            className={`-mt-1 w-5 h-5 rounded-full bg-${
-              estado === "Empacando" ? "grayish" : "primary"
-            } z-10`}
-          ></div>
-          <div
-            className={`-mt-2 w-2 h-32 bg-${
-              estado === "Entregado" ? "primary" : "grayish"
-            }`}
-          ></div>
-          <div
-            className={`-mt-1 w-5 h-5 rounded-full bg-${
-              estado === "Entregado" ? "primary" : "grayish"
-            } z-10`}
-          ></div>
-        </div>
+        <div className={'w-4 h-4 rounded-full bg-primary z-10'}></div>
+        <div className={`-mt-1 w-2 h-32 bg-${estado === 'Empacando' ? 'grayish' : 'primary'}`}></div>
+        <div className={`-mt-1 w-4 h-4 rounded-full bg-${estado === 'Empacando' ? 'grayish' : 'primary'} z-10`}></div>
+        <div className={`-mt-2 w-2 h-32 bg-${estado === 'Recibido' ? 'primary' : 'grayish'}`}></div>
+        <div className={`-mt-1 w-4 h-4 rounded-full bg-${estado === 'Recibido' ? 'primary' : 'grayish'} z-10`}></div>
+      </div>
       </div>
       <div className="ml-8">
         <div
@@ -44,5 +28,6 @@ export function TrackingComponent({ estado }) {
         </div>
       </div>
     </div>
-  );
-}
+  )
+};
+

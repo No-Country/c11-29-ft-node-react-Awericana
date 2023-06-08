@@ -1,15 +1,15 @@
-import { Header } from "@/components/Header";
-import { Layout } from "@/components/Layout";
-import { TrackingComponent } from "@/components/ShipingTracking/index.js";
-import Head from "next/head";
-import Link from "next/link";
-import { HiTrash } from "react-icons/hi";
+import { Header } from '@/components/Header'
+import { Layout } from '@/components/Layout'
+import { TrackingComponent } from '@/components/ShipingTracking/index.js'
+import Head from 'next/head'
+import Link from 'next/link'
+// import { HiTrash } from 'react-icons/hi'
 
-export default function Shiptracking() {
-  let imgUrl = "";
-  let title = "Medias epicas";
-  let price = "";
-  let estado = "Entregado";
+export default function Shiptracking () {
+  const imgUrl = ''
+  const title = 'Medias epicas'
+  // const price = ''
+  const estado = 'Recibido'
 
   return (
     <Layout>
@@ -36,32 +36,41 @@ export default function Shiptracking() {
                 {estado}
               </div>
               <div className="flex justify-around">
-                {estado === "Empacando" ? (
+                {estado === 'Empacando'
+                  ? (
                   <p
-                    className="text-xs font-normal leading-5 text-black underline "
-                    href={"#"}
+                    className="text-xs font-normal leading-5 text-black underline xl:text-primary xl:text-lg xl:no-underline xl:hover:underline"
+                    href={'#'}
+
                   >
                     cancelar compra
                   </p>
-                ) : null}
+                    )
+                  : null}
 
-                {estado === "Entregado" ? (
+                {estado === 'Recibido'
+                  ? (
                   <Link
-                    className="text-xs font-normal leading-5 text-black underline "
-                    href={"#"}
+                    className="text-xs font-normal leading-5 text-black underline xl:text-primary xl:text-lg xl:no-underline xl:hover:underline"
+                    href={'#'}
+
                   >
                     Calificar al vendedor
                   </Link>
-                ) : null}
+                    )
+                  : null}
 
-                {estado === "Entregado" ? (
+                {estado === 'Recibido'
+                  ? (
                   <p
-                    className="text-xs font-normal leading-5 text-black underline "
-                    href={"#"}
+                    className="text-xs font-normal leading-5 text-black underline xl:text-primary xl:text-lg xl:no-underline xl:hover:underline"
+                    href={'#'}
+
                   >
                     devolver producto
                   </p>
-                ) : null}
+                    )
+                  : null}
               </div>
             </div>
         </div>
@@ -72,5 +81,5 @@ export default function Shiptracking() {
 
       </section>
     </Layout>
-  );
+  )
 }
