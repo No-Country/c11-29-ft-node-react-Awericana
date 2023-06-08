@@ -9,18 +9,12 @@ export function useProduct () {
     return fetch(URL, { credentials: 'include', method: 'DELETE' })
   }
 
-  const toggleFav = (id, postId) => {
-    const URL = `${process.env.NEXT_PUBLIC_API_URL}/favoritos/${id}`
+  const toggleFav = (postId) => {
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/favoritos/${postId}`
 
     return fetch(URL, {
       credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        publicacionId: postId
-      })
+      method: 'POST'
     })
   }
 

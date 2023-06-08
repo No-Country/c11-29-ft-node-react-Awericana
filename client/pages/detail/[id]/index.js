@@ -17,18 +17,14 @@ export default function Detail ({ postData = {} }) {
 
   useEffect(() => {
     if (postData.usuarioId !== session?.id && session?.id && initialFav === null) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${session.id}`, { credentials: 'include' })
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${postData.id}`, { credentials: 'include' })
         .then(res => {
           if (res.ok) return res.json()
           return res
         })
         .then(res => {
-          if (res.length !== 0) {
-            const favved = res.find(fav => fav.publicacion.id === postData.id)
-            console.log('FAVED', favved)
-            if (favved) setInitialFav(true)
-            else setInitialFav(false)
-          } else setInitialFav(false)
+          console.log(res)
+          setInitialFav(res?.enFavoritos ? true : false)
         })
         .catch(e => {
           console.error(e)
