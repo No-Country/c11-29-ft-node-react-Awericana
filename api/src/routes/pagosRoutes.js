@@ -10,7 +10,7 @@ router.get("/url/:userid", getUrlPago)
 
 router.post('/notificar', notificarYConfirmarPago)
 
-router.get("/envio/:compradorId/:vendedorId", getPrecioEnvio)
+router.get("/envio/:userid", getPrecioEnvio)
 
 
 
