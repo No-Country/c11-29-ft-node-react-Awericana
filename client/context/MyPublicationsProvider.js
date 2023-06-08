@@ -8,7 +8,7 @@ const ACTION_TYPES = {
   PUPULATE: 'POPULATE',
   DELETE_ID: 'DELETE_ID',
   ADD_ONE: 'ADD_ONE',
-  UPDATE_ONE: 'ADD_DISCOUNT'
+  UPDATE_ONE: 'UPDATE_ONE'
 }
 
 function reducer (state = null, action) {
