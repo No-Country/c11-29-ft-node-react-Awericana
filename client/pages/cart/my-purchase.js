@@ -7,7 +7,7 @@ import Head from 'next/head'
 export default function index () {
   const [compras, setCompras] = useState([])
   const { session } = useSession()
-
+  console.log(session)
   useEffect(() => {
     obtenerCompras()
   }, [])
@@ -18,8 +18,7 @@ export default function index () {
         credentials: 'include'
       })
       const data = await response.json()
-      const publicaciones = data.map((favorito) => favorito.publicacion)
-      setCompras(publicaciones)
+      setCompras(data)
     } catch (error) {
       console.error('Error al obtener las Compras:', error)
     }
@@ -46,12 +45,13 @@ export default function index () {
                 </div>
                 <div className='flex flex-col justify-center'>
                   <p className='text-3xl'>{publicacion.titulo}</p>
-                  <p className='text-2xl'>{publicacion.precio}</p>
+                  <p className='text-2xl'>{publicacion.estado}</p>
+                  <p className='text-2xl'>{publicacion.estadoEntrega}</p>
                 </div>
               </div>
-              <div className='flex justify-between  px-5 py-5'>
-                <a>Ver Producto</a>
-                <a className='underline cursor-pointer'></a>
+              <div className='flex justify-between  px-16 py-5'>
+                <a className='underline cursor-pointer' >Ver Producto</a>
+                <a className='underline cursor-pointer'>Estado del Envio</a>
               </div>
             </div>
           ))}
