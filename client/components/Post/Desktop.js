@@ -5,14 +5,15 @@ import { Fav } from '@/components/Post/Fav'
 import { useRouter } from 'next/router'
 import { Submit } from '../Buttons/Submit'
 import { Tertiary } from '../Buttons/Tertiary'
-
+import { useSession } from '@/hooks/useSession'
 export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title, isFav, price, size, detail, calificacion, nombre, apellido, originalPrice, userId, id }) {
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
   const router = useRouter()
-
+  const { session } = useSession()
+  console.log(session)
   const addToCart = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
       credentials: 'include',
       method: 'POST',
       headers: {
@@ -30,7 +31,7 @@ export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title
   }
 
   const handlePurchase = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
       credentials: 'include',
       method: 'POST',
       headers: {
