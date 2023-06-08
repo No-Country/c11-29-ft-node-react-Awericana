@@ -9,29 +9,25 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { Submit } from '../../components/Buttons/Submit'
 import { useSession } from '@/hooks/useSession'
 export default function Index () {
-  const [producto, setProducto] = useState([])
+	const [compras, setCompras] = useState([])
 	const { session } = useSession()
-
-	console.log("session: ", session)
-	console.log("Producto es: ", producto)
-  useEffect(() => {
-    fetchEstadoProducto()
-  }, [])
-
-  const fetchEstadoProducto = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/7/compras`, { credentials: 'include' })
-      console.log('response es: ', response)
-			if(response.ok) {
-        const data = await response.json()
-        setProducto(data)
-      } else {
-        console.error('Error al obtener los estados')
-      }
-    } catch (error) {
-      console.error('Error al conectar con el servidor', error)
-    }
-  }
+	console.log(compras)
+	console.log(session)
+	useEffect(() => {
+	  obtenerCompras()
+	}, [])
+  
+	const obtenerCompras = async () => {
+	  try {
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/6/compras`, {
+		  credentials: 'include'
+		})
+		const data = await response.json()
+		setCompras(data)
+	  } catch (error) {
+		console.error('Error al obtener las Compras:', error)
+	  }
+	}
   const handleSubmit = async (e) => {
     e.preventDefault()
     return true
@@ -51,10 +47,10 @@ export default function Index () {
 						<p>Compraste</p>
 						<div className='rounded-sm shadow-down'>
 							<div>
-								<img src={producto} alt='fotoProducto' />
+								<img src={compras.imagenPortada} alt='fotoProducto' />
 							</div>
-							<p>1{producto}</p>
-							<p>2{producto}</p>
+							<p>1{compras.titulo}</p>
+							<p>2{compras.estadoEntrega}</p>
 						</div>
 					</div>
 					<div>
