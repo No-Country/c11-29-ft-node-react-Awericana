@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Submit } from '@/components/Buttons/Submit'
 import { useSession } from '@/hooks/useSession'
-export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, id }) {
+export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, id, originalPrice }) {
 
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
