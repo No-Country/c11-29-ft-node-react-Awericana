@@ -17,8 +17,11 @@ export default function Shiptracking() {
          <title>Estado del envio </title>
         </Head>
       <Header disabled={true} />
-   
-      <section className=" max-w-screen-sm lg:max-w-5x2  m-auto mt-12 h-fit flex flex-col xl:flex-row xl:mt-32">
+      <div className="flex justify-center">
+      <h1 className='py-12 px-4 text-2xl leading-5'>Estado del envio </h1>
+
+      </div>
+      <section className=" max-w-screen-sm lg:max-w-5x2  m-auto mt-12 h-fit flex flex-col xl:flex-row xl:mt-20">
        
         <div className="flex px-5 py-4 mb-12 justify-stretch items-center gap-4 xl:gap-8 shadow-[1px_1px_4px_rgba(0,0,0,0.25)] h-[120px] xl:ml-20 ">
             <img
