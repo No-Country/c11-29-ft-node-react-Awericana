@@ -13,11 +13,12 @@ const Card = ({
         <div className='inline-flex flex-col'>
             <div className='my-3'>
                 <Image
-                    className='rounded-lg aspect-video'
+                    className='rounded-lg object-contain aspect-video'
                     src={imgSrc}
                     width={297}
                     height={154}
                     alt="producto"
+                    loading='lazy'
                 />
             </div>
             <div className='ml-0'>

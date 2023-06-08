@@ -20,16 +20,19 @@ export default function Detail ({ postData = {} }) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${session.id}`, { credentials: 'include' })
         .then(res => {
           if (res.ok) return res.json()
+          return res
         })
         .then(res => {
-          console.log('faves', res)
           if (res?.length !== 0) {
             const favved = res.find(fav => fav.publicacion.id === postData.id)
-            console.log(favved)
             setInitialFav(favved ? true : false)
           } else setInitialFav(false)
         })
-    }
+        .catch(e => {
+          console.error(e)
+          setInitialFav(false)
+        })
+    } else setInitialFav(false)
   }, [session?.id])
 
   useEffect(() => {
@@ -56,6 +59,7 @@ export default function Detail ({ postData = {} }) {
     </Layout>
     )
   } else {
+    console.log('fav', initialFav)
     return (
     <Layout>
       <Header disabled={true}/>

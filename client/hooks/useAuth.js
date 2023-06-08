@@ -38,6 +38,7 @@ export function useAuth () {
     }
     setSession(null)
     push('/auth/signin')
+    if (window) window.location.reload()
     return true
   }
 

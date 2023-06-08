@@ -36,6 +36,9 @@ export default function MyProducts () {
           return <MyProductsCard key={pub.id} id={pub.id} title={pub.titulo} price={pub.precioOriginal || pub.precio} discount={pub.descuento} discountPrice={pub.precio} applyDiscount={applyDiscount} handleDiscount={handleDiscount} handleDelete={handleDelete} imgUrl={pub.imagenPortada}/>
         })
         : <Loading />}
+        {
+          !isLoading && !isLoading && publications.length === 0 && <p className='text-3xl ml-10'>Aún no hay publicaciones.</p>
+        }
       </section>
     </Layout>
   )

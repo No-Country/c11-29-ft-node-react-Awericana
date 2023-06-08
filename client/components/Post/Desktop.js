@@ -1,34 +1,13 @@
 import { Stars } from './Stars'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
 import { Submit } from '@/components/Buttons/Submit'
-import { useSession } from '@/hooks/useSession'
-export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, id, originalPrice }) {
+import { Tertiary } from '../Buttons/Tertiary'
+import { Fav } from '@/components/Post/Fav'
 
-
-export function Desktop ({ toggleFav, buttons = false, images, title, isFav, price, size, detail, calificacion, nombre, apellido, originalPrice }) {
+export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title, isFav, price, size, detail, calificacion, nombre, apellido, originalPrice }) {
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
-  const { session } = useSession()
-
-  const addToCart = () => {
-    fetch(`http://localhost:3001/carrito/${session?.id}`, {
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ publicacionId: id })
-    })
-      .then(response => {
-        console.log('Producto agregado al carrito:', response)
-        alert("Producto agregado")
-      })
-      .catch(error => {
-        console.error('Error al agregar el producto al carrito:', error)
-      })
-  }
 
   return (
       <article className="p-layoutSides gap-10 mb-10 mt-10 flex w-full justify-center">
@@ -61,28 +40,18 @@ export function Desktop ({ toggleFav, buttons = false, images, title, isFav, pri
         <div className="flex flex-col max-w-1/2 mt-5 gap-10">
             <div className='flex flex-col justify-between h-[150px]'>
               {
-                 originalPrice !== price
+                 originalPrice !== price && originalPrice
                    ? <div className='flex gap-4'>
                 <p className='text-5xl font-extrabold leading-5 text-black line-through'>${originalPrice}</p>
                  <p className='text-5xl font-extrabold leading-5 text-red'>${price}</p>
                 </div>
-                   : <p className='text-5xl font-extrabold leading-5 text-black'>${originalPrice}</p>
+                   : <p className='text-5xl font-extrabold leading-5 text-black'>${price}</p>
               }
               <p className="text-3xl font-bold">{title}</p>
               <p className="text-2xl">{size.nombre}</p>
             </div>
             <span className='flex gap-2 p-0 text-left h-fit items-center'>
-              {
-                isFav
-                  ? <>
-                  <AiFillHeart className='fill-primary' size={20} />
-                  <p onClick={toggleFav} className='w-2/4 cursor-pointer inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Quitar de favoritos</p>
-                </>
-                  : <>
-                  <AiOutlineHeart className='fill-primary' size={20}/>
-                  <p onClick={toggleFav} className='w-2/4 cursor-pointer inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Agregar a favoritos</p>
-                </>
-              }
+              { ownProduct ? null : <Fav state={isFav} toggleFav={toggleFav} /> }
             </span>
           <div className='mt-4'>
               <p className="text-xl mb-4 font-normal">{detail}</p>
@@ -91,16 +60,6 @@ export function Desktop ({ toggleFav, buttons = false, images, title, isFav, pri
                 <Stars rating={calificacion} />
               </div>
             </div>
-
-            {
-              buttons
-                ? <div className='flex flex-col justify-center items-center w-fit'>
-            <Submit center={true}>COMPRAR</Submit>
-            <Tertiary onClick={addToCart}>Agregar al carrito</Tertiary>
-
-        </div>
-                : null
-            }
 
         </div>
       </article>
