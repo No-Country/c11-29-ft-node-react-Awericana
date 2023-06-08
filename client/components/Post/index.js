@@ -5,10 +5,27 @@ import { Submit } from '../Buttons/Submit'
 import { Tertiary } from '../Buttons/Tertiary'
 import { useFav } from '@/hooks/useFav'
 
-
 export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls, detail, selectedTalle, sellerData, originalPrice, ownProduct }) {
   const [isBig, setIsBig] = useState(false)
   const { isFav, toggle } = useFav(initialFav, userId, id)
+
+  const addToCart = () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ publicacionId: id })
+    })
+      .then(response => {
+        console.log('Producto agregado al carrito:', response)
+        alert('Producto agregado')
+      })
+      .catch(error => {
+        console.error('Error al agregar el producto al carrito:', error)
+      })
+  }
 
   useEffect(() => {
     if (window && window.innerWidth > 799) setIsBig(true)
@@ -19,9 +36,9 @@ export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls
     return (
     <section className='relative'>
      <Desktop toggleFav={() => toggle()} ownProduct={ownProduct} isFav={isFav} buttons={buttons} {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, originalPrice }}/>
-    {!ownProduct && <div className='flex flex-col w-fit items-center absolute bottom-0 right-0 lg:right-56'>
+    {!ownProduct && buttons && <div className='flex flex-col w-fit items-center absolute bottom-0 right-0 lg:right-56'>
         <Submit>COMPRAR</Submit>
-        <Tertiary>Agregar al carrito</Tertiary>
+        <Tertiary onClick={addToCart}>Agregar al carrito</Tertiary>
       </div>}
     </section>
     )

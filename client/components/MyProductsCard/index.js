@@ -60,7 +60,7 @@ function MyProductsCard ({ title, price, imgUrl, id, handleDelete, handleDiscoun
               : <p className='text-base font-normal leading-5 text-black xl:text-2xl'>${price}</p>
           }
           <div className='flex justify-around gap-2'>
-            <Link className='text-xs font-normal ml-4 leading-5 text-black underline xl:text-primary xl:text-lg xl:no-underline xl:hover:underline whitespace-nowrap' href={'#'}>Editar publicación</Link>
+            <Link className='text-xs font-normal ml-4 leading-5 text-black underline xl:text-primary xl:text-lg xl:no-underline xl:hover:underline whitespace-nowrap' href={'/sell/edit-product/:id'} as={`/sell/edit-product/${id}`}>Editar publicación</Link>
             <p onClick={() => setIsOpen(!isOpen)} className='text-xs  cursor-pointer font-normal leading-5 text-black underline xl:text-primary xl:text-lg whitespace-nowrap xl:no-underline xl:hover:underline'>{discount === '0%' || discount === 0 ? 'Agregar descuento' : 'Modificar descuento'}</p>
           </div>
         </div>
