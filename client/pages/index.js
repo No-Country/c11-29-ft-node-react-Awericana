@@ -4,12 +4,9 @@ import Head from 'next/head'
 import Banner from '@/components/Banner'
 import Card from '@/components/Card'
 import Categories from '@/components/Category/Categories'
-import { useSession } from '@/hooks/useSession'
 import Link from 'next/link'
 
-export default function Home ({ userData, publicaciones = [] }) {
-  const { session } = useSession(userData)
-
+export default function Home ({ publicaciones = [] }) {
   return (
     <Layout>
       <Head>
@@ -24,7 +21,7 @@ export default function Home ({ userData, publicaciones = [] }) {
           <Categories />
         </section>
         <h1 className='text-2xl font-semibold ml-5 mt-10'>Productos destacados</h1>
-        <section className='flex flex-wrap justify-center'>
+        <section className='flex flex-wrap justify-center gap-4'>
           {publicaciones.length > 0 && publicaciones.map(pub => {
             return (
               <Link href={'/detail/:id'} as={`/detail/${pub.id}`} key={pub.id}>
@@ -33,6 +30,8 @@ export default function Home ({ userData, publicaciones = [] }) {
                   titulo={pub.titulo}
                   talleMedidas={pub.talle.nombre}
                   imgSrc={pub.imagenPortada || null}
+                  precioOriginal={pub.precioOriginal}
+                  descuento={pub.descuento}
                    />
               </Link>
             )
@@ -44,17 +43,11 @@ export default function Home ({ userData, publicaciones = [] }) {
 }
 
 export async function getServerSideProps (ctx) {
-  const userDataResponse = await fetch('http://' + ctx.req.headers.host + '/api/session')
-  const userData = await userDataResponse.json()
   const publicacionesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/publicaciones?offset=0&limit=100`)
   const publicaciones = await publicacionesResponse.json()
 
-  // const bannerResponse = await fetch(domain + '/banner')
-  // const banner = await bannerResponse.json() // Las imagenes no estan cargadas
-
   return {
     props: {
-      userData: userData?.error ? null : userData.user,
       publicaciones: publicaciones.publicaciones
     }
   }

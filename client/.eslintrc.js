@@ -19,6 +19,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
-    'no-unneeded-ternary': 'off'
+    'no-unneeded-ternary': 'off',
+    'no-case-declarations': 'off'
   }
 }

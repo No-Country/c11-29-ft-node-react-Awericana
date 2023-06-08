@@ -46,6 +46,17 @@ body, html {
   background: rgba(119, 181, 169, 1);
 }
 
+/* Select scrollbar settings */
+div::-webkit-scrollbar-track {
+  background: gray;
+  width: 1px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: rgba(34, 131, 112, 1);
+  width: 2px;
+}
+
 /* Disable appearence in number input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

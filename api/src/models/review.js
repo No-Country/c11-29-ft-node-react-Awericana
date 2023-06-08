@@ -17,8 +17,8 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    fecha: {
-      type: DataTypes.DATEONLY,
+    estadoCumpleExpectativas: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
   });

@@ -6,7 +6,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-export const Mobile = ({ images, title, price, size, detail, calificacion, nombre, apellido }) => {
+export const Mobile = ({ images, title, price, size, detail, calificacion, nombre, apellido, originalPrice }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -39,8 +39,15 @@ export const Mobile = ({ images, title, price, size, detail, calificacion, nombr
                         </Slider>
                     </div>
                     <div className="flex justify-between mt-5">
-                        <div>
-                            <p className="text-3xl font-bold">$ {price}</p>
+                        <div className='flex flex-col gap-4'>
+                            {
+                              originalPrice !== price
+                                ? <div className='flex gap-4 mb-4'>
+                                    <p className='text-3xl font-bold leading-5 text-black line-through'>${originalPrice}</p>
+                                    <p className='text-3xl font-bold leading-5 text-red'>${price}</p>
+                                  </div>
+                                : <p className='text-3xl font-bold leading-5 text-black'>${originalPrice}</p>
+                            }
                             <p className="text-2xl">{title}</p>
                             <p className="text-xl">{size.nombre}</p>
                             <p className="text-small underline">Ver tabla de talles</p>

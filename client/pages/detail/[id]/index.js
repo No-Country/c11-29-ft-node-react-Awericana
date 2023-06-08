@@ -31,7 +31,9 @@ export default function Detail ({ postData = {} }) {
     <Layout>
       <Header disabled={true}/>
       { data && images.length > 0
+
         ? <Post title={data.titulo} price={data.precio} imageUrls={images} detail={data.descripcion} selectedTalle={{ nombre: 'XL' }} sellerData={sellerData} id={data.id}/>
+
         : null }
       {
         notFound ? <ErrorLayout /> : null
