@@ -21,11 +21,13 @@ const usuario = require("./usuario");
 const pagos = require("./pagosRoutes");
 const busquedas = require("./busquedas");
 const posventa = require("./posventa");
-const talle = require('./talle')
-const genero = require('./genero')
-const banner = require('./banner')
-const imagenes = require('./imagenes')
-const direcciones = require('./direccion')
+const talle = require("./talle");
+const genero = require("./genero");
+const banner = require("./banner");
+const imagenes = require("./imagenes");
+const direcciones = require("./direccion");
+const review = require("./review");
+const paises = require('./paises')
 
 router.use("/producto", productsRoute);
 router.use("/auth", authRouter);
@@ -35,18 +37,15 @@ router.use("/cargaBaseDeDatos", rutaBaseDeDatos);
 router.use("/categoria", categoria);
 router.use("/favoritos", favoritos);
 router.use("/auth", authTerceros);
-
-router.use('/pagos', pagos)
-router.use('/busqueda', busquedas)
-router.use('/posventa', posventa)
-
-router.use('/usuario', usuario)
-router.use('/talle', talle)
-
-router.use('/banner', banner)
-
-router.use('/personas', genero)
-router.use('/imagenes', imagenes)
-router.use('/direcciones', direcciones)
-
+router.use("/pagos", pagos);
+router.use("/busqueda", busquedas);
+router.use("/posventa", posventa);
+router.use("/usuario", usuario);
+router.use("/talle", talle);
+router.use("/banner", banner);
+router.use("/personas", genero);
+router.use("/imagenes", imagenes);
+router.use("/direcciones", direcciones);
+router.use("/review", review);
+router.use('/paises', paises)
 module.exports = router;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Layout } from '@/components/Layout'
 import { Header } from '@/components/Header'
 import { useSession } from '@/hooks/useSession'
-
+import Head from 'next/head'
 export default function Index () {
   const [carritoData, setCarritoData] = useState(null)
   const { session } = useSession()
@@ -11,7 +11,9 @@ export default function Index () {
     const fetchCarritoData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/carrito/${session?.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
+            credentials: 'include'
+          }
         )
         const data = await response.json()
         setCarritoData(data)
@@ -26,7 +28,8 @@ export default function Index () {
   const pagarConMercadoPago = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/pagos/url/${session?.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/pagos/url/${session?.id}`,
+        { credentials: 'include' }
       )
       const data = await response.text()
       window.location.href = data
@@ -37,6 +40,9 @@ export default function Index () {
 
   return (
     <Layout>
+      <Head>
+        <title>Mi Carrito</title>
+      </Head>
       <Header />
 
       <div className="px-[10%]">

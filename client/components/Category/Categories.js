@@ -4,20 +4,27 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { useEffect, useState } from 'react'
 import { data } from 'autoprefixer'
+import { Loading } from '@/components/Loading'
 
 const Categories = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState([])
   const URL = `${process.env.NEXT_PUBLIC_API_URL}/categoria`
+
   useEffect(() => {
+    setIsLoading(true)
     fetch(URL)
       .then(response => response.json())
-      .then(data => setCategories(data.categorias))
+      .then(data => {
+        setIsLoading(false)
+        setCategories(data.categorias)
+      })
     console.log(data)
   }, [])
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 8,
     slidesToScroll: 1,
@@ -46,10 +53,12 @@ const Categories = () => {
     ]
   }
 
+  if (isLoading) return <Loading />
+
   return (
     <Slider {...settings}>
       {categories.map(category => (
-        <Category key={category.id} name={category.nombre}/>
+        <Category key={category.id} name={category.nombre} img={category.link}/>
       ))}
     </Slider>
   )

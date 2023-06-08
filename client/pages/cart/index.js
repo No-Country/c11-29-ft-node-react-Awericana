@@ -4,6 +4,7 @@ import { Header } from '@/components/Header'
 import { useSession } from '@/hooks/useSession'
 import { BiTrash } from 'react-icons/bi'
 import Link from 'next/link'
+import Head from 'next/head'
 export default function Index () {
   const [carritoData, setCarritoData] = useState(null)
   const { session } = useSession()
@@ -11,7 +12,9 @@ export default function Index () {
   useEffect(() => {
     const fetchCarritoData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/carrito/${session?.id}`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
+          credentials: 'include'
+        })
         const data = await response.json()
         setCarritoData(data)
       } catch (error) {
@@ -24,8 +27,9 @@ export default function Index () {
 
   const handleDeleteItem = async (itemId) => {
     try {
-      await fetch(`http://localhost:3001/carrito/${session?.id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -47,6 +51,9 @@ export default function Index () {
 
   return (
     <Layout>
+       <Head>
+        <title>Mi Carrito</title>
+      </Head>
       <Header />
 
       <div className="px-[10%]">
@@ -84,7 +91,7 @@ export default function Index () {
         </section>
 
         <div className="flex items-center flex-col gap-4 mt-7 ">
-        <Link href={'/ShopingCard'}>
+        <Link href={'/cart/delivery'}>
         <button className="w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition">
             Comprar Carrito
           </button></Link>
