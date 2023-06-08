@@ -14,11 +14,11 @@ export default function add () {
   const [paises, setPaises] = useState([])
   const [direccion, setDireccion] = useState({
     calle: '',
-    numero: '',
+    numeracion: '',
     codigoPostal: '',
     ciudad: '',
     provincia: '',
-    pais: ''
+    idPais: ''
   })
 
   const fetchPaises = async () => {
@@ -35,17 +35,51 @@ export default function add () {
     }
   }
 
+  const fetchDireccion = async () => {
+    
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/${id}`, {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setDireccion({
+          calle: data.calle,
+          numeracion:  data.numeracion,
+          codigoPostal: data.codigoPostal,
+          ciudad: data.ciudad,
+          provincia: data.provincia,
+          idPais: data.paiId
+        })
+      } else {
+        console.error('Error al obtener los datos de la dirección')
+      }
+    } catch (error) {
+      console.error('Error al conectar con el servidor', error)
+    }
+  }
+
   useEffect(() => {
-    fetchPaises()
-  }, [])
+    fetchPaises();
+    fetchDireccion();
+  }, []);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const completedFields = Object.values(direccion).filter((value) => value.trim() !== '').length
+   /* const completedFields = Object.values(direccion).filter((value) => value.trim() !== '').length
     if (completedFields < 6) {
       alert('Por favor, complete  6 campos.')
       return
-    }
+    }*/
+    const calle = (direccion.calle).trim();               if( calle === ''){return}
+    const numeracion = (direccion.numeracion).trim();     if( numeracion === ''){return}
+    const codigoPostal = (direccion.codigoPostal).trim(); if( codigoPostal === ''){return}
+    const ciudad = (direccion.ciudad).trim();             if( ciudad === ''){return}
+    const provincia = (direccion.provincia).trim();       if( provincia === ''){return}
+    const idPais = direccion.idPais;                      if( idPais ==  0){return}
+    
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/${id}`, {
         credentials: 'include',
@@ -54,12 +88,12 @@ export default function add () {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          calle: direccion.calle,
-          numeracion: direccion.numero,
-          codigoPostal: direccion.codigoPostal,
-          ciudad: direccion.ciudad,
-          provincia: direccion.provincia,
-          idPais: parseInt(direccion.pais)
+          calle,
+          numeracion,
+          codigoPostal,
+          ciudad,
+          provincia,
+          idPais
         })
       })
       if (response.ok) {
@@ -76,11 +110,11 @@ export default function add () {
   return (
     <Layout>
       <Head>
-        <title>Modificar Direccion</title>
+        <title>Modificar Dirección</title>
       </Head>
       <Header disabled={true} />
       <section className='flex flex-col justify-center items-center'>
-        <p className='mt-[70px] mb-[50px] font-medium text-3xl'>Modificar Direccion</p>
+        <p className='mt-[70px] mb-[50px] font-medium text-3xl'>Modificar Dirección</p>
         <form className='flex flex-col justify-center items-center' onSubmit={handleSubmit}>
           <div className='ml-4 mr-4 mt-5 flex flex-col gap-3'>
             <Input
@@ -89,7 +123,7 @@ export default function add () {
               placeholder={'Calle*'}
               label={'Calle*'}
               value={direccion.calle}
-              onChange={(e) => setDireccion({ ...direccion, calle: e.target.value })}
+              onChange={(e) => setDireccion({ ...direccion, calle: (e.target.value).trimStart() })}
             />
             <div className='flex gap-5 justify-center items-center w-full'>
               <Input
@@ -97,8 +131,8 @@ export default function add () {
                 type='text'
                 placeholder={'Numero*'}
                 label={'Numero*'}
-                value={direccion.numero}
-                onChange={(e) => setDireccion({ ...direccion, numero: e.target.value })}
+                value={direccion.numeracion}
+                onChange={(e) => setDireccion({ ...direccion, numeracion: (e.target.value).trimStart() })}
               />
               <Input
                 name={'C.Postal'}
@@ -106,7 +140,7 @@ export default function add () {
                 placeholder={'C.Postal*'}
                 label={'C.Postal*'}
                 value={direccion.codigoPostal}
-                onChange={(e) => setDireccion({ ...direccion, codigoPostal: e.target.value })}
+                onChange={(e) => setDireccion({ ...direccion, codigoPostal: (e.target.value).trimStart() })}
               />
             </div>
             <Input
@@ -115,7 +149,7 @@ export default function add () {
               placeholder={'Ciudad*'}
               label={'Ciudad*'}
               value={direccion.ciudad}
-              onChange={(e) => setDireccion({ ...direccion, ciudad: e.target.value })}
+              onChange={(e) => setDireccion({ ...direccion, ciudad: (e.target.value).trimStart() })}
             />
             <Input
               name={'Provincia'}
@@ -123,19 +157,21 @@ export default function add () {
               placeholder={'Provincia*'}
               label={'Provincia*'}
               value={direccion.provincia}
-              onChange={(e) => setDireccion({ ...direccion, provincia: e.target.value })}
+              onChange={(e) => setDireccion({ ...direccion, provincia: (e.target.value).trimStart() })}
             />
             <select
                  name={'Pais'}
-                 value={direccion.pais}
-                 onChange={(e) => setDireccion({ ...direccion, pais: e.target.value })}
+                 value={direccion.idPais}
+                 onChange={(e) => setDireccion({ ...direccion, idPais: e.target.value })}
                  className='my-0.5 w-full h-12 border border-solid  text-gray-700 text-sm font-regular leading-tight border-green-700 text-black outline-none shadow-md p-3 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm placeholder:text-slate-400'
                  >
-                  <option className="" value="">
+                  <option className="" value="" disabled>
                       Seleccione un país*
                   </option>
                    {paises.map((pais) => (
+                      
                      <option key={pais.id} value={pais.id}>
+
                    {pais.nombre}
                 </option>))}
                 </select>
