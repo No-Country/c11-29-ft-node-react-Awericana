@@ -9,17 +9,16 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { Submit } from '../../components/Buttons/Submit'
 import { useSession } from '@/hooks/useSession'
 export default function Index () {
-	const [compras, setCompras] = useState([])
-	const { session } = useSession()
-	console.log(compras)
-	console.log(session)
-	useEffect(() => {
-	  obtenerCompras()
-	}, [])
-  
-	const obtenerCompras = async () => {
-	  try {
-		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/6/compras`, {
+  const [compras, setCompras] = useState([])
+  const { session } = useSession()
+  console.log(session)
+  useEffect(() => {
+    obtenerCompras()
+  }, [])
+
+  const obtenerCompras = async () => {
+    try {
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/7/compras`, {
 		  credentials: 'include'
 		})
 		const data = await response.json()
@@ -43,16 +42,24 @@ export default function Index () {
 			<h2 className='py-12 px-4 font-bold text-lg leading-5'>Calificar al vendedor</h2>
 			<section className='flex'>
 				<form onSubmit={handleSubmit}>
+					<div className='flex justify-center gap-10'>
 					<div>
 						<p>Compraste</p>
 						<div className='rounded-sm shadow-down'>
-							<div>
-								<img src={compras.imagenPortada} alt='fotoProducto' />
-							</div>
-							<p>1{compras.titulo}</p>
-							<p>2{compras.estadoEntrega}</p>
-						</div>
+						{compras.map((publicacion, id) => { 
+						return (
+							<div key={id}>
+								<div>
+									<img src={publicacion.imagenPortada} alt='fotoProducto' />
+								</div>
+								<p>{publicacion.titulo}</p>
+								<p>{publicacion.estadoEntrega}</p>
+							</div>)
+						})
+						}
 					</div>
+					</div>
+
 					<div>
 						<p className='font-bold'>1. ¿Recibiste el producto que esperabas?</p>
 						<div className='flex flex-col'>
@@ -82,13 +89,18 @@ export default function Index () {
 								<span>Pésimo</span>
 								<span>Excelente</span>
 							</div>
+							</div>
 						</div>
 					</div>
-					<div>
-						<Submit>ENVIAR</Submit>
-						<button className="border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ">
-            Cancelar
-          </button>
+					<div className='flex flex-col justify-center'>
+					<div className='flex justify-center'>
+							<Submit>ENVIAR</Submit>
+					</div>
+					<div className='flex justify-center'>
+							<button className="border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ">
+							Cancelar
+						</button>
+					</div>
 					</div>
 				</form>
 			</section>
