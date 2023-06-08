@@ -5,6 +5,7 @@ import { Submit } from '../Buttons/Submit'
 import { Tertiary } from '../Buttons/Tertiary'
 import { useFav } from '@/hooks/useFav'
 
+
 export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls, detail, selectedTalle, sellerData, originalPrice, ownProduct }) {
   const [isBig, setIsBig] = useState(false)
   const { isFav, toggle } = useFav(initialFav, userId, id)

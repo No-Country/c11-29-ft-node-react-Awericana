@@ -41,7 +41,11 @@ export default function add () {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    const completedFields = Object.values(direccion).filter((value) => value.trim() !== '').length
+    if (completedFields < 6) {
+      alert('Por favor, complete  6 campos.')
+      return
+    }
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/${id}`, {
         credentials: 'include',
@@ -60,6 +64,7 @@ export default function add () {
       })
       if (response.ok) {
         console.log('Dirección modificada')
+        router.push('/profile/directions')
       } else {
         console.error('Error al modificar la dirección')
       }
@@ -136,7 +141,7 @@ export default function add () {
                 </select>
           </div>
           <Submit>Guardar Cambios</Submit>
-          <Link href={'/profile/directions'} ><button className='w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400`'>
+          <Link href={'/profile/directions'} ><button className='w-[390px] hover:scale-110 border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400`'>
             Cancelar
           </button></Link>
         </form>

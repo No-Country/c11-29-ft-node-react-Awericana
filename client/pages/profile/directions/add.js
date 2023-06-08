@@ -7,7 +7,9 @@ import { Layout } from '@/components/Layout'
 import Head from 'next/head'
 import { useSession } from '@/hooks/useSession'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 export default function add () {
+  const router = useRouter()
   const { session } = useSession()
   const [direccion, setDireccion] = useState({
     calle: '',
@@ -39,6 +41,16 @@ export default function add () {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    const incompleteFields = Object.entries(direccion).filter(([key, value]) => {
+      return key !== 'pais' && (value === '' || value === undefined)
+    })
+
+    if (incompleteFields.length > 0) {
+      alert('Por favor, complete todos los campos obligatorios.')
+      return
+    }
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/direcciones/?idUsuario=${session.id}`, {
         credentials: 'include',
@@ -46,7 +58,6 @@ export default function add () {
         headers: {
           'Content-Type': 'application/json'
         },
-
         body: JSON.stringify({
           calle: direccion?.calle,
           numeracion: direccion?.numeracion,
@@ -55,11 +66,10 @@ export default function add () {
           provincia: direccion?.provincia,
           idPais: parseInt(direccion?.pais)
         })
-
       })
 
       if (response.ok) {
-        console.log('Dirección agregada')
+        router.push('/profile/directions')
       } else {
         console.error('Error al agregar la dirección')
       }
@@ -139,7 +149,7 @@ export default function add () {
             </select>
           </div>
           <Submit>Agregar</Submit>
-          <Link href={'/profile/directions'} ><button className='w-[390px] border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400`'>
+          <Link href={'/profile/directions'} ><button className='w-[390px] hover:scale-110 border my-0.5  h-12  border-solid  text-gray-700 text-sm font-regular leading-tight text-black outline-none shadow-md p-3 rounded-xl border-primary focus:outline-none focus:ring-1 focus:ring-primary-400 focus:ring-opacity-50 placeholder:text-sm border-green-400`'>
             Cancelar
           </button></Link>
         </form>

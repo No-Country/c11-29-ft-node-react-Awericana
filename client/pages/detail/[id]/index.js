@@ -51,6 +51,7 @@ export default function Detail ({ postData = {} }) {
     return (
     <Layout>
       <Header disabled={true}/>
+
       <ErrorLayout/>
     </Layout>
     )
