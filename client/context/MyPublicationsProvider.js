@@ -8,7 +8,7 @@ const ACTION_TYPES = {
   PUPULATE: 'POPULATE',
   DELETE_ID: 'DELETE_ID',
   ADD_ONE: 'ADD_ONE',
-  ADD_DISCOUNT: 'ADD_DISCOUNT'
+  UPDATE_ONE: 'ADD_DISCOUNT'
 }
 
 function reducer (state = null, action) {
@@ -20,7 +20,7 @@ function reducer (state = null, action) {
       return state.filter(pub => pub.id !== payload)
     case ACTION_TYPES.ADD_ONE:
       return state.concat([{ ...payload }])
-    case ACTION_TYPES.ADD_DISCOUNT:
+    case ACTION_TYPES.UPDATE_ONE:
       const index = state.findIndex(el => el.id === payload.id)
       const clone = structuredClone(state)
       if (clone[index]) {
@@ -44,7 +44,6 @@ export function MyPublicationsProvider ({ children }) {
         .then(res => res.json())
         .then(res => {
           dispatch({ type: ACTION_TYPES.PUPULATE, payload: res })
-          console.log(res)
         })
         .catch((e) => {
           console.error(e)

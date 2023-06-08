@@ -66,7 +66,7 @@ export default function Preview () {
       {formData
         ? (
         <section className='flex flex-col m-auto max-w-[500px] lg:w-full lg:max-w-none justify-center items-center gap-10 mt-14'>
-          <Post {...formData} sellerData={sellerData} />
+          <Post buttons={true} {...formData} sellerData={sellerData} />
         </section>
           )
         : null}

@@ -1,23 +1,21 @@
-import { Layout } from '@/components/Layout'
 import { Stars } from './Stars'
-import { AiOutlineHeart } from 'react-icons/ai'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import Image from 'next/image'
 import { useState } from 'react'
 import { Submit } from '@/components/Buttons/Submit'
 import { Tertiary } from '@/components/Buttons/Tertiary'
 
-export function Desktop ({ images, title, price, size, detail, calificacion, nombre, apellido, originalPrice }) {
+export function Desktop ({ toggleFav, buttons = false, images, title, isFav, price, size, detail, calificacion, nombre, apellido, originalPrice }) {
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
 
   return (
-    <Layout>
       <article className="p-layoutSides gap-10 mb-10 mt-10 flex w-full justify-center">
-        <figure className='w-[800px] max-h-[500px] max-w-[800px] aspect-video'>
+        <figure className='h-fit max-w-[800px] aspect-video'>
           {imageList.map((src, i) => {
             if (i === shown) {
               return (
-              <Image key={src + i} src={src} className='h-full w-full block rounded-tr-3xl rounded-tl-3xl' alt='Product image' width={100} height={100}/>
+              <Image key={src + i} src={src} className='h-full object-contain w-full block rounded-tr-3xl rounded-tl-3xl' alt='Product image' width={100} height={100}/>
               )
             }
             return null
@@ -27,7 +25,7 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
               imageList.map((src, i) => {
                 if (i !== shown && i < 5) {
                   return (
-                  <Image key={src + i} src={src} className='w-[140px] h-[140px] inline-block mt-4 cursor-pointer' alt='Product image' onClick={() => setShown(i)} width={100} height={100}/>
+                  <Image key={src + i} src={src} className='w-[140px] object-contain h-[140px] inline-block mt-4 cursor-pointer' alt='Product image' onClick={() => setShown(i)} width={100} height={100}/>
                   )
                 } else if (i === 6) {
                   return (
@@ -39,7 +37,7 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
             }
           </span>
         </figure>
-        <div className="flex flex-col mt-5 gap-10">
+        <div className="flex flex-col max-w-1/2 mt-5 gap-10">
             <div className='flex flex-col justify-between h-[150px]'>
               {
                  originalPrice !== price
@@ -51,11 +49,19 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
               }
               <p className="text-3xl font-bold">{title}</p>
               <p className="text-2xl">{size.nombre}</p>
-              <p className="text-small underline">Ver tabla de talles</p>
             </div>
             <span className='flex gap-2 p-0 text-left h-fit items-center'>
-              <AiOutlineHeart className='fill-primary' size={20} />
-              <p className='w-2/4 inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Agregar a favoritos</p>
+              {
+                isFav
+                  ? <>
+                  <AiFillHeart className='fill-primary' size={20} />
+                  <p onClick={toggleFav} className='w-2/4 cursor-pointer inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Quitar de favoritos</p>
+                </>
+                  : <>
+                  <AiOutlineHeart className='fill-primary' size={20}/>
+                  <p onClick={toggleFav} className='w-2/4 cursor-pointer inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Agregar a favoritos</p>
+                </>
+              }
             </span>
           <div className='mt-4'>
               <p className="text-xl mb-4 font-normal">{detail}</p>
@@ -64,12 +70,16 @@ export function Desktop ({ images, title, price, size, detail, calificacion, nom
                 <Stars rating={calificacion} />
               </div>
             </div>
-        <div className='flex flex-col'>
-            <Submit>COMPRAR</Submit>
+            {
+              buttons
+                ? <div className='flex flex-col justify-center items-center w-fit'>
+            <Submit center={true}>COMPRAR</Submit>
             <Tertiary>Agregar al carrito</Tertiary>
         </div>
+                : null
+            }
+
         </div>
       </article>
-    </Layout>
   )
 }

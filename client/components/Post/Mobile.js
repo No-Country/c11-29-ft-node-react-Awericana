@@ -1,12 +1,11 @@
-import { Layout } from '@/components/Layout'
 import Image from 'next/image'
 import { Stars } from './Stars'
-import { AiOutlineHeart } from 'react-icons/ai'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-export const Mobile = ({ images, title, price, size, detail, calificacion, nombre, apellido, originalPrice }) => {
+export const Mobile = ({ toggleFav, images, title, price, size, detail, calificacion, nombre, apellido, originalPrice, isFav = false }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -19,7 +18,6 @@ export const Mobile = ({ images, title, price, size, detail, calificacion, nombr
   }
 
   return (
-        <Layout>
             <article className="p-4">
                 <section id="producto">
                     <div>
@@ -50,11 +48,20 @@ export const Mobile = ({ images, title, price, size, detail, calificacion, nombr
                             }
                             <p className="text-2xl">{title}</p>
                             <p className="text-xl">{size.nombre}</p>
-                            <p className="text-small underline">Ver tabla de talles</p>
                         </div>
                         <span className='flex justify-center mr-10 mt-1 gap-2 h-fit items-center'>
-                          <AiOutlineHeart size={20} />
-                          <p className='w-2/4 text-right inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Agregar a favoritos</p>
+                      {
+                        isFav
+                          ? <>
+                          <AiFillHeart className='fill-primary' size={20} />
+                          <p className='w-2/4 inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Quitar de favoritos</p>
+                        </>
+                          : <>
+                          <AiOutlineHeart className='fill-primary' size={20}/>
+                          <p onClick={toggleFav} className='w-2/4 inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Agregar a favoritos</p>
+                        </>
+                      }
+                          <p onClick={toggleFav} className='w-2/4 text-right inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Agregar a favoritos</p>
                         </span>
                     </div>
                     <div className='mt-4'>
@@ -66,6 +73,5 @@ export const Mobile = ({ images, title, price, size, detail, calificacion, nombr
                     </div>
                 </section>
             </article>
-        </Layout>
   )
 }

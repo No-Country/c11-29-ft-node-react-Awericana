@@ -20,7 +20,7 @@ export default function MyProducts () {
   }
 
   const handleDiscount = (publication) => {
-    dispatch({ type: ACTION_TYPES.ADD_DISCOUNT, payload: publication })
+    dispatch({ type: ACTION_TYPES.UPDATE_ONE, payload: publication })
   }
 
   return (

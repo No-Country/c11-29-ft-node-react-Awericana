@@ -37,7 +37,7 @@ export function useAuth () {
       return false
     }
     setSession(null)
-    push('/')
+    push('/auth/signin')
     return true
   }
 
