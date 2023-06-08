@@ -6,6 +6,10 @@ export async function middleware (request) {
   const path = request.nextUrl.pathname
   const isOnAuthPage = ['/auth/signin', '/auth/signup'].includes(path)
 
+  if (request.method === 'OPTIONS') {
+    return NextResponse.status(200).send('ok')
+  }
+
   if (userData?.error && !isOnAuthPage) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/signin'
