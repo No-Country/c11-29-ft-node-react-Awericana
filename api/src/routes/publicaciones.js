@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const { body, param } = require('express-validator');
+
 const { validarCampos } = require("../middlewares/validar-campos");
+const authMiddleware = require("../middlewares/session");
+const checkRole = require("../middlewares/role");
+
 const {
     actualizarPublicacion,
     configurarDescuento,
@@ -9,12 +13,10 @@ const {
     obtenerPublicacion,
     obtenerPublicaciones
 } = require("../controllers/publicaciones");
-const authMiddleware = require("../middlewares/session");
-const checkRole = require("../middlewares/role");
 
 const router = Router();
 
-router.get('/' ,    obtenerPublicaciones);
+router.get('/' , obtenerPublicaciones);
 
 router.get('/:id' , [
     param('id', 'El id de la publicación debe ser entero mayor a 0').isInt({min:1}),
