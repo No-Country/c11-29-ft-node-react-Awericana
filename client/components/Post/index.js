@@ -3,7 +3,7 @@ import { Mobile } from '@/components/Post/Mobile'
 import { Desktop } from '@/components/Post/Desktop'
 
 
-export function Post ({ title, price, imageUrls, detail, selectedTalle, sellerData, id }) {
+export function Post ({ title, price, imageUrls, detail, selectedTalle, sellerData, id, originalPrice }) {
 
   const [isBig, setIsBig] = useState(false)
 
@@ -15,7 +15,7 @@ export function Post ({ title, price, imageUrls, detail, selectedTalle, sellerDa
   if (isBig) {
     return (
 
-    <Desktop {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, id }}/>
+    <Desktop {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, id, originalPrice }}/>
 
     )
   }
