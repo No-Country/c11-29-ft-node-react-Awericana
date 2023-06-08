@@ -50,9 +50,7 @@ export const Mobile = ({ toggleFav, images, ownProduct, title, price, size, deta
                             <p className="text-xl">{size.nombre}</p>
                         </div>
                         <span className='flex justify-center mr-10 mt-1 gap-2 h-fit items-center'>
-
                         { ownProduct ? null : <Fav state={isFav} toggleFav={toggleFav} /> }
-                          <p onClick={toggleFav} className='w-2/4 text-right inline-block text-primary whitespace-nowrap font-normal text-normal underline'>Agregar a favoritos</p>
                         </span>
                     </div>
                     <div className='mt-4'>

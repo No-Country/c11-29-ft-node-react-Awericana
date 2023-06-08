@@ -23,16 +23,18 @@ export default function Detail ({ postData = {} }) {
           return res
         })
         .then(res => {
-          if (res?.length !== 0) {
+          if (res.length !== 0) {
             const favved = res.find(fav => fav.publicacion.id === postData.id)
-            setInitialFav(favved ? true : false)
+            console.log('FAVED', favved)
+            if (favved) setInitialFav(true)
+            else setInitialFav(false)
           } else setInitialFav(false)
         })
         .catch(e => {
           console.error(e)
           setInitialFav(false)
         })
-    } else setInitialFav(false)
+    }
   }, [session?.id])
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function Detail ({ postData = {} }) {
     <Layout>
       <Header disabled={true}/>
       { data && images.length > 0 && initialFav !== null
-        ? <Post initialFav={initialFav} id={postData.id} title={data.titulo} price={data.precio} userId={session?.id} ownProduct={postData.usuarioId === session?.id} originalPrice={data.precioOriginal || data.precio} imageUrls={images} detail={data.descripcion} selectedTalle={{ nombre: 'XL' }} sellerData={sellerData} />
+        ? <Post buttons={true} initialFav={initialFav} id={postData.id} title={data.titulo} price={data.precio} userId={session?.id} ownProduct={postData.usuarioId === session?.id} originalPrice={data.precioOriginal || data.precio} imageUrls={images} detail={data.descripcion} selectedTalle={{ nombre: 'XL' }} sellerData={sellerData} />
         : (
         <div className='mt-20'>
           <Loading />
