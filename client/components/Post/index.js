@@ -54,10 +54,8 @@ export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls
   if (isBig) {
     return (
     <section className='relative'>
-     <Desktop toggleFav={() => toggle()} ownProduct={ownProduct} isFav={isFav} buttons={buttons} {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, originalPrice }}/>
+     <Desktop toggleFav={() => toggle()} ownProduct={ownProduct} isFav={isFav} buttons={buttons} {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, originalPrice, userId, id }}/>
     {!ownProduct && buttons && <div className='flex flex-col w-fit items-center absolute bottom-0 right-0 lg:right-56'>
-        <Submit onClick={handlePurchase}>COMPRAR</Submit>
-        <Tertiary onClick={addToCart}>Agregar al carrito</Tertiary>
       </div>}
     </section>
     )
@@ -65,7 +63,7 @@ export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls
 
   return (
     <section className='mb-24'>
-      <Mobile toggleFav={() => toggle()} isFav={isFav} ownProduct={ownProduct} {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, originalPrice }} />
+      <Mobile toggleFav={() => toggle()} isFav={isFav} ownProduct={ownProduct} {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, originalPrice, userId, id }} />
       {!ownProduct && buttons && <div className='flex flex-col w-full items-center justify-center absolute '>
         <Submit center={true} onClick={handlePurchase}>COMPRAR</Submit>
         <Tertiary center={true} onClick={addToCart}>Agregar al carrito</Tertiary>
