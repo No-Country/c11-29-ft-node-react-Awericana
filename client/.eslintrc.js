@@ -20,6 +20,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'no-unneeded-ternary': 'off',
-    'no-case-declarations': 'off'
+    'no-case-declarations': 'off',
+    'no-mixed-spaces-and-tabs': 'off'
   }
 }
