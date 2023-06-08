@@ -12,17 +12,24 @@ const {
     inhabilitarOHabilitarUsuario,
     obtenerVentas,
     obtenerCompras,
-    obtenerPublicaciones
+    obtenerPublicaciones,
+    obtenerUsuarioLogin
 } = require("../controllers/usuario");
 
 const router = Router();
 
 router.get('/' , obtenerUsuarios);
 
+router.get('/yo', [
+    authMiddleware
+], obtenerUsuarioLogin);
+
 router.get('/:id', [
     param('id', 'El id debe ser entero mayor a 0').isInt({min:1}),
     validarCampos
 ], obtenerUsuario);
+
+
 
 router.put('/:id', [
     authMiddleware,
