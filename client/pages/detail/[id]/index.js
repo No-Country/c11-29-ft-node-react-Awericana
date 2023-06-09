@@ -13,7 +13,17 @@ export default function Detail ({ postData = {} }) {
   const [notFound, setNotFound] = useState(false)
   const [sellerData, setSellerData] = useState({})
   const [initialFav, setInitialFav] = useState(null)
-  const { session } = useSession()
+  const { session, setSession } = useSession()
+
+  useEffect(() => {
+    if (!session?.id) {
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/loginLocal/success`
+      fetch(URL, { credentials: 'include' })
+        .then(res => res.ok ? res.json() : res)
+        .then(res => setSession(res.user))
+        .catch(console.error)
+    }
+  }, [])
 
   useEffect(() => {
     if (postData.usuarioId && initialFav === null) {
