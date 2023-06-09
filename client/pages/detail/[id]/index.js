@@ -14,7 +14,6 @@ export default function Detail ({ postData = {} }) {
   const [sellerData, setSellerData] = useState({})
   const [initialFav, setInitialFav] = useState(null)
   const { session } = useSession()
-
   useEffect(() => {
     if (postData.usuarioId !== session?.id && session?.id && initialFav === null) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${postData.id}`, { credentials: 'include' })
@@ -70,6 +69,14 @@ export default function Detail ({ postData = {} }) {
         </div>
           )
     }
+<h3 className='text-3xl ml-10 mt-20 mb-10'>Mas Productos Del Vendedor</h3>
+<div className='flex gap-10 pl-10 pt-5 flex-row '>
+  {images.map((e, index) => (
+    <div className='' key={index}>
+      <img className='w-[120px] hover:scale-110 cursor-pointer h-[120px]' src={e} alt="Imagen" />
+    </div>
+  ))}
+</div>
 
     </Layout>
     )
