@@ -68,7 +68,7 @@ const userLogin = async (req, res) => {
       handleHttpError(res, "USER_NO_REGISTRADO", 404);
       return;
     }
-    
+
     if (!user.habilitado) {
       handleHttpError(res, "USER_BANEADO", 400);
       return;
@@ -131,7 +131,7 @@ const changePassword = async (req, res) => {
       });
     }
 
-    const resetPasswordLink = `https://tu-sitio-web.com/resetPassword`;
+    const resetPasswordLink = `${process.env.URL_FRONT}/new-password`;
 
     const mailOptions = {
       from: '"Awericana" <awericana@gmail.com>',
@@ -144,30 +144,33 @@ const changePassword = async (req, res) => {
 
     res.json({
       message:
-        "Se ha enviado un código de confirmación a tu correo electrónico.",
+        "Pronto recibirás un correo electrónico para restablecer tu contraseña. Si no lo encuentras, comprueba la carpeta de correo no deseado y la papelera",
     });
   } catch (err) {
     console.error(err);
-    res
-      .status(500)
-      .json({ message: "Ocurrió un error al procesar tu solicitud." });
+    res.status(500).json({ message: "Debes ingresar tu correo electrónico." });
   }
 };
 
 const newPassword = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
+
+    // Validar que el correo electrónico y la contraseña no estén vacíos
+    if (!email || !password) {
+      return res.status(400).json({
+        msg: "Por favor, proporciona tanto el correo electrónico como la contraseña.",
+      });
+    }
+
     const newPassword = await encrypt(password);
-    // const body = { ...req, password };
-    // const dataUser = await Usuario.create(body);
 
     await Usuario.update(
       { password: newPassword },
       { where: { email: email } }
     );
 
-    res.json({ msg: "Password successfully changed!" });
+    res.json({ msg: "¡Tu contraseña ha sido cambiado exitosamente!" });
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }
