@@ -37,8 +37,7 @@ export default function Home ({ publicaciones = [], talles = [] }) {
     fetch(url)
       .then(res => res.ok ? res.json() : res)
       .then(res => {
-        if (res.coincidencias > 0) setShown(res.publicaciones)
-        else setShown(publicaciones)
+        setShown(res.publicaciones)
       })
   }, [url])
 
