@@ -10,6 +10,7 @@ import { Form } from "@/components/Form";
 import { Input } from "@/components/Input";
 import { Submit } from "@/components/Buttons/Submit";
 import styles from "./forgot.module.css";
+import Head from "next/head";
 const Forgot = () => {
   const [form, setForm] = useState({});
   const [response, setResponse] = useState("");
@@ -43,6 +44,9 @@ const Forgot = () => {
   return (
     <div className={styles.container}>
       <Header />
+      <Head>
+        <title>Olvidé mi contraseña | Awericana</title>
+      </Head>
       <div className={styles.notification}>
         <h2 className={styles.title}>¿Has olvidado la contraseña?</h2>
         <Form onSubmit={handleSubmit}>

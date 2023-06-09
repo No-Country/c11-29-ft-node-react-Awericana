@@ -31,7 +31,7 @@ const obtenerCarrito = async(req, res) => {
         const montoTotal = calcularMonto(carrito);
 
         //Devolver el monto y la lista de publicaciones que se encuentran en el carrito
-        res.json({montoTotal, carrito});
+        res.status(200).json({montoTotal, carrito});
 
     } catch (error) {
         console.log(error);
@@ -70,7 +70,7 @@ const agregarAlCarrito = async(req, res) => {
 
         //Retornar si la publicación es del propio usuario
         if(esPubliPropia){
-            return res.json({msg: 'No puede agregar al carrito su propia publicación'});
+            return res.status(200).json({msg: 'No puede agregar al carrito su propia publicación'});
         }
 
         //Verificar si la publicación existe en el carrito 
@@ -81,7 +81,7 @@ const agregarAlCarrito = async(req, res) => {
 
         //Retornar si la publicación existe en el carrito
         if(existe){
-            return res.json('La publicación ya se encuentra en el carrito de compra.');
+            return res.status(200).json('La publicación ya se encuentra en el carrito de compra.');
         }
 
         //Agregar al carrito
@@ -89,7 +89,7 @@ const agregarAlCarrito = async(req, res) => {
         await itemDeCarrito.save();
 
         //Devolver mensaje
-        res.json({msg: 'La publicación fue agregada al carrito.'});
+        res.status(200).json({msg: 'La publicación fue agregada al carrito.'});
 
     } catch (error) {
         console.log(error);
@@ -111,7 +111,7 @@ const quitarDelCarrito = async(req, res) => {
             });
 
             //Devolver mensaaje
-            res.json({msg: 'Se han quitado todas las publicaciones del carrito.'});
+            res.status(200).json({msg: 'Se han quitado todas las publicaciones del carrito.'});
         
         }else{
             //Buscar la publicación
@@ -131,7 +131,7 @@ const quitarDelCarrito = async(req, res) => {
             });
 
             //Devolver mensaje
-            res.json({msg: 'La publicación fue removida del carrito.'});
+            res.status(200).json({msg: 'La publicación fue removida del carrito.'});
         }
 
     } catch (error) {

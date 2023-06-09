@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { ErrorLayout } from '@/components/ErrorLayout'
 import { useSession } from '@/hooks/useSession'
 import { Loading } from '@/components/Loading'
+import Head from 'next/head'
 
 export default function Detail ({ postData = {} }) {
   const [data, setData] = useState({})
@@ -13,7 +14,18 @@ export default function Detail ({ postData = {} }) {
   const [notFound, setNotFound] = useState(false)
   const [sellerData, setSellerData] = useState({})
   const [initialFav, setInitialFav] = useState(null)
-  const { session } = useSession()
+  const { session, setSession } = useSession()
+
+  useEffect(() => {
+    if (!session?.id) {
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/loginLocal/success`
+      fetch(URL, { credentials: 'include' })
+        .then(res => res.ok ? res.json() : res)
+        .then(res => setSession(res.user))
+        .catch(console.error)
+    }
+  }, [])
+
   useEffect(() => {
     if (postData.usuarioId && initialFav === null) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${postData.id}`, { credentials: 'include' })
@@ -39,7 +51,7 @@ export default function Detail ({ postData = {} }) {
       setImages(imagesData)
 
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/${postData.usuarioId}`)
-        .then(res => res.json())
+        .then(res => res.ok ? res.json() : res)
         .then(setSellerData)
         .catch(console.error)
     } else if (postData === null) {
@@ -51,7 +63,9 @@ export default function Detail ({ postData = {} }) {
     return (
     <Layout>
       <Header disabled={true}/>
-
+      <Head>
+        <title>Error | Awericana</title>
+      </Head>
       <ErrorLayout/>
     </Layout>
     )
@@ -60,6 +74,9 @@ export default function Detail ({ postData = {} }) {
     return (
     <Layout>
       <Header disabled={true}/>
+      <Head>
+        <title>Detalle | Awericana</title>
+      </Head>
       { data && images.length > 0 && initialFav !== null
         ? <Post buttons={true} initialFav={initialFav} id={postData.id} title={data.titulo} price={data.precio} userId={session?.id} ownProduct={postData.usuarioId === session?.id} originalPrice={data.precioOriginal || data.precio} imageUrls={images} detail={data.descripcion} selectedTalle={{ nombre: 'XL' }} sellerData={sellerData} />
         : (

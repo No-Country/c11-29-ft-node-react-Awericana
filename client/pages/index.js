@@ -10,12 +10,24 @@ import { useEffect, useState } from 'react'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useSearch } from '@/hooks/useSearch'
 import { WithFilters } from '@/components/WithFilters'
+import { useSession } from '@/hooks/useSession'
 
 export default function Home ({ publicaciones = [], talles = [] }) {
   const [value, setValue] = useState('')
   const debouncedValue = useDebounce(value, 500)
   const { url, add } = useSearch()
   const [shown, setShown] = useState(publicaciones)
+  const { session, setSession } = useSession()
+
+  useEffect(() => {
+    if (!session?.id) {
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/loginLocal/success`
+      fetch(URL, { credentials: 'include' })
+        .then(res => res.ok ? res.json() : res)
+        .then(res => setSession(res.user))
+        .catch(console.error)
+    }
+  }, [])
 
   useEffect(() => {
     add('termino', debouncedValue)
@@ -25,8 +37,7 @@ export default function Home ({ publicaciones = [], talles = [] }) {
     fetch(url)
       .then(res => res.ok ? res.json() : res)
       .then(res => {
-        if (res.coincidencias > 0) setShown(res.publicaciones)
-        else setShown(publicaciones)
+        setShown(res.publicaciones)
       })
   }, [url])
 
@@ -91,7 +102,7 @@ export async function getServerSideProps (ctx) {
 
   return {
     props: {
-      publicaciones: publicaciones.publicaciones,
+      publicaciones: publicaciones?.publicaciones,
       talles
     }
   }

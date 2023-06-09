@@ -30,7 +30,7 @@ export default function index () {
   return (
     <Layout>
         <Head>
-        <title>Mis Compras</title>
+        <title>Mis Compras | Awericana</title>
       </Head>
       <Header />
       <h3 className='mt-16 ml-10 mb-8 text-4xl '>Mis Compras</h3>

@@ -9,6 +9,7 @@ import { Form } from "@/components/Form";
 import { Input } from "@/components/Input";
 import { Submit } from "@/components/Buttons/Submit";
 import styles from "./new.module.css";
+import Head from "next/head";
 
 const Newpassword = () => {
   const [form, setForm] = useState({
@@ -46,7 +47,10 @@ const Newpassword = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header disabled={true} />
+      <Head>
+        <title>Recuerar contraseña | Awericana</title>
+      </Head>
       <div className={styles.notification}>
         <h2 className={styles.title}>
           Ingresa tu correo y tu nueva contraseña

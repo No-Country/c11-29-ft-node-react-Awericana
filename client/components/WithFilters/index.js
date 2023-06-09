@@ -1,5 +1,5 @@
 import { Categories } from '@/components/Category/Categories'
-import { Card } from '@/components/Card'
+import Card from '@/components/Card'
 import Link from 'next/link'
 import { useState } from 'react'
 

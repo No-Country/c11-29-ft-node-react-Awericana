@@ -15,7 +15,7 @@ export default function index () {
   return (
     <Layout>
        <Head>
-         <title>Estado del envio </title>
+         <title>Estado del envio | Awericana</title>
         </Head>
       <Header disabled={true} />
       <div className="flex justify-center">

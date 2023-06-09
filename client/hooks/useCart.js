@@ -17,38 +17,37 @@ export function useCart (userId, itemId) {
   }, [userId])
 
   const getUserCart = async () => {
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito`, {
       credentials: 'include'
     })
   }
 
   const addToCart = async (id) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito`, {
       credentials: 'include',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        publicacionId: id
+        publicacionId: id || itemId
       })
     })
 
     if (req.ok) {
       const publication = await req.json()
-      console.log('34 usecart', publication)
       setUserCart(prev => prev.carrito.concat(publication))
     }
   }
 
   const deleteCartItem = async (id) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ publicacionId: id })
+      body: JSON.stringify({ publicacionId: id || itemId })
     })
 
     if (req.ok) {
