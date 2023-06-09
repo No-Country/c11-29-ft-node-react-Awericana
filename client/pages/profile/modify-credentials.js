@@ -61,7 +61,7 @@ function modifyCredentials () {
           password
         })
       })
-      console.log("responseOk:", response.ok);
+ 
       if (response.ok) {
         console.log('Credenciales modificadas')
         router.push('/profile')
@@ -100,7 +100,7 @@ function modifyCredentials () {
             <Input 
               name= 'Password2' 
               type='text' 
-              placeholder='Contraseña' 
+              placeholder='Repetir contraseña' 
               label='Repetir contraseña' 
               value={credenciales.password2} onChange={(e) => setCredenciales({ ...credenciales, password2: (e.target.value).trimStart() })}
             />

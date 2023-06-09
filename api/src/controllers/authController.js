@@ -153,6 +153,7 @@ const changePassword = async (req, res) => {
 };
 
 const newPassword = async (req, res) => {
+  const {id} = req.user;
   try {
     const { email, password } = req.body;
 
@@ -166,8 +167,10 @@ const newPassword = async (req, res) => {
     const newPassword = await encrypt(password);
 
     await Usuario.update(
-      { password: newPassword },
-      { where: { email: email } }
+      { password: newPassword,
+        email
+      },
+      { where: { id } }
     );
 
     res.json({ msg: "¡Tu contraseña ha sido cambiado exitosamente!" });
