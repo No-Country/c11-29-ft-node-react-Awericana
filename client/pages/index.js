@@ -104,13 +104,5 @@ export async function getServerSideProps (ctx) {
     }
   } catch (e) {
     console.log(e)
-
-    return {
-      props: {
-        publicaciones: [],
-        talles: [],
-        initialSession: {}
-      }
-    }
   }
 }
