@@ -87,18 +87,30 @@ export default function Home ({ publicaciones = [], talles = [], initialSession 
 }
 
 export async function getServerSideProps (ctx) {
-  const publicacionesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/publicaciones?offset=0&limit=100`)
-  const tallesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/talle`)
-  const publicaciones = await publicacionesResponse.json()
-  const talles = await tallesResponse.json()
+  try {
+    const publicacionesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/publicaciones?offset=0&limit=100`)
+    const tallesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/talle`)
+    const publicaciones = await publicacionesResponse.json()
+    const talles = await tallesResponse.json()
 
-  const sessionReq = await checkSession(ctx.req.headers)
+    const sessionReq = await checkSession(ctx.req.headers)
 
-  return {
-    props: {
-      publicaciones: publicaciones.publicaciones,
-      talles,
-      initialSession: sessionReq?.error ? {} : sessionReq.user
+    return {
+      props: {
+        publicaciones: publicaciones.publicaciones,
+        talles,
+        initialSession: sessionReq?.error ? {} : sessionReq.user
+      }
+    }
+  } catch (e) {
+    console.log(e)
+
+    return {
+      props: {
+        publicaciones: [],
+        talles: [],
+        initialSession: {}
+      }
     }
   }
 }
