@@ -23,7 +23,7 @@ export function useCart (userId, itemId) {
   }
 
   const addToCart = async (id) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/1`, {
       credentials: 'include',
       method: 'POST',
       headers: {
@@ -36,7 +36,6 @@ export function useCart (userId, itemId) {
 
     if (req.ok) {
       const publication = await req.json()
-      console.log('34 usecart', publication)
       setUserCart(prev => prev.carrito.concat(publication))
     }
   }
