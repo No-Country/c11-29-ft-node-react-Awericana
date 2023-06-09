@@ -38,8 +38,8 @@ export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title
   }
 
   return (
-    <div className='flex flex-row w-full items-center gap-10 mt-10  '>
-      <article className="p-layoutSides gap-10 mb-10 mt-10 pl-40 justify-center">
+    <div className='flex flex-row w-full items-center gap-10 mt-10 pl-40 pr-40  '>
+      <article className="p-layoutSides gap-10 mb-10 mt-10  justify-center">
         <figure className='h-fit max-w-[800px] aspect-video'>
           {imageList.map((src, i) => {
             if (i === shown) {
@@ -89,8 +89,10 @@ export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title
                 <p className="text-xl">{`${nombre} ${apellido}`}</p>
                 <Stars rating={calificacion} />
               </div>
+              <div className='flex flex-col'>
               <Submit center={true} onClick={handlePurchase}>COMPRAR</Submit>
               <Tertiary center={true} onClick={handleAddToCart}>{ !isAdded ? 'Agregar al carrito' : 'Ir al carrito'}</Tertiary>
+              </div>
             </div>
 
         </div>
