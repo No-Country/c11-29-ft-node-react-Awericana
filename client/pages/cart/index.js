@@ -101,7 +101,7 @@ export default function Index () {
               )
             : (
             <button
-              className="w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition"
+              className="w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-no-drop bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition"
               disabled
             >
               Comprar Carrito

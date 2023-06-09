@@ -3,6 +3,7 @@ import { Layout } from '@/components/Layout'
 import { Header } from '@/components/Header'
 import { useSession } from '@/hooks/useSession'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function index () {
   const [compras, setCompras] = useState([])
@@ -51,7 +52,9 @@ export default function index () {
               </div>
               <div className='flex justify-between  px-16 py-5'>
                 <a className='underline cursor-pointer' >Ver Producto</a>
-                <a className='underline cursor-pointer'>Estado del Envio</a>
+                <a className='underline cursor-pointer'>
+                <Link href={`/tracking/${publicacion.id}`}>Estado del Envío</Link>
+                </a>
               </div>
             </div>
           ))}
