@@ -8,10 +8,12 @@ import Link from 'next/link'
 export default function index () {
   const [compras, setCompras] = useState([])
   const { session } = useSession()
-  console.log(session)
+
   useEffect(() => {
-    obtenerCompras()
-  }, [])
+    if (session?.id) {
+      obtenerCompras()
+    }
+  }, [session?.id])
 
   const obtenerCompras = async () => {
     try {
