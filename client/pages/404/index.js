@@ -9,7 +9,7 @@ export default function FourOhFour () {
   return (
    <Layout>
    <Head>
-        <title>Ups Error</title>
+        <title>Ups Error | Awericana</title>
       </Head>
       <header className='m-small'>
           <nav className='block m-auto w-fit'>

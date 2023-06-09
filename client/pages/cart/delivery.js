@@ -25,7 +25,7 @@ export default function Index () {
   return (
 <Layout>
       <Head>
-        <title>Mi Carrito</title>
+        <title>Mi Carrito | Awericana</title>
       </Head>
     <Header/>
     <div className='px-[10%]'>

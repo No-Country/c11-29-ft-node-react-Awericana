@@ -58,7 +58,7 @@ export default function Index () {
   return (
     <Layout>
       <Head>
-        <title>Reviews</title>
+        <title>Reviews | Awericana</title>
       </Head>
       <Header />
       <h2 className='mt-10 ml-10 mb-14 font-bold text-lg leading-5'>Calificar al vendedor</h2>

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { ErrorLayout } from '@/components/ErrorLayout'
 import { useSession } from '@/hooks/useSession'
 import { Loading } from '@/components/Loading'
+import Head from 'next/head'
 
 export default function Detail ({ postData = {} }) {
   const [data, setData] = useState({})
@@ -62,7 +63,9 @@ export default function Detail ({ postData = {} }) {
     return (
     <Layout>
       <Header disabled={true}/>
-
+      <Head>
+        <title>Error | Awericana</title>
+      </Head>
       <ErrorLayout/>
     </Layout>
     )
@@ -71,6 +74,9 @@ export default function Detail ({ postData = {} }) {
     return (
     <Layout>
       <Header disabled={true}/>
+      <Head>
+        <title>Detalle | Awericana</title>
+      </Head>
       { data && images.length > 0 && initialFav !== null
         ? <Post buttons={true} initialFav={initialFav} id={postData.id} title={data.titulo} price={data.precio} userId={session?.id} ownProduct={postData.usuarioId === session?.id} originalPrice={data.precioOriginal || data.precio} imageUrls={images} detail={data.descripcion} selectedTalle={{ nombre: 'XL' }} sellerData={sellerData} />
         : (
