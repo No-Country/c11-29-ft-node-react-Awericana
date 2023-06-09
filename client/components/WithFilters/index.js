@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export function WithFilters ({ talles, shown }) {
-  const [category, setCategory] = useState()
+  const [, setCategory] = useState()
 
   return (
     <section className='flex flex-wrap justify-center gap-4 m-auto w-full p-4'>

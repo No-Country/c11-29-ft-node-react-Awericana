@@ -3,15 +3,15 @@ import { Layout } from '@/components/Layout'
 import { TrackingComponent } from '@/components/ShipingTracking/index.js'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 export default function index () {
   const imgUrl = ''
   const title = 'Medias epicas'
   // const price = ''
   const estado = 'Recibido'
-  const router = useRouter()
-  const { id } = router.query
+  // const router = useRouter()
+
   return (
     <Layout>
        <Head>

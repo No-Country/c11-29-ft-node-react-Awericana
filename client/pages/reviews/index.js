@@ -6,14 +6,15 @@ import { Layout } from '@/components/Layout'
 import { AiOutlineStar } from 'react-icons/ai'
 import { Submit } from '../../components/Buttons/Submit'
 import { useSession } from '@/hooks/useSession'
+
 export default function Index () {
   const [compras, setCompras] = useState([])
   const { session } = useSession()
   const [rating, setRating] = useState(0)
 
   useEffect(() => {
-    obtenerCompras()
-  }, [])
+    if (session?.id) { obtenerCompras() }
+  }, [session?.id])
 
   const obtenerCompras = async () => {
     try {
