@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Head from 'next/head'
 import { Big } from '@/components/Logo/Big'
 import img from '@/public/assets/error.png'
-export default function index () {
+
+export default function FourOhFour () {
   return (
    <Layout>
    <Head>
@@ -19,7 +20,7 @@ export default function index () {
       </header>
       <section className="flex justify-center items-center flex-wrap">
         <div><Image src={img} alt="logo404"/></div>
-        <div><h4 className="text-2xl">No pudimos encontrar la página que estas buscando</h4>
+        <div><h4 className="text-2xl text-center">No pudimos encontrar la página que estas buscando</h4>
         </div>
       </section>
    </Layout>

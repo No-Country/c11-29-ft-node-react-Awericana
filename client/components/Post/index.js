@@ -30,7 +30,6 @@ export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls
   }
 
   const handlePurchase = () => {
-    console.log(userId)
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
       credentials: 'include',
       method: 'POST',
