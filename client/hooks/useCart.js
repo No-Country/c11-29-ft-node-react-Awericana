@@ -30,7 +30,7 @@ export function useCart (userId, itemId) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        publicacionId: id
+        publicacionId: id || itemId
       })
     })
 

@@ -14,17 +14,19 @@ export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title
   const { isAdded, addToCart, setIsAdded } = useCart(userId, id)
 
   const handlePurchase = () => {
-    addToCart(id)
-      .then(response => {
-        router.push('/cart')
-      })
-      .catch(error => {
-        console.error('Error al agregar el producto al carrito:', error)
-      })
+    if (id) {
+      addToCart(id)
+        .then(response => {
+          router.push('/cart')
+        })
+        .catch(error => {
+          console.error('Error al agregar el producto al carrito:', error)
+        })
+    }
   }
 
   const handleAddToCart = () => {
-    if (!isAdded) {
+    if (!isAdded && id) {
       addToCart(id)
         .then(res => {
           setIsAdded(true)
