@@ -14,6 +14,7 @@ export default function Detail ({ postData = {} }) {
   const [sellerData, setSellerData] = useState({})
   const [initialFav, setInitialFav] = useState(null)
   const { session } = useSession()
+
   useEffect(() => {
     if (postData.usuarioId && initialFav === null) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/favoritos/${postData.id}`, { credentials: 'include' })
@@ -39,7 +40,7 @@ export default function Detail ({ postData = {} }) {
       setImages(imagesData)
 
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/${postData.usuarioId}`)
-        .then(res => res.json())
+        .then(res => res.ok ? res.json() : res)
         .then(setSellerData)
         .catch(console.error)
     } else if (postData === null) {
