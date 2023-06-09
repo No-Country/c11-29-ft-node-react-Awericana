@@ -13,13 +13,13 @@ import styles from "./new.module.css";
 const Newpassword = () => {
   const [form, setForm] = useState({
     email: "",
-    password: "",
+    password: ""
   });
   const [response, setResponse] = useState("");
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -28,9 +28,9 @@ const Newpassword = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/newPassword`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify(form)
     })
       .then((response) => response.json())
       .then((data) => {

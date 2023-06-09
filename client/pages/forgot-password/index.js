@@ -16,7 +16,7 @@ const Forgot = () => {
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
   const handleSubmit = (e) => {
@@ -24,9 +24,9 @@ const Forgot = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resetPassword`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify(form)
     })
       .then((response) => response.json())
       .then((data) => {
