@@ -10,12 +10,15 @@ import { useEffect, useState } from 'react'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useSearch } from '@/hooks/useSearch'
 import { WithFilters } from '@/components/WithFilters'
+import { useSession } from '@/hooks/useSession'
+import { checkSession } from '@/lib/checkSession'
 
-export default function Home ({ publicaciones = [], talles = [] }) {
+export default function Home ({ publicaciones = [], talles = [], initialSession = {} }) {
   const [value, setValue] = useState('')
   const debouncedValue = useDebounce(value, 500)
   const { url, add } = useSearch()
   const [shown, setShown] = useState(publicaciones)
+  useSession(initialSession)
 
   useEffect(() => {
     add('termino', debouncedValue)
@@ -89,10 +92,13 @@ export async function getServerSideProps (ctx) {
   const publicaciones = await publicacionesResponse.json()
   const talles = await tallesResponse.json()
 
+  const sessionReq = await checkSession(ctx.req.headers)
+
   return {
     props: {
       publicaciones: publicaciones.publicaciones,
-      talles
+      talles,
+      initialSession: sessionReq?.error ? {} : sessionReq.user
     }
   }
 }
