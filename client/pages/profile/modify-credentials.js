@@ -8,12 +8,12 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 function modifyCredentials () {
-  const router = useRouter();
+  const router = useRouter()
   const [credenciales, setCredenciales] = useState({
     email: '',
     password: '',
     password2: ''
-  } );
+  })
 
   const fetchCredenciales = async () => {
     try {
@@ -36,7 +36,7 @@ function modifyCredentials () {
 
   useEffect(() => {
     fetchCredenciales()
-  }, []);
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -48,7 +48,7 @@ function modifyCredentials () {
     const email = (credenciales.email).trim(); if (email === '') { return }
     const password = (credenciales.password).trim(); if (password === '') { return }
     if (password !== credenciales.password2) { return }
-      
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/newPassword`, {
         credentials: 'include',
@@ -61,7 +61,7 @@ function modifyCredentials () {
           password
         })
       })
-      console.log("responseOk:", response.ok);
+      console.log('responseOk:', response.ok)
       if (response.ok) {
         console.log('Credenciales modificadas')
         router.push('/profile')
@@ -83,25 +83,25 @@ function modifyCredentials () {
         <h1 className='py-12 px-4 font-normal text-lg leading-5'>Mis datos</h1>
         <Form onSubmit={handleSubmit}>
           <div className='flex flex-col gap-6'>
-            <Input 
-              name= 'Email' 
-              type='text' 
-              placeholder='Email' 
-              label='Email' 
+            <Input
+              name= 'Email'
+              type='text'
+              placeholder='Email'
+              label='Email'
               value={credenciales.email} onChange={(e) => setCredenciales({ ...credenciales, email: (e.target.value).trimStart() })}
             />
-            <Input 
-              name= 'Password' 
-              type='text' 
-              placeholder='Contraseña' 
-              label='Contraseña' 
+            <Input
+              name= 'Password'
+              type='text'
+              placeholder='Contraseña'
+              label='Contraseña'
               value={credenciales.password} onChange={(e) => setCredenciales({ ...credenciales, password: (e.target.value).trimStart() })}
             />
-            <Input 
-              name= 'Password2' 
-              type='text' 
-              placeholder='Contraseña' 
-              label='Repetir contraseña' 
+            <Input
+              name= 'Password2'
+              type='text'
+              placeholder='Contraseña'
+              label='Repetir contraseña'
               value={credenciales.password2} onChange={(e) => setCredenciales({ ...credenciales, password2: (e.target.value).trimStart() })}
             />
           </div>
