@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
 const { Usuario, Publicacion } = require("../db");
 const { quitarPublicaciones } = require("../Helpers/quitarPublicacionDeListas");
 
@@ -130,6 +130,25 @@ const obtenerPublicaciones = async (req, res) => {
   res.json(publicaciones);
 };
 
+//Controlador para obtener el resto de las publicaciones del usuario excepto la recibida
+const obtenerOtrasPublicaciones = async (req, res) => {
+  const { usuarioId, publicacionId } = req.params;
+
+  const publicaciones = await Publicacion.findAll({
+    where: {
+      id: { [Op.ne]: publicacionId },
+      usuarioId,
+      estado: "habilitada",
+    },
+    attributes: [
+      "id",
+      "imagenPortada"
+    ]
+  });
+
+  res.json(publicaciones);
+};
+
 const obtenerVentas = async (req, res) => {
   const { id } = req.user;
 
@@ -164,5 +183,6 @@ module.exports = {
   obtenerPublicaciones,
   obtenerVentas,
   obtenerCompras,
-  obtenerUsuarioLogin
+  obtenerUsuarioLogin,
+  obtenerOtrasPublicaciones
 };

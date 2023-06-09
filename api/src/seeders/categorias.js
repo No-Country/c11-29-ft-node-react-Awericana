@@ -12,7 +12,7 @@ let categorias = [
     {
      
       nombre: "REMERAS",
-      link: "https://res.cloudinary.com/dbyhc9v6t/image/upload/v1685997025/categorias/Iconos_categorias_Remeras_olkwox.png"
+      link: "https://res.cloudinary.com/dew4ce360/image/upload/v1686308293/Awericana/Iconos_categorias_Remera_v09daw.png"
 
     },
     {
