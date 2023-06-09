@@ -13,7 +13,8 @@ const {
     obtenerVentas,
     obtenerCompras,
     obtenerPublicaciones,
-    obtenerUsuarioLogin
+    obtenerUsuarioLogin,
+    obtenerOtrasPublicaciones
 } = require("../controllers/usuario");
 
 const router = Router();
@@ -61,5 +62,11 @@ router.get('/:id/publicaciones' , [
     param('id', 'El id debe ser entero mayor a 0').isInt({min:1}),
     validarCampos
 ] ,obtenerPublicaciones);
+
+router.get('/:usuarioId/publicaciones/excluir/:publicacionId' , [
+    param('usuarioId', 'El publicacionId debe ser entero mayor a 0').isInt({min:1}),
+    param('publicacionId', 'publicacionId debe ser entero mayor a 0').isInt({min:1}),
+    validarCampos
+] ,obtenerOtrasPublicaciones);
 
 module.exports = router;

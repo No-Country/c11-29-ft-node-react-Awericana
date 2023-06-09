@@ -6,7 +6,8 @@ let usuarios = [
         "password": "$2a$10$KcPKhk4F3W.mlSp6Bjlr4eRtBUB/9Eg6o/UdPM34oGiueuOu5HF7K",
         "fechaNacimiento": "1990-01-01",
         "dni": 34123456,
-        "rol": "user"
+        "rol": "user",
+        "calificacion": 0
     },
     {
         "nombre": "Ignacio",
@@ -15,7 +16,8 @@ let usuarios = [
         "password": "$2a$10$KcPKhk4F3W.mlSp6Bjlr4eRtBUB/9Eg6o/UdPM34oGiueuOu5HF7K",
         "fechaNacimiento": "1990-01-01",
         "dni": 34123456,
-        "rol": "user"
+        "rol": "user",
+        "calificacion": 2.5
     },
     {
         "nombre": "Sebastian",
@@ -24,7 +26,8 @@ let usuarios = [
         "password": "$2a$10$KcPKhk4F3W.mlSp6Bjlr4eRtBUB/9Eg6o/UdPM34oGiueuOu5HF7K",
         "fechaNacimiento": "1990-01-01",
         "dni": 34123456,
-        "rol": "user"
+        "rol": "user",
+        "calificacion": 3
     },
     {
         "nombre": "Adhemir",
@@ -33,7 +36,8 @@ let usuarios = [
         "password": "$2a$10$KcPKhk4F3W.mlSp6Bjlr4eRtBUB/9Eg6o/UdPM34oGiueuOu5HF7K",
         "fechaNacimiento": "1990-01-01",
         "dni": 34123456,
-        "rol": "user"
+        "rol": "user",
+        "calificacion": 5
     }
 ]
 

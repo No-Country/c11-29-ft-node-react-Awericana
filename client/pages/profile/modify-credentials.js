@@ -61,7 +61,7 @@ function modifyCredentials () {
           password
         })
       })
-      console.log('responseOk:', response.ok)
+
       if (response.ok) {
         console.log('Credenciales modificadas')
         router.push('/profile')
