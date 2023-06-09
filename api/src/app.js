@@ -5,7 +5,7 @@ const passportSetup = require("./config/passport");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
-const fileUpload = require('express-fileupload')
+const fileUpload = require("express-fileupload");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
 require("./db.js");
@@ -19,11 +19,11 @@ server.use(
     name: "session",
     keys: [process.env.JWT_SECRET],
     maxAge: 24 * 60 * 60 * 100,
-    sameSite: 'none',
-    secure: true
+    sameSite: "none",
+    secure: true,
   })
 );
-
+// console.log(process.env.URL_FRONT);
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
@@ -38,13 +38,15 @@ server.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  next();
+  next();
 });
 
-server.use(fileUpload({
-  useTempFiles : true,
-  tempFileDir : './uploads'
-}));
+server.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./uploads",
+  })
+);
 server.use("/", routes);
 
 // Error catching endware.
@@ -55,8 +57,5 @@ server.use((err, req, res, next) => {
   console.error(err);
   res.status(status).send(message);
 });
-
-
-
 
 module.exports = server;
