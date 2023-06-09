@@ -1,4 +1,5 @@
 /* eslint-disable no-tabs */
+
 import React, { useState, useEffect } from 'react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -18,7 +19,7 @@ export default function Index () {
 
   const obtenerCompras = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/7/compras`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/${session?.id}/compras`, {
         credentials: 'include'
       })
       const data = await response.json()
@@ -38,22 +39,24 @@ export default function Index () {
         <title>Reviews</title>
 		</Head>
 		<Header />
-		<section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit flex flex-col'>
-			<h2 className='py-12 px-4 font-bold text-lg leading-5'>Calificar al vendedor</h2>
+		<h2 className='mt-10 ml-10 mb-14 font-bold text-lg leading-5'>Calificar al vendedor</h2>
+		<section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit flex flex-col items-center'>
 			<section className='flex'>
 				<form onSubmit={handleSubmit}>
 					<div className='flex justify-center gap-10'>
 					<div>
 						<p>Compraste</p>
-						<div className='rounded-sm shadow-down'>
+						<div className=' flex items-center rounded-sm shadow-down w-[459px] h-[200px]'>
 						{compras.map((publicacion, id) => {
 						  return (
-						<div key={id}>
+						<div className='flex items-center' key={id}>
 								<div>
-									<img src={publicacion.imagenPortada} alt='fotoProducto' />
+								<img className='w-[128px] h-[152px]' src={publicacion.imagenPortada} alt='fotoProducto' />
 								</div>
+								<div>
 								<p>{publicacion.titulo}</p>
 								<p>{publicacion.estadoEntrega}</p>
+								</div>
 							</div>)
 						})
 						}
@@ -78,16 +81,16 @@ export default function Index () {
 						</div>
 						<p className='font-bold mt-2'>2. ¿Cómo calificarías al vendedor?</p>
 						<div className='p-3'>
-							<div className='flex ml-5' >
+							<div className='flex ml-12 ' >
 								<AiOutlineStar className='text-3xl text-green-600'/>
 								<AiOutlineStar className='text-3xl text-green-600'/>
 								<AiOutlineStar className='text-3xl text-green-600'/>
 								<AiOutlineStar className='text-3xl text-green-600'/>
 								<AiOutlineStar className='text-3xl text-green-600'/>
 							</div>
-							<div className='flex justify-between'>
+							<div className='flex '>
 								<span>Pésimo</span>
-								<span>Excelente</span>
+								<span className='ml-36'>Excelente</span>
 							</div>
 							</div>
 						</div>
@@ -97,7 +100,7 @@ export default function Index () {
 							<Submit>ENVIAR</Submit>
 					</div>
 					<div className='flex justify-center'>
-							<button className="border-green-700 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ">
+							<button className="border-green-700 hover:scale-110 border w-full md:w-[28rem]  relative lg:w-[28rem] lg:h-14 py-3 select-none shadow-lg rounded-xl font-md text-lg ">
 							Cancelar
 						</button>
 					</div>
