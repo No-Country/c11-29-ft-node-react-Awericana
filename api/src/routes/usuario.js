@@ -31,11 +31,10 @@ router.get('/:id', [
 
 
 
-router.put('/:id', [
+router.put('/', [
     authMiddleware,
     body('nombre', 'El nombre debe tener entre 2 y 50 caracteres').isString().isLength({min:2, max:50}),
     body('apellido', 'El apellido debe tener entre 2 y 50 caracteres').isString().isLength({min:2, max:50}),
-    param('id', 'El id debe ser entero mayor a 0').isInt({min:1}),
     validarCampos
 ] ,actualizarUsuario)
 
